@@ -25,8 +25,8 @@ for root, dirs, files in os.walk("."): # Use os.walk to walk through all files a
 				# print(f)
 				g=f[len(f)-1].split('_') # Split the last string in array f on '_' to index individual chunks of the last string in array f
 				# print(g)
-				filename=g[2]+"_"+g[3]+"_"+g[4]+"_"+g[5] # Reconstruct filename using strings in array g
-				print(g)
-				#file = open(filename+"_merge_config", "w") # Initialize new file based on filename created above concatenated with _config. "w" means write a new file, Note: will clobber files with the same name!
-				#file.write("[general]\nproject_name = KI_Compartment_"+filename+"\nresearcher_email = dclaar@uvic.ca\ninput_directory = "+path+"/"+root[2:]+"\noutput_directory = "+path+"/"+root[2:]+"\n\n[files]\npair_1= "+path+"/"+root[2:]+"/"+name+"\npair_2= "+path+"/"+name2[2:]) # Write the Illumina-utils config file ready for boku_qc
-				#file.close() # Close the file that was opened above.
+				h=g[6].split('-')
+				filename=g[2]+"_"+g[3]+"_"+g[4]+"_"+g[5]+"_"+h[0] # Reconstruct filename using strings in array g
+				file = open(filename+"_merge_config", "w") # Initialize new file based on filename created above concatenated with _config. "w" means write a new file, Note: will clobber files with the same name!
+				file.write("[general]\nproject_name = KI_Compartment_"+filename+"\nresearcher_email = dclaar@uvic.ca\ninput_directory = "+path+"/"+root[2:]+"\noutput_directory = "+path+"/"+root[2:]+"\n\n[files]\npair_1= "+path+"/"+root[2:]+"/"+name+"\npair_2= "+path+"/"+name2[2:]) # Write the Illumina-utils config file ready for boku_qc
+				file.close() # Close the file that was opened above.
