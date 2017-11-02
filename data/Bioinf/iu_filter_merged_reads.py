@@ -1,7 +1,7 @@
 import os,sys # Importing necessary libraries
 
 file = open("iu-filter-merged-reads_KI_Compartment.sh", "w") # Initialize new file iu-filter-merged-reads_KI_Compartment.sh. "w" means write a new file, Note: will clobber files with the same name!
-file.write("#!/bin/bash\nset -e\nset -u\nset -o pipefail\n\n") # Write bash header to file
+file.write("#!/bin/bash\n#set -e\n#set -u\n#set -o pipefail\n\n") # Write bash header to file
 
 for root, dirs, files in os.walk("."): # Use os.walk to walk through all files and directories within the enclosing directory
 	for name in files: # Iterate through all files within the enclosing directory
