@@ -1,5 +1,7 @@
 library(plyr)
 
+rm(list=ls())
+
 meta <- read.csv("data/Coralphoto__Metadata/KI_Coralphoto_Metadata_Jan_to_Apr_2017_23March.csv",header=T)
 meta$Year_Pre_Post <- paste(meta$field_season,meta$before.after, sep="")
 meta$ref <- paste(meta$Year_Pre_Post,".tag",meta$coral_tag, sep="")
@@ -29,9 +31,10 @@ names(map.compartment)[names(map.compartment)=="Site"] <- "site"
 fix <- which(map.compartment$SampleID=="KI15cFSYM509")
 map.compartment$coral_tag[fix] <- "341.2"
 
-map.compartment$ref[which(map.compartment$SampleType=="coral")] <- paste(map.compartment$field_season,".tag",map.compartment$coral_tag, sep="")
-map.compartment$ref[which(map.compartment$SampleType=="water")] <- paste(map.compartment$field_season,".water",map.compartment$TubeNumber,".site",map.compartment$Site, sep="")
-map.compartment$ref[which(map.compartment$SampleType=="sediment")] <- paste(map.compartment$field_season,".sediment",map.compartment$TubeNumber,".site",map.compartment$Site, sep="")
+map.compartment$ref <- ifelse(map.compartment$SampleType=="coral", map.compartment$ref <- paste(map.compartment$field_season,".tag",map.compartment$coral_tag, sep=""), 
+       ifelse(map.compartment$SampleType=="water", map.compartment$ref <- paste(map.compartment$field_season,".water",map.compartment$TubeNumber,".site",map.compartment$site, sep=""), 
+              ifelse(map.compartment$SampleType=="sediment", map.compartment$ref <- paste(map.compartment$field_season,".sediment",map.compartment$TubeNumber,".site",map.compartment$site, sep=""), NA)))
+
 duplicated(map.compartment)
 map.compartment
 
