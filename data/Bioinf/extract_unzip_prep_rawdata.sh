@@ -8,9 +8,8 @@ python data/Bioinf/make_configs.py # Make the Illumina-utils config files for th
 
 python data/Bioinf/boku_qc.py # Run Bokulich QC method on all applicable files
 chmod u+x data/Bioinf/boku_qc_KI_Compartment.sh
+# Give permissions so .sh file will run
 
-
-sh # Give permissions so .sh file will run
 source ~/virtual-envs/illumina-utils-v2.0.0/bin/activate
 data/Bioinf/boku_qc_KI_Compartment.sh # Run .sh file that was just created 
 
