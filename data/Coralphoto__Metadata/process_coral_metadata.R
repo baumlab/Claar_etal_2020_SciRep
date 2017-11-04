@@ -29,7 +29,9 @@ names(map.compartment)[names(map.compartment)=="Site"] <- "site"
 fix <- which(map.compartment$SampleID=="KI15cFSYM509")
 map.compartment$coral_tag[fix] <- "341.2"
 
-map.compartment$ref <- paste(map.compartment$field_season,".tag",map.compartment$coral_tag, sep="")
+map.compartment$ref[which(map.compartment$SampleType=="coral")] <- paste(map.compartment$field_season,".tag",map.compartment$coral_tag, sep="")
+map.compartment$ref[which(map.compartment$SampleType=="water")] <- paste(map.compartment$field_season,".water",map.compartment$TubeNumber,".site",map.compartment$Site, sep="")
+map.compartment$ref[which(map.compartment$SampleType=="sediment")] <- paste(map.compartment$field_season,".sediment",map.compartment$TubeNumber,".site",map.compartment$Site, sep="")
 duplicated(map.compartment)
 map.compartment
 
