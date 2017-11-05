@@ -95,9 +95,12 @@ write.delim(data.frame(otu_table(phy97.f.c)), "data/otu_table.tsv", quote = FALS
 #https://rdrr.io/rforge/seqinr/man/dist.alignment.html
 #returns sqrt of pairwise genetic distance, then squared the matrices
 A.seqs <- read.alignment(file = "data/Bioinf/tree/A_tree_seqs_aligned_clean.fasta", format= "fasta")
-
 A.dis <- (as.matrix(dist.alignment(A.seqs, matrix = "identity" )))^2
 write.csv(A.dis, file="data/Bioinf/tree/A.dis.matx.csv")
+
+B.seqs <- read.alignment(file = "data/Bioinf/tree/B_tree_seqs_aligned_clean.fasta", format= "fasta")
+B.dis <- (as.matrix(dist.alignment(B.seqs, matrix = "identity" )))^2
+write.csv(B.dis, file="data/Bioinf/tree/B.dis.matx.csv")
 
 C.seqs <- read.alignment(file = "data/Bioinf/tree/C_tree_seqs_aligned_clean.fasta", format= "fasta")
 C.dis <- (as.matrix(dist.alignment(C.seqs, matrix = "identity" )))^2
@@ -107,34 +110,51 @@ D.seqs <- read.alignment(file = "data/Bioinf/tree/D_tree_seqs_aligned_clean.fast
 D.dis <- (as.matrix(dist.alignment(D.seqs, matrix = "identity" )))^2
 write.csv(D.dis, file="data/Bioinf/tree/D.dis.matx.csv")
 
-# F.seqs <- read.alignment(file = "data/Bioinf/tree/F_tree_seqs_aligned_clean.fasta", format= "fasta")
-# F.dis <- (as.matrix(dist.alignment(F.seqs, matrix = "identity" )))^2
-# write.csv(F.dis, file="data/Bioinf/tree/F.dis.matx.csv")
+F.seqs <- read.alignment(file = "data/Bioinf/tree/F_tree_seqs_aligned_clean.fasta", format= "fasta")
+F.dis <- (as.matrix(dist.alignment(F.seqs, matrix = "identity" )))^2
+write.csv(F.dis, file="data/Bioinf/tree/F.dis.matx.csv")
 
 G.seqs <- read.alignment(file = "data/Bioinf/tree/G_tree_seqs_aligned_clean.fasta", format= "fasta")
 G.dis <- (as.matrix(dist.alignment(G.seqs, matrix = "identity" )))^2
 write.csv(G.dis, file="data/Bioinf/tree/G.dis.matx.csv")
 
+I.seqs <- read.alignment(file = "data/Bioinf/tree/I_tree_seqs_aligned_clean.fasta", format= "fasta")
+I.dis <- (as.matrix(dist.alignment(I.seqs, matrix = "identity" )))^2
+write.csv(I.dis, file="data/Bioinf/tree/I.dis.matx.csv")
+
 #give clade distances using average 28s distance from Pochon and Gates 2010
+A_B <- matrix(0.219, ncol=ncol(A.dis), nrow=nrow(B.dis), dimnames=list(rownames(B.dis), colnames(A.dis)))
 A_C <- matrix(0.1960, ncol=ncol(A.dis), nrow=nrow(C.dis), dimnames=list(rownames(C.dis), colnames(A.dis)))
 A_D <- matrix(0.1775, ncol=ncol(A.dis), nrow=nrow(D.dis), dimnames=list(rownames(D.dis), colnames(A.dis)))
-# A_F <- matrix(0.2085, ncol=ncol(A.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(A.dis)))
+A_F <- matrix(0.2085, ncol=ncol(A.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(A.dis)))
 A_G <- matrix(0.216, ncol=ncol(A.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(A.dis)))
+A_I <- matrix(0.205, ncol=ncol(A.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(A.dis)))
+B_C <- matrix(0.114, ncol=ncol(B.dis), nrow=nrow(C.dis), dimnames=list(rownames(C.dis), colnames(B.dis)))
+B_D <- matrix(0.1705, ncol=ncol(B.dis), nrow=nrow(D.dis), dimnames=list(rownames(D.dis), colnames(B.dis)))
+B_F <- matrix(0.1355, ncol=ncol(B.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(B.dis)))
+B_G <- matrix(0.21, ncol=ncol(B.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(B.dis)))
+B_I <- matrix(0.151, ncol=ncol(B.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(B.dis)))
 C_D <- matrix(0.1520, ncol=ncol(C.dis), nrow=nrow(D.dis), dimnames=list(rownames(D.dis), colnames(C.dis)))
-# C_F <- matrix(0.0945, ncol=ncol(C.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(C.dis)))
+C_F <- matrix(0.0945, ncol=ncol(C.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(C.dis)))
 C_G <- matrix(0.187, ncol=ncol(C.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(C.dis)))
-# D_F <- matrix(0.1691, ncol=ncol(D.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(D.dis)))
+C_I <- matrix(0.137, ncol=ncol(C.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(C.dis)))
+D_F <- matrix(0.1691, ncol=ncol(D.dis), nrow=nrow(F.dis), dimnames=list(rownames(F.dis), colnames(D.dis)))
 D_G <- matrix(0.1795, ncol=ncol(D.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(D.dis)))
-# F_G <- matrix(0.2072, ncol=ncol(F.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(F.dis)))
-
+D_I <- matrix(0.169125, ncol=ncol(D.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(D.dis)))
+F_G <- matrix(0.2072, ncol=ncol(F.dis), nrow=nrow(G.dis), dimnames=list(rownames(G.dis), colnames(F.dis)))
+F_I <- matrix(0.14925, ncol=ncol(F.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(F.dis)))
+G_I <- matrix(0.194, ncol=ncol(G.dis), nrow=nrow(I.dis), dimnames=list(rownames(I.dis), colnames(G.dis)))
 
 #build ACDG matrix
-col1 <- rbind(A.dis, A_C, A_D, A_G)
-col2 <- rbind(matrix(NA, nrow=nrow(A.dis), ncol=ncol(C.dis), dimnames=list(rownames(A.dis), colnames(C.dis))), C.dis, C_D, C_G)
-col3 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(C.dis), ncol=ncol(D.dis), dimnames=list(c(rownames(A.dis), rownames(C.dis)), colnames(D.dis))), D.dis, D_G)
-col4 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(C.dis)+nrow(D.dis), ncol=ncol(G.dis), dimnames=list(c(rownames(A.dis), rownames(C.dis), rownames(D.dis)), colnames(G.dis))), G.dis)
+col1 <- rbind(A.dis, A_B, A_C, A_D, A_F, A_G, A_I)
+col2 <- rbind(matrix(NA, nrow=nrow(A.dis), ncol=ncol(B.dis), dimnames=list(rownames(A.dis), colnames(B.dis))), B.dis, B_C, B_D, B_F, B_G, B_I)
+col3 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(B.dis), ncol=ncol(C.dis), dimnames=list(c(rownames(A.dis), rownames(B.dis)), colnames(C.dis))), C.dis, C_D, C_F, C_G, C_I)
+col4 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(B.dis)+nrow(C.dis), ncol=ncol(D.dis), dimnames=list(c(rownames(A.dis), rownames(B.dis), rownames(C.dis)), colnames(D.dis))), D.dis, D_F, D_G, D_I)
+col5 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(B.dis)+nrow(C.dis)+nrow(D.dis), ncol=ncol(F.dis), dimnames=list(c(rownames(A.dis), rownames(B.dis), rownames(C.dis), rownames(D.dis)), colnames(F.dis))), F.dis, F_G, F_I)
+col6 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(B.dis)+nrow(C.dis)+nrow(D.dis)+nrow(F.dis), ncol=ncol(G.dis), dimnames=list(c(rownames(A.dis), rownames(B.dis), rownames(C.dis), rownames(D.dis),  rownames(F.dis)), colnames(G.dis))), G.dis, G_I)
+col7 <- rbind(matrix(NA, nrow=nrow(A.dis)+nrow(B.dis)+nrow(C.dis)+nrow(D.dis)+nrow(F.dis)+nrow(G.dis), ncol=ncol(I.dis), dimnames=list(c(rownames(A.dis), rownames(B.dis), rownames(C.dis), rownames(D.dis),  rownames(F.dis), rownames(G.dis)), colnames(I.dis))), I.dis)
 
-ubermatrix <- cbind(col1, col2, col3, col4)
+ubermatrix <- cbind(col1, col2, col3, col4, col5, col6, col7)
 dim(ubermatrix)
 
 #build tree
@@ -178,8 +198,5 @@ coral_seqs <- sum(taxa_sums(phy97.f.c.coral))
 water_seqs <- sum(taxa_sums(phy97.f.c.water))
 sediment_seqs <- sum(taxa_sums(phy97.f.c.sediment))
 
-# Cleanup 
-rm(a,b,c,i,nam,VeryHigh,VeryLow,phy.f,Low,LowMed,High,HighMed)
-
 # Save grouped data as RData file
-save(list = ls(all.names = TRUE), file = "data/KI_Compartment_f_coral_grouped.RData")
+save(list=ls(pattern="phy97.f.c."), sediment_seqs, total_seqs, coral_seqs, water_seqs, file = "data/KI_Compartment_f_coral_grouped.RData")
