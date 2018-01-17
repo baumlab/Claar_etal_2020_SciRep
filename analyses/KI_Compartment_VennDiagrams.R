@@ -7,13 +7,13 @@ phy97.f.c <- subset_samples(phy97.f.c,field_season!="KI2015c")
 col <- c(KI2014 = "#2c7fb8", KI2015a_Pre = "#7fcdbb", KI2015a_Post = "#253494", KI2015b = "#41b6c4")
 cols2 <- c(coral = "#bf812d", sediment = "#d8b365", water = "#5ab4ac")
 
-sediment.before <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2014",prune=TRUE)
+sediment.before <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2014",prune=TRUE)
 sediment.before <- subset_taxa(sediment.before, taxa_sums(sediment.before) > 0, prune=TRUE)
 
-sediment.storm <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2015a_Post", prune=TRUE)
+sediment.storm <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2015a_Post", prune=TRUE)
 sediment.storm <- subset_taxa(sediment.storm, taxa_sums(sediment.storm) > 0, prune=TRUE)
 
-sediment.after <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2015b", prune=TRUE)
+sediment.after <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2015b", prune=TRUE)
 sediment.after <- subset_taxa(sediment.after, taxa_sums(sediment.after) > 0, prune=TRUE)
 
 sediment.before.types <- unique(data.frame(tax_table(sediment.before))$hit)
@@ -55,13 +55,13 @@ plot(VennDiag, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=col,col=col,border=col,lwd=c(1,4,2),auto.key = T)
 dev.off()
 
-water.before <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2014",prune=TRUE)
+water.before <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2014",prune=TRUE)
 water.before <- subset_taxa(water.before, taxa_sums(water.before) > 0, prune=TRUE)
 
-water.storm <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2015a_Post", prune=TRUE)
+water.storm <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2015a_Post", prune=TRUE)
 water.storm <- subset_taxa(water.storm, taxa_sums(water.storm) > 0, prune=TRUE)
 
-water.after <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2015b", prune=TRUE)
+water.after <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2015b", prune=TRUE)
 water.after <- subset_taxa(water.after, taxa_sums(water.after) > 0, prune=TRUE)
 
 water.before.types <- unique(data.frame(tax_table(water.before))$hit)
