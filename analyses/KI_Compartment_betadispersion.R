@@ -3,8 +3,6 @@
 rm(list=ls())
 load("data/KI_Compartment_f_coral_grouped.RData")
 
-phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
-
 col <- c(KI2014 = "#2c7fb8", KI2015a_Pre = "#7fcdbb", KI2015a_Post = "#253494", KI2015b = "#41b6c4")
 sitecols <- c("8" = "#1b9e77","30"="#d95f02","35" ="#7570b3", "27"="#66a61e")
 
@@ -156,22 +154,22 @@ dev.off()
 
 
 jpeg(filename="figures/water_betadisper_bysite.jpg", width = 13.5, height = 4, units="in",res = 300)
-par(mfrow=c(1,3))
-# phy97.f.c.water.site27 <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$site==27, prune=TRUE)
-# water.ufdist.site27 <- UniFrac(phy97.f.c.water.site27, weighted=T, normalized=F, parallel=F, fast=T)
-# water.bd.site27 <- betadisper(d=water.ufdist.site27, 
-#                                  group=sample_data(phy97.f.c.water.site27)$field_season,
-#                                  type="centroid", bias.adjust=FALSE)
-# plot(water.bd.site27, hull=F, label=F, 
-#      main="water - 27", col=col,
-#      xlab="PCoA 1", ylab="PCoA 2", sub="")
-# ordihull(water.bd.site27, sample_data(phy97.f.c.water.site27)$field_season,  
-#          draw = c("polygon"),
-#          col = col, alpha=0.2, lwd=0.05)
-# legend("topleft", bty="n", pch=1:6,
-#        legend=levels(sample_data(phy97.f.c.water.site27)$field_season),
-#        col=col)
-# anova(water.bd.site27)
+par(mfrow=c(1,4))
+phy97.f.c.water.site27 <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$site==27, prune=TRUE)
+water.ufdist.site27 <- UniFrac(phy97.f.c.water.site27, weighted=T, normalized=F, parallel=F, fast=T)
+water.bd.site27 <- betadisper(d=water.ufdist.site27,
+                                 group=sample_data(phy97.f.c.water.site27)$field_season,
+                                 type="centroid", bias.adjust=FALSE)
+plot(water.bd.site27, hull=F, label=F,
+     main="water - 27", col=col,
+     xlab="PCoA 1", ylab="PCoA 2", sub="")
+ordihull(water.bd.site27, sample_data(phy97.f.c.water.site27)$field_season,
+         draw = c("polygon"),
+         col = col, alpha=0.2, lwd=0.05)
+legend("topleft", bty="n", pch=1:6,
+       legend=levels(sample_data(phy97.f.c.water.site27)$field_season),
+       col=col)
+anova(water.bd.site27)
 
 phy97.f.c.water.site30 <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$site==30, prune=TRUE)
 water.ufdist.site30 <- UniFrac(phy97.f.c.water.site30, weighted=T, normalized=F, parallel=F, fast=T)
@@ -223,15 +221,15 @@ anova(water.bd.site8)
 dev.off()
 
 jpeg(filename="figures/water_betadisper_boxplot_bysite.jpg", width = 13.5, height = 4, units="in",res = 300)
-par(mfrow=c(1,3))
-boxplot(water.bd.site30,col=col,main="Site 30")
-boxplot(water.bd.site35,col=col,main="Site 35")
-boxplot(water.bd.site8,col=col,main="Site 8")
+par(mfrow=c(1,4))
+boxplot(water.bd.site30,col=col,main="Site 27",ylim=c(0,0.06))
+boxplot(water.bd.site30,col=col,main="Site 30",ylim=c(0,0.06))
+boxplot(water.bd.site35,col=col,main="Site 35",ylim=c(0,0.06))
+boxplot(water.bd.site8,col=col,main="Site 8",ylim=c(0,0.06))
 dev.off()
 
 
 
-phy97.f.c.coral <- subset_samples(phy97.f.c.coral, sample_data(phy97.f.c.coral)$site != "34")
 phy97.f.c.coral <- subset_samples(phy97.f.c.coral, sample_data(phy97.f.c.coral)$field_season != "KI2015a_Pre")
 
 
@@ -284,6 +282,10 @@ legend("topleft", bty="n", pch=1:6,
        col=col)
 anova(coral.bd.Plob)
 
-boxplot(coral.bd.Mfol,col=col,main="Montipora")
-boxplot(coral.bd.Peydo,col=col, main="P. eydouxi")
-boxplot(coral.bd.Plob,col=col, main="P. lobata")
+jpeg(filename="figures/coral_betadisper_boxplot_byspecies.jpg", width = 9, height = 8, units="in",res = 300)
+par(mfrow=c(1,3))
+
+boxplot(coral.bd.Mfol,col=col,main="Montipora",ylim=c(0,0.1))
+boxplot(coral.bd.Peydo,col=col, main="P. eydouxi",ylim=c(0,0.1),ylab="")
+boxplot(coral.bd.Plob,col=col, main="P. lobata",ylim=c(0,0.1),ylab="")
+dev.off()

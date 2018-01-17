@@ -22,7 +22,7 @@ phy.f <- prune_taxa(names(taxa), phy.f)
 
 # Filter samples by minimum count
 # Set threshold number of reads
-sn <- 200
+sn <- 100
 # Remove samples with fewer reads than threshold
 phy.f <- prune_samples(sample_sums(phy.f)>=sn, phy.f)
 
@@ -179,13 +179,16 @@ phy97.f.c.p <- transform_sample_counts(phy97.f.c, function(x) x/sum(x))
 
 # Note, this is now the same as phy97.f.c - renaming and subsetting was completed before when water and sediment samples were included
 phy97.f.c.coral <- subset_samples(phy97.f.c,SampleType=="coral")
+phy97.f.c.coral <- subset_samples(phy97.f.c.coral, sample_data(phy97.f.c.coral)$site != "34")
 phy97.f.c.coral <- subset_taxa(phy97.f.c.coral, taxa_sums(phy97.f.c.coral) > 0, prune=TRUE)
 
 phy97.f.c.water <- subset_samples(phy97.f.c,SampleType=="water")
 phy97.f.c.water <- subset_taxa(phy97.f.c.water, taxa_sums(phy97.f.c.water) > 0, prune=TRUE)
 
 phy97.f.c.sediment <- subset_samples(phy97.f.c,SampleType=="sediment")
+phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
 phy97.f.c.sediment <- subset_taxa(phy97.f.c.sediment, taxa_sums(phy97.f.c.sediment) > 0, prune=TRUE)
+
 
 # Transform sample counts to proportional abundance for downstream analyses
 phy97.f.c.coral.p <- transform_sample_counts(phy97.f.c.coral, function(x) x/sum(x))

@@ -4,9 +4,6 @@ rm(list=ls())
 load("data/KI_Compartment_f_coral_grouped.RData")
 library(vegan)
 
-phy97.f.c.coral <- subset_samples(phy97.f.c.coral, sample_data(phy97.f.c.coral)$site != "34")
-phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
-
 sediment.metadata <- as(sample_data(phy97.f.c.sediment), "data.frame")
 adonis(distance(phy97.f.c.sediment, method="wunifrac") ~ field_season + site,
        data = sediment.metadata)

@@ -1,9 +1,6 @@
 rm(list=ls())
 load("data/KI_Compartment_f_coral_grouped.RData")
 
-phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
-phy97.f.c <- subset_samples(phy97.f.c,field_season!="KI2015c")
-
 col <- c(KI2014 = "#2c7fb8", KI2015a_Pre = "#7fcdbb", KI2015a_Post = "#253494", KI2015b = "#41b6c4")
 cols2 <- c(coral = "#bf812d", sediment = "#d8b365", water = "#5ab4ac")
 
