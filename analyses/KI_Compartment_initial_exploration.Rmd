@@ -1,0 +1,264 @@
+---
+title: "KI_Compartment_initial exploration"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+load("data/KI_Compartment_f_coral_grouped.RData")
+
+library(ggplot2)
+library(gridExtra)
+library(Hmisc)
+library(corrplot)
+library(RColorBrewer)
+library(VennDiagram)
+library(indicspecies)
+```
+
+
+```{r}
+phy97.f.c.p.comp <- subset_samples(phy97.f.c.p,field_season!="KI2015c")
+phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
+phy97.f.c <- subset_samples(phy97.f.c,field_season!="KI2015c")
+
+col <- c(KI2014 = "#2c7fb8", KI2015a_Pre = "#7fcdbb", KI2015a_Post = "#253494", KI2015b = "#41b6c4")
+
+ord.phy97.f.c.p.comp.CAP <- ordinate(phy97.f.c.p.comp,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p1 <- plot_ordination(phy97.f.c.p.comp, ord.phy97.f.c.p.comp.CAP,
+                      color="field_season", shape="SampleType",type="samples",title="") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) +
+  scale_color_manual(values=col)
+
+p1
+
+ord.phy97.f.c.sediment.CAP <- ordinate(phy97.f.c.sediment,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p2 <- plot_ordination(phy97.f.c.sediment, ord.phy97.f.c.sediment.CAP,
+                      color="field_season", type="samples",title="Sediment") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) +
+  scale_shape_manual(values = c(16,21,1,18)) +
+  scale_color_manual(values=col)
+
+
+p2
+
+ord.phy97.f.c.water.CAP <- ordinate(phy97.f.c.water,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p3 <- plot_ordination(phy97.f.c.water, ord.phy97.f.c.water.CAP,
+                      color="field_season", type="samples",title="Water") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) +
+  scale_shape_manual(values = c(16,21,1,18)) + 
+  scale_color_manual(values=col)
+
+
+p3
+
+ord.phy97.f.c.coral.CAP <- ordinate(phy97.f.c.coral,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p4 <- plot_ordination(phy97.f.c.coral, ord.phy97.f.c.coral.CAP,
+                      color="field_season", shape="Coral_Species", type="samples",title="Coral") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) + 
+  scale_color_manual(values=col)
+
+
+p4
+
+grid.arrange(p1,p2,p3,p4)
+
+
+phy97.f.c.sediment.C <- subset_taxa(phy97.f.c.sediment,data.frame(tax_table(phy97.f.c.sediment))$clade =="C")
+
+ord.phy97.f.c.sediment.C.CAP <- ordinate(phy97.f.c.sediment.C,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p5 <- plot_ordination(phy97.f.c.sediment.C, ord.phy97.f.c.sediment.C.CAP,
+                      color="field_season", type="samples",title="Sediment - C only") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) +
+  scale_shape_manual(values = c(16,21,1,18)) +
+  scale_color_manual(values=col)
+p5
+
+phy97.f.c.water.C <- subset_taxa(phy97.f.c.water,data.frame(tax_table(phy97.f.c.water))$clade =="C")
+
+ord.phy97.f.c.water.C.CAP <- ordinate(phy97.f.c.water.C,
+                                method="CAP",distance="wunifrac",
+                                formula= ~ field_season + SampleType)
+p6 <- plot_ordination(phy97.f.c.water.C, ord.phy97.f.c.water.C.CAP,
+                      color="field_season", type="samples",title="Water - C only") +
+  stat_ellipse(aes(group=c(field_season)), type = "t",level=0.95,lty=2) +
+  scale_shape_manual(values = c(16,21,1,18)) +
+  scale_color_manual(values=col)
+p6
+
+
+tt <- data.frame(tax_table(phy97.f.c.sediment))
+
+plot_bar(phy97.f.c.sediment.p, fill="clade") + facet_grid(site ~ field_season)
+
+plot_bar(phy97.f.c.water.p, fill="clade") + facet_grid(site ~ field_season)
+
+plot_heatmap(phy97.f.c.water) + facet_grid(. ~ field_season)
+
+water <- subset_taxa(physeq = phy97.f.c.water,taxa_sums(phy97.f.c.water) >50)
+
+plot_heatmap(water,sample.label = "field_season",sample.order = "field_season",method = "RDA",distance = "none",taxa.label = "hit")
+
+
+sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) >50)
+sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) >10)
+
+plot_heatmap(sediment,sample.label = "field_season",sample.order = "field_season",method = "NMDS",distance = "jaccard",taxa.label = "hit")
+
+
+# Helper function from http://joey711.github.io/phyloseq-demo/phyloseq-demo.html to convert phyloseq objects to vegan-friendly formatting
+veganotu = function(physeq) {
+  require("vegan")
+  OTU = otu_table(physeq)
+  if (taxa_are_rows(OTU)) {
+    OTU = t(OTU)
+  }
+  return(as(OTU, "matrix"))
+}
+
+
+# Use veganotu function to convert to vegan-friendly formatting
+water.veg <- veganotu(water)
+sediment.veg <- veganotu(sediment)
+all.veg <- veganotu(phy97.f.c.p)
+
+# Calculate correlation matrix
+water.cor <- cor(water.veg, method = c("pearson"))
+# Use Hmisc package to calculate correlation matrix with statistical significance
+water.rcorr <- rcorr(as.matrix(water.veg))
+# platy.rcorr$P
+# platy.rcorr$r
+
+# Use corrplot package to plot correlation matrix in a human-readable format
+# Set p > 0.05
+corrplot(water.rcorr$r, type="upper", order="AOE", 
+         p.mat = water.rcorr$P, sig.level = 0.05, insig = "blank", method="square",
+         col = rev(brewer.pal(n = 8, name = "RdBu")),tl.col = "black")
+
+plot_tree(water,color="field_season",label.tips = "hit") + scale_color_manual(values=c("blue","red","green"))
+plot_tree(sediment,color="field_season", label.tips = "hit") + scale_color_manual(values=c("blue","red","green"))
+
+plot_net(water,color="site")
+plot_net(sediment,color="site")
+
+sediment.before <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2014",prune=TRUE)
+sediment.before <- subset_taxa(sediment.before, taxa_sums(sediment.before) > 0, prune=TRUE)
+
+sediment.storm <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2015a_Post", prune=TRUE)
+sediment.storm <- subset_taxa(sediment.storm, taxa_sums(sediment.storm) > 0, prune=TRUE)
+
+sediment.after <- subset_samples(phy97.f.c.sediment.p, data.frame(sample_data(phy97.f.c.sediment.p))$field_season == "KI2015b", prune=TRUE)
+sediment.after <- subset_taxa(sediment.after, taxa_sums(sediment.after) > 0, prune=TRUE)
+
+plot_bar(sediment.before, fill="clade")
+plot_bar(sediment.storm, fill="clade")
+plot_bar(sediment.after, fill="clade")
+
+sediment.before.types <- unique(data.frame(tax_table(sediment.before))$hit)
+sediment.storm.types <- unique(data.frame(tax_table(sediment.storm))$hit)
+sediment.after.types <- unique(data.frame(tax_table(sediment.after))$hit)
+
+venn.diagram(x=list("Sediment Before"=sediment.before.types,"Sediment Storm"=sediment.storm.types,"Sediment After"=sediment.after.types),file = "analyses/Sediment_Venn.jpg", col=rainbow(3),fill=rainbow(3), margin=0.1,main = "Sediment Types")
+
+sediment.storm.only <- sediment.storm.types[which(!(sediment.storm.types %in% sediment.before.types) & !(sediment.storm.types %in% sediment.after.types))]
+sediment.not.storm <- sediment.before.types[which(!(sediment.before.types %in% sediment.storm.types) & (sediment.before.types %in% sediment.after.types))]
+
+sediment.befstaf <- sediment.before.types[which(sediment.before.types %in% sediment.storm.types & (sediment.before.types %in% sediment.after.types))]
+sediment.notbef.staf <- sediment.after.types[which(!(sediment.after.types %in% sediment.before.types) & (sediment.after.types %in% sediment.storm.types))]
+sediment.befst.notaf <- sediment.before.types[which(!(sediment.before.types %in% sediment.after.types) & (sediment.before.types %in% sediment.storm.types))]
+sediment.befonly <- sediment.before.types[which(!(sediment.before.types %in% sediment.after.types) & !(sediment.before.types %in% sediment.storm.types))]
+sediment.afonly <- sediment.after.types[which(!(sediment.after.types %in% sediment.before.types) & !(sediment.after.types %in% sediment.storm.types))]
+
+water.before <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2014",prune=TRUE)
+water.before <- subset_taxa(water.before, taxa_sums(water.before) > 0, prune=TRUE)
+
+water.storm <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2015a_Post", prune=TRUE)
+water.storm <- subset_taxa(water.storm, taxa_sums(water.storm) > 0, prune=TRUE)
+
+water.after <- subset_samples(phy97.f.c.water.p, data.frame(sample_data(phy97.f.c.water.p))$field_season == "KI2015b", prune=TRUE)
+water.after <- subset_taxa(water.after, taxa_sums(water.after) > 0, prune=TRUE)
+
+water.before.types <- unique(data.frame(tax_table(water.before))$hit)
+water.storm.types <- unique(data.frame(tax_table(water.storm))$hit)
+water.after.types <- unique(data.frame(tax_table(water.after))$hit)
+
+venn.diagram(x=list("water Before"=water.before.types,"water Storm"=water.storm.types,"water After"=water.after.types),file = "analyses/water_Venn.jpg", col=rainbow(3),fill=rainbow(3), margin=0.1,main = "water Types")
+
+water.storm.only <- water.storm.types[which(!(water.storm.types %in% water.before.types) & !(water.storm.types %in% water.after.types))]
+water.not.storm <- water.before.types[which(!(water.before.types %in% water.storm.types) & (water.before.types %in% water.after.types))]
+
+water.befstaf <- water.before.types[which(water.before.types %in% water.storm.types & (water.before.types %in% water.after.types))]
+water.notbef.staf <- water.after.types[which(!(water.after.types %in% water.before.types) & (water.after.types %in% water.storm.types))]
+water.befst.notaf <- water.before.types[which(!(water.before.types %in% water.after.types) & (water.before.types %in% water.storm.types))]
+water.befonly <- water.before.types[which(!(water.before.types %in% water.after.types) & !(water.before.types %in% water.storm.types))]
+water.afonly <- water.after.types[which(!(water.after.types %in% water.before.types) & !(water.after.types %in% water.storm.types))]
+
+# Why use pcoa?
+# We use PCoA because the inputs to adonis(), betadisper, etc are dissimilarity matrices and the aim is to show those dissimilarities (and the group centroids/dispersions) as best as possible whilst preserving the direct link to the distance values (ie why we don't use NMDS).
+#https://stat.ethz.ch/pipermail/r-sig-ecology/2013-August/004011.html
+
+library(vegan)
+sediment.metadata <- as(sample_data(phy97.f.c.sediment), "data.frame")
+adonis(distance(phy97.f.c.sediment, method="wunifrac") ~ field_season,
+       data = sediment.metadata)
+
+water.metadata <- as(sample_data(phy97.f.c.water), "data.frame")
+adonis(distance(phy97.f.c.water, method="wunifrac") ~ field_season,
+       data = water.metadata)
+
+coral.sp.metadata <- as(sample_data(phy97.f.c.coral), "data.frame")
+adonis(distance(phy97.f.c.coral, method="wunifrac") ~ Coral_Species + field_season,
+       data = coral.sp.metadata)
+
+
+coral.before
+coral.before <- subset_samples(phy97.f.c.coral.p, data.frame(sample_data(phy97.f.c.coral.p))$field_season == "KI2014",prune=TRUE)
+coral.before <- subset_taxa(coral.before, taxa_sums(coral.before) > 0, prune=TRUE)
+
+coral.storm <- subset_samples(phy97.f.c.coral.p, data.frame(sample_data(phy97.f.c.coral.p))$field_season == "KI2015a_Post", prune=TRUE)
+coral.storm <- subset_taxa(coral.storm, taxa_sums(coral.storm) > 0, prune=TRUE)
+
+coral.after <- subset_samples(phy97.f.c.coral.p, data.frame(sample_data(phy97.f.c.coral.p))$field_season == "KI2015b", prune=TRUE)
+coral.after <- subset_taxa(coral.after, taxa_sums(coral.after) > 0, prune=TRUE)
+
+coral.before.types <- unique(data.frame(tax_table(coral.before))$hit)
+coral.storm.types <- unique(data.frame(tax_table(coral.storm))$hit)
+coral.after.types <- unique(data.frame(tax_table(coral.after))$hit)
+
+venn.diagram(x=list("coral Before"=coral.before.types,"coral Storm"=coral.storm.types,"coral After"=coral.after.types),file = "analyses/coral_Venn.jpg", col=rainbow(3),fill=rainbow(3), margin=0.1,main = "coral Types")
+
+coral.storm.only <- coral.storm.types[which(!(coral.storm.types %in% coral.before.types) & !(coral.storm.types %in% coral.after.types))]
+coral.not.storm <- coral.before.types[which(!(coral.before.types %in% coral.storm.types) & (coral.before.types %in% coral.after.types))]
+
+coral.befstaf <- coral.before.types[which(coral.before.types %in% coral.storm.types & (coral.before.types %in% coral.after.types))]
+coral.notbef.staf <- coral.after.types[which(!(coral.after.types %in% coral.before.types) & (coral.after.types %in% coral.storm.types))]
+coral.befst.notaf <- coral.before.types[which(!(coral.before.types %in% coral.after.types) & (coral.before.types %in% coral.storm.types))]
+coral.befonly <- coral.before.types[which(!(coral.before.types %in% coral.after.types) & !(coral.before.types %in% coral.storm.types))]
+coral.afonly <- coral.after.types[which(!(coral.after.types %in% coral.before.types) & !(coral.after.types %in% coral.storm.types))]
+
+groups.water <- as.numeric(sample_data(water)$field_season)
+indval.water = multipatt(as.data.frame(water.veg), groups.water, control = how(nperm=999))
+summary(indval.water)
+
+groups.sed <- as.numeric(sample_data(sediment)$field_season)
+indval.sed = multipatt(as.data.frame(sediment.veg), groups.sed, control = how(nperm=999))
+summary(indval.sed)
+
+groups.all <- as.numeric(sample_data(phy97.f.c.p)$SampleType)
+indval.all = multipatt(as.data.frame(all.veg), groups.all, control = how(nperm=999))
+summary(indval.all)
+
+```
+
+
