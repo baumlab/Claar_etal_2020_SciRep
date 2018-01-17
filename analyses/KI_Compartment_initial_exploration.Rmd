@@ -112,7 +112,7 @@ plot_heatmap(water,sample.label = "field_season",sample.order = "field_season",m
 
 
 sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) >50)
-sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) >10)
+# sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) >10)
 
 plot_heatmap(sediment,sample.label = "field_season",sample.order = "field_season",method = "NMDS",distance = "jaccard",taxa.label = "hit")
 
@@ -145,9 +145,6 @@ water.rcorr <- rcorr(as.matrix(water.veg))
 corrplot(water.rcorr$r, type="upper", order="AOE", 
          p.mat = water.rcorr$P, sig.level = 0.05, insig = "blank", method="square",
          col = rev(brewer.pal(n = 8, name = "RdBu")),tl.col = "black")
-
-plot_tree(water,color="field_season",label.tips = "hit") + scale_color_manual(values=c("blue","red","green"))
-plot_tree(sediment,color="field_season", label.tips = "hit") + scale_color_manual(values=c("blue","red","green"))
 
 plot_net(water,color="site")
 plot_net(sediment,color="site")
@@ -208,19 +205,6 @@ water.afonly <- water.after.types[which(!(water.after.types %in% water.before.ty
 # We use PCoA because the inputs to adonis(), betadisper, etc are dissimilarity matrices and the aim is to show those dissimilarities (and the group centroids/dispersions) as best as possible whilst preserving the direct link to the distance values (ie why we don't use NMDS).
 #https://stat.ethz.ch/pipermail/r-sig-ecology/2013-August/004011.html
 
-library(vegan)
-sediment.metadata <- as(sample_data(phy97.f.c.sediment), "data.frame")
-adonis(distance(phy97.f.c.sediment, method="wunifrac") ~ field_season,
-       data = sediment.metadata)
-
-water.metadata <- as(sample_data(phy97.f.c.water), "data.frame")
-adonis(distance(phy97.f.c.water, method="wunifrac") ~ field_season,
-       data = water.metadata)
-
-coral.sp.metadata <- as(sample_data(phy97.f.c.coral), "data.frame")
-adonis(distance(phy97.f.c.coral, method="wunifrac") ~ Coral_Species + field_season,
-       data = coral.sp.metadata)
-
 
 coral.before
 coral.before <- subset_samples(phy97.f.c.coral.p, data.frame(sample_data(phy97.f.c.coral.p))$field_season == "KI2014",prune=TRUE)
@@ -247,17 +231,6 @@ coral.befst.notaf <- coral.before.types[which(!(coral.before.types %in% coral.af
 coral.befonly <- coral.before.types[which(!(coral.before.types %in% coral.after.types) & !(coral.before.types %in% coral.storm.types))]
 coral.afonly <- coral.after.types[which(!(coral.after.types %in% coral.before.types) & !(coral.after.types %in% coral.storm.types))]
 
-groups.water <- as.numeric(sample_data(water)$field_season)
-indval.water = multipatt(as.data.frame(water.veg), groups.water, control = how(nperm=999))
-summary(indval.water)
-
-groups.sed <- as.numeric(sample_data(sediment)$field_season)
-indval.sed = multipatt(as.data.frame(sediment.veg), groups.sed, control = how(nperm=999))
-summary(indval.sed)
-
-groups.all <- as.numeric(sample_data(phy97.f.c.p)$SampleType)
-indval.all = multipatt(as.data.frame(all.veg), groups.all, control = how(nperm=999))
-summary(indval.all)
 
 ```
 
