@@ -199,4 +199,4 @@ water_seqs <- sum(taxa_sums(phy97.f.c.water))
 sediment_seqs <- sum(taxa_sums(phy97.f.c.sediment))
 
 # Save grouped data as RData file
-save(list=ls(pattern="phy97.f.c."), sediment_seqs, total_seqs, coral_seqs, water_seqs, file = "data/KI_Compartment_f_coral_grouped.RData")
+save(list=ls(pattern="phy97.f.c."), sediment_seqs, total_seqs, coral_seqs, water_seqs, phy97.f.c, file = "data/KI_Compartment_f_coral_grouped.RData")
