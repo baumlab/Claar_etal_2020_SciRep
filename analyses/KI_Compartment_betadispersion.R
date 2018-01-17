@@ -144,6 +144,16 @@ legend("topleft", bty="n", pch=1:6,
 anova(sediment.bd.site8)
 dev.off()
 
+jpeg(filename="figures/sediment_betadisper_boxplot_bysite.jpg", width = 18, height = 4, units="in",res = 300)
+par(mfrow=c(1,4))
+boxplot(sediment.bd.site27,col=col,main="Site 27")
+boxplot(sediment.bd.site30,col=col,main="Site 30")
+boxplot(sediment.bd.site35,col=col,main="Site 35")
+boxplot(sediment.bd.site8,col=col,main="Site 8")
+dev.off()
+
+
+
 
 jpeg(filename="figures/water_betadisper_bysite.jpg", width = 13.5, height = 4, units="in",res = 300)
 par(mfrow=c(1,3))
@@ -211,6 +221,14 @@ legend("topleft", bty="n", pch=1:6,
        col=col)
 anova(water.bd.site8)
 dev.off()
+
+jpeg(filename="figures/water_betadisper_boxplot_bysite.jpg", width = 13.5, height = 4, units="in",res = 300)
+par(mfrow=c(1,3))
+boxplot(water.bd.site30,col=col,main="Site 30")
+boxplot(water.bd.site35,col=col,main="Site 35")
+boxplot(water.bd.site8,col=col,main="Site 8")
+dev.off()
+
 
 
 phy97.f.c.coral <- subset_samples(phy97.f.c.coral, sample_data(phy97.f.c.coral)$site != "34")
