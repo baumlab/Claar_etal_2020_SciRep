@@ -66,3 +66,4 @@ data/Bioinf/sequences/merged/KI*
 
 #Ignore .log files
 *.log
+.Rproj.user
