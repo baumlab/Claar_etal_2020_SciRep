@@ -26,6 +26,13 @@ sn <- 100
 # Remove samples with fewer reads than threshold
 phy.f <- prune_samples(sample_sums(phy.f)>=sn, phy.f)
 
+# Remove samples that were sequenced with this set, but are not included in this ms
+# Remove KI2015c samples
+phy.f <- prune_samples(sample_data(phy.f)$field_season!="KI2015c", phy.f)
+# Remove Site34 samples
+phy.f <- prune_samples(sample_data(phy.f)$site!="34", phy.f)
+
+
 # Characterize sites by disturbance level
 VeryHigh <- c(33,40,32,31,27,30,26)
 High <- c(25,3,38,24)
