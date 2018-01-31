@@ -1,0 +1,5 @@
+,f.pressure,site,area,f.level,smw.region,smw.fp,smw.prod,surveyed.2007,surveyed.2009,PMQ,notes,fish.prod,lat,lon,loc.year
+8,Medium,8,South west,4,LON,L,H,X,NA,NA,NA,LowF/HighChl,1.886,-157.552,2007
+27,Very High,27,London,6,LON,H,H,X,X,X,NA,HighF/HighChl,2.00973,-157.48941,2009
+30,Very High,30,London,6,LON,H,H,X,X,NA,NA,HighF/HighChl,2.02572,-157.498,2009
+35,Medium,35,South west,4,LON,L,H,X,X,X,NA,LowF/HighChl,1.89417,-157.54283,2009
