@@ -144,6 +144,8 @@ cw <- 2
 sw <- 5
 csw <- 17
 
+c+s+w+cs+cw+sw+csw
+
 jpeg(filename="figures/coral_water_sed_venn.jpg", 
      width = 4, height = 4, units="in",res = 300)
 VennDiag3 <- euler(c("Coral" = (c), "Sediment" = (s), "Water" = (w), "Coral&Sediment" = (cs), "Coral&Water" = (cw), "Sediment&Water" = (sw), "Coral&Sediment&Water" = (csw)))
