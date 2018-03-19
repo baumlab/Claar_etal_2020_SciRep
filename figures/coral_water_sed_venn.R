@@ -104,3 +104,81 @@ plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
 dev.off()
 
 
+phy97.f.c.coral.VH <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="VeryHigh")
+phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="HighMed")
+phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
+phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
+phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
+phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
+
+sediment.VH.types <- unique(data.frame(tax_table(phy97.f.c.sediment.VH))$hit)
+sediment.M.types <- unique(data.frame(tax_table(phy97.f.c.sediment.M))$hit)
+water.VH.types <- unique(data.frame(tax_table(phy97.f.c.water.VH))$hit)
+water.M.types <- unique(data.frame(tax_table(phy97.f.c.water.M))$hit)
+coral.VH.types <- unique(data.frame(tax_table(phy97.f.c.coral.VH))$hit)
+coral.M.types <- unique(data.frame(tax_table(phy97.f.c.coral.M))$hit)
+
+sediment.VH.types.subclade <- sediment.VH.types
+sediment.VH.types.subclade <- gsub("_.*","",sediment.VH.types.subclade)
+sediment.VH.types.subclade <- gsub("\\..*","",sediment.VH.types.subclade)
+sediment.VH.types.subclade <- unique(sediment.VH.types.subclade)
+sediment.M.types.subclade <- sediment.M.types
+sediment.M.types.subclade <- gsub("_.*","",sediment.M.types.subclade)
+sediment.M.types.subclade <- gsub("\\..*","",sediment.M.types.subclade)
+sediment.M.types.subclade <- unique(sediment.M.types.subclade)
+
+water.VH.types.subclade <- water.VH.types
+water.VH.types.subclade <- gsub("_.*","",water.VH.types.subclade)
+water.VH.types.subclade <- gsub("\\..*","",water.VH.types.subclade)
+water.VH.types.subclade <- unique(water.VH.types.subclade)
+water.M.types.subclade <- water.M.types
+water.M.types.subclade <- gsub("_.*","",water.M.types.subclade)
+water.M.types.subclade <- gsub("\\..*","",water.M.types.subclade)
+water.M.types.subclade <- unique(water.M.types.subclade)
+
+coral.VH.types.subclade <- coral.VH.types
+coral.VH.types.subclade <- gsub("_.*","",coral.VH.types.subclade)
+coral.VH.types.subclade <- gsub("\\..*","",coral.VH.types.subclade)
+coral.VH.types.subclade <- unique(coral.VH.types.subclade)
+coral.M.types.subclade <- coral.M.types
+coral.M.types.subclade <- gsub("_.*","",coral.M.types.subclade)
+coral.M.types.subclade <- gsub("\\..*","",coral.M.types.subclade)
+coral.M.types.subclade <- unique(coral.M.types.subclade)
+
+cs.VH <- intersect(coral.VH.types.subclade,sediment.VH.types.subclade)
+csw.VH <- intersect(cs.VH,water.VH.types.subclade)
+cs.only.VH <- length(cs.VH)-length(csw.VH)
+csw.length.VH <- length(csw.VH)
+cw.VH <- intersect(coral.VH.types.subclade,water.VH.types.subclade)
+cw.only.VH <- length(cw.VH)-length(csw.VH)
+sw.VH <- intersect(sediment.VH.types.subclade,water.VH.types.subclade)
+sw.only.VH <- length(sw.VH)-length(csw.VH)
+c.VH <- length(coral.VH.types.subclade) - cs.only.VH - cw.only.VH - csw.length.VH
+s.VH <- length(sediment.VH.types.subclade) - sw.only.VH - cs.only.VH - csw.length.VH
+w.VH <- length(water.VH.types.subclade) - sw.only.VH - cw.only.VH - csw.length.VH
+
+jpeg(filename="figures/coral_water_sed_venn_VH.jpg", 
+     width = 4, height = 4, units="in",res = 300)
+VennDiag3 <- euler(c("Coral" = (c.VH), "Sediment" = (s.VH), "Water" = (w.VH), "Coral&Sediment" = (cs.only.VH), "Coral&Water" = (cw.only.VH), "Sediment&Water" = (sw.only.VH), "Coral&Sediment&Water" = (csw.length.VH)))
+plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+dev.off()
+
+cs.M <- intersect(coral.M.types.subclade,sediment.M.types.subclade)
+csw.M <- intersect(cs.M,water.M.types.subclade)
+cs.only.M <- length(cs.M)-length(csw.M)
+csw.length.M <- length(csw.M)
+cw.M <- intersect(coral.M.types.subclade,water.M.types.subclade)
+cw.only.M <- length(cw.M)-length(csw.M)
+sw.M <- intersect(sediment.M.types.subclade,water.M.types.subclade)
+sw.only.M <- length(sw.M)-length(csw.M)
+c.M <- length(coral.M.types.subclade) - cs.only.M - cw.only.M - csw.length.M
+s.M <- length(sediment.M.types.subclade) - sw.only.M - cs.only.M - csw.length.M
+w.M <- length(water.M.types.subclade) - sw.only.M - cw.only.M - csw.length.M
+
+jpeg(filename="figures/coral_water_sed_venn_M.jpg", 
+     width = 4, height = 4, units="in",res = 300)
+VennDiag3 <- euler(c("Coral" = (c.M), "Sediment" = (s.M), "Water" = (w.M), "Coral&Sediment" = (cs.only.M), "Coral&Water" = (cw.only.M), "Sediment&Water" = (sw.only.M), "Coral&Sediment&Water" = (csw.length.M)))
+plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+dev.off()
