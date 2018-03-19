@@ -9,6 +9,7 @@ rm(list=ls())
 
 ### site data
 sites<-read.csv('figures/KI_map/KI_sites_compartment.csv')
+sites$site.simple <- c("M1","VH2","VH1","M2")
 
 ###village data
 villages<-read.csv("figures/KI_map/KI_villagesDCC_2015update.csv", header = TRUE)
@@ -37,7 +38,7 @@ text(-157.482 + 0.01, 1.699, "500 people", cex=0.69)
 text(-157.588 + 0.004, 1.67, "Village", srt=90, cex=0.6)
 segments(-157.563, 1.64,-157.563, 1.704)  
 points(sites$lon, sites$lat, bg=alpha(sites$col,0.8), pch=21, cex=1.4)
-with(sites, text(lon, lat, label=site, cex=0.5))
+with(sites, text(lon, lat, label=site.simple, cex=0.3))
 legend(-157.56, 1.8,legend=levels(sites$f.pressure), pt.bg=c("#c7eae5","#8c510a"), pch=21, bty="n", pt.cex=1.4, cex=0.6)
 text(-157.588, 1.77, "Human\nDisturbance", srt=90, cex=0.6)
 segments(-157.563, 1.72,-157.563, 1.82)
