@@ -62,8 +62,11 @@ coral.sediment.water.subclades <- coral.types.subclade[which((coral.types.subcla
 
 
 phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
+phy97.f.c.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd)==0,phy97.f.c.coral.Peyd)
 phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
+phy97.f.c.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq)==0,phy97.f.c.coral.MAeq)
 phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
+phy97.f.c.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob)==0,phy97.f.c.coral.Plob)
 
 Peyd.types <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd))$hit)
 Peyd.types.subclade <- Peyd.types
@@ -98,18 +101,25 @@ Maeq <- length(MAeq.types.subclade) - PlobMaeq.only - PeydMaeq.only - PeydPlobMa
 
 jpeg(filename="figures/coral_species_venn.jpg", 
      width = 4, height = 4, units="in",res = 300)
-VennDiag3 <- euler(c("P. eydouxi" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. eydouxi&P. lobata" = (PeydPlob.only), "P. eydouxi&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. eydouxi&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
-plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
-     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+VennDiag4 <- euler(c("P. eydouxi" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. eydouxi&P. lobata" = (PeydPlob.only), "P. eydouxi&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. eydouxi&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
+plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
 dev.off()
 
 
 phy97.f.c.coral.VH <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="VeryHigh")
+phy97.f.c.coral.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.VH)==0,phy97.f.c.coral.VH)
 phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="HighMed")
+phy97.f.c.coral.M <- prune_taxa(taxa_sums(phy97.f.c.coral.M)==0,phy97.f.c.coral.M)
 phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
+phy97.f.c.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.sediment.VH)==0,phy97.f.c.sediment.VH)
 phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
+phy97.f.c.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.sediment.M)==0,phy97.f.c.sediment.M)
 phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
+phy97.f.c.water.VH <- prune_taxa(taxa_sums(phy97.f.c.water.VH)==0,phy97.f.c.water.VH)
 phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
+phy97.f.c.water.M <- prune_taxa(taxa_sums(phy97.f.c.water.M)==0,phy97.f.c.water.M)
+
 
 sediment.VH.types <- unique(data.frame(tax_table(phy97.f.c.sediment.VH))$hit)
 sediment.M.types <- unique(data.frame(tax_table(phy97.f.c.sediment.M))$hit)
@@ -159,8 +169,8 @@ w.VH <- length(water.VH.types.subclade) - sw.only.VH - cw.only.VH - csw.length.V
 
 jpeg(filename="figures/coral_water_sed_venn_VH.jpg", 
      width = 4, height = 4, units="in",res = 300)
-VennDiag3 <- euler(c("Coral" = (c.VH), "Sediment" = (s.VH), "Water" = (w.VH), "Coral&Sediment" = (cs.only.VH), "Coral&Water" = (cw.only.VH), "Sediment&Water" = (sw.only.VH), "Coral&Sediment&Water" = (csw.length.VH)))
-plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
+VennDiag5 <- euler(c("Coral" = (c.VH), "Sediment" = (s.VH), "Water" = (w.VH), "Coral&Sediment" = (cs.only.VH), "Coral&Water" = (cw.only.VH), "Sediment&Water" = (sw.only.VH), "Coral&Sediment&Water" = (csw.length.VH)))
+plot(VennDiag5, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
 dev.off()
 
@@ -178,7 +188,20 @@ w.M <- length(water.M.types.subclade) - sw.only.M - cw.only.M - csw.length.M
 
 jpeg(filename="figures/coral_water_sed_venn_M.jpg", 
      width = 4, height = 4, units="in",res = 300)
-VennDiag3 <- euler(c("Coral" = (c.M), "Sediment" = (s.M), "Water" = (w.M), "Coral&Sediment" = (cs.only.M), "Coral&Water" = (cw.only.M), "Sediment&Water" = (sw.only.M), "Coral&Sediment&Water" = (csw.length.M)))
-plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
+VennDiag6 <- euler(c("Coral" = (c.M), "Sediment" = (s.M), "Water" = (w.M), "Coral&Sediment" = (cs.only.M), "Coral&Water" = (cw.only.M), "Sediment&Water" = (sw.only.M), "Coral&Sediment&Water" = (csw.length.M)))
+plot(VennDiag6, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+dev.off()
+
+vd3 <- plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+vd5 <- plot(VennDiag5, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+vd6 <- plot(VennDiag6, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+
+
+jpeg(filename="figures/coral_water_sed_venn_ALL_VH_M.jpg", 
+     width = 12, height = 4, units="in",res = 300)
+grid.arrange(vd3,vd6,vd5,ncol=3)
 dev.off()
