@@ -13,13 +13,6 @@ sediment.bd.dist <- betadisper(d=sediment.ufdist, group=sample_data(phy97.f.c.se
 water.bd.dist <- betadisper(d=water.ufdist, group=sample_data(phy97.f.c.water)$Dist,
                             type="centroid", bias.adjust=FALSE)
 
-
-phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
-phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
-
-phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
-phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
-
 sediment.VH.ufdist <- UniFrac(phy97.f.c.sediment.VH, weighted=T, normalized=F, parallel=F, fast=T)
 water.VH.ufdist <- UniFrac(phy97.f.c.water.VH, weighted=T, normalized=F, parallel=F, fast=T)
 sediment.VH.bd <- betadisper(d=sediment.VH.ufdist, 
@@ -95,18 +88,6 @@ anova(sediment.M.bd)
 anova(water.VH.bd)
 anova(water.M.bd)
 
-phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
-phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
-phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
-
-phy97.f.c.coral.Peyd.VH <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="VeryHigh")
-phy97.f.c.coral.MAeq.VH <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="VeryHigh")
-phy97.f.c.coral.Plob.VH <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="VeryHigh")
-
-phy97.f.c.coral.Peyd.M <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="HighMed")
-phy97.f.c.coral.MAeq.M <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="HighMed")
-phy97.f.c.coral.Plob.M <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="HighMed")
-
 
 Peyd.VH.ufdist <- UniFrac(phy97.f.c.coral.Peyd.VH, weighted=T, normalized=F, parallel=F, fast=T)
 Peyd.VH.bd <- betadisper(d=Peyd.VH.ufdist, 
@@ -165,7 +146,7 @@ legend("topleft", bty="n", pch=1:6,
 
 plot(Plob.M.bd, hull=F, label=F, 
      main="Plob-M", col=timecols,
-     xlab="PCoA 1", ylab="PCoA 2", sub="")
+     xlab="PCoA 1", ylab="PCoA 2", sub="",select=c(""))
 ordihull(Plob.M.bd, sample_data(phy97.f.c.coral.Plob.M)$field_season,  draw = c("polygon"),
          col = timecols, alpha=0.2, lwd=0.05)
 legend("topleft", bty="n", pch=1:6,

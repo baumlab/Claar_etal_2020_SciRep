@@ -7,26 +7,6 @@ library(gridExtra)
 load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
-all.types <- unique(data.frame(tax_table(phy97.f.c))$hit)
-sediment.types <- unique(data.frame(tax_table(phy97.f.c.sediment))$hit)
-water.types <- unique(data.frame(tax_table(phy97.f.c.water))$hit)
-coral.types <- unique(data.frame(tax_table(phy97.f.c.coral))$hit)
-
-sediment.types.subclade <- sediment.types
-sediment.types.subclade <- gsub("_.*","",sediment.types.subclade)
-sediment.types.subclade <- gsub("\\..*","",sediment.types.subclade)
-sediment.types.subclade <- unique(sediment.types.subclade)
-
-water.types.subclade <- water.types
-water.types.subclade <- gsub("_.*","",water.types.subclade)
-water.types.subclade <- gsub("\\..*","",water.types.subclade)
-water.types.subclade <- unique(water.types.subclade)
-
-coral.types.subclade <- coral.types
-coral.types.subclade <- gsub("_.*","",coral.types.subclade)
-coral.types.subclade <- gsub("\\..*","",coral.types.subclade)
-coral.types.subclade <- unique(coral.types.subclade)
-
 cs <- intersect(coral.types.subclade,sediment.types.subclade)
 csw <- intersect(cs,water.types.subclade)
 cs.only <- length(cs)-length(csw)
@@ -60,32 +40,6 @@ coral.sediment.water.subclades <- coral.types.subclade[which((coral.types.subcla
 
 
 
-
-phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
-phy97.f.c.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd)==0,phy97.f.c.coral.Peyd)
-phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
-phy97.f.c.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq)==0,phy97.f.c.coral.MAeq)
-phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
-phy97.f.c.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob)==0,phy97.f.c.coral.Plob)
-
-Peyd.types <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd))$hit)
-Peyd.types.subclade <- Peyd.types
-Peyd.types.subclade <- gsub("_.*","",Peyd.types.subclade)
-Peyd.types.subclade <- gsub("\\..*","",Peyd.types.subclade)
-Peyd.types.subclade <- unique(Peyd.types.subclade)
-
-Plob.types <- unique(data.frame(tax_table(phy97.f.c.coral.Plob))$hit)
-Plob.types.subclade <- Plob.types
-Plob.types.subclade <- gsub("_.*","",Plob.types.subclade)
-Plob.types.subclade <- gsub("\\..*","",Plob.types.subclade)
-Plob.types.subclade <- unique(Plob.types.subclade)
-
-MAeq.types <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq))$hit)
-MAeq.types.subclade <- MAeq.types
-MAeq.types.subclade <- gsub("_.*","",MAeq.types.subclade)
-MAeq.types.subclade <- gsub("\\..*","",MAeq.types.subclade)
-MAeq.types.subclade <- unique(MAeq.types.subclade)
-
 PeydPlob <- intersect(Peyd.types.subclade,Plob.types.subclade)
 PeydPlobMaeq <- intersect(PeydPlob,MAeq.types.subclade)
 PeydPlob.only <- length(PeydPlob)-length(PeydPlobMaeq)
@@ -106,54 +60,6 @@ plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
 dev.off()
 
-
-phy97.f.c.coral.VH <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="VeryHigh")
-phy97.f.c.coral.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.VH)==0,phy97.f.c.coral.VH)
-phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="HighMed")
-phy97.f.c.coral.M <- prune_taxa(taxa_sums(phy97.f.c.coral.M)==0,phy97.f.c.coral.M)
-phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
-phy97.f.c.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.sediment.VH)==0,phy97.f.c.sediment.VH)
-phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
-phy97.f.c.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.sediment.M)==0,phy97.f.c.sediment.M)
-phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
-phy97.f.c.water.VH <- prune_taxa(taxa_sums(phy97.f.c.water.VH)==0,phy97.f.c.water.VH)
-phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
-phy97.f.c.water.M <- prune_taxa(taxa_sums(phy97.f.c.water.M)==0,phy97.f.c.water.M)
-
-
-sediment.VH.types <- unique(data.frame(tax_table(phy97.f.c.sediment.VH))$hit)
-sediment.M.types <- unique(data.frame(tax_table(phy97.f.c.sediment.M))$hit)
-water.VH.types <- unique(data.frame(tax_table(phy97.f.c.water.VH))$hit)
-water.M.types <- unique(data.frame(tax_table(phy97.f.c.water.M))$hit)
-coral.VH.types <- unique(data.frame(tax_table(phy97.f.c.coral.VH))$hit)
-coral.M.types <- unique(data.frame(tax_table(phy97.f.c.coral.M))$hit)
-
-sediment.VH.types.subclade <- sediment.VH.types
-sediment.VH.types.subclade <- gsub("_.*","",sediment.VH.types.subclade)
-sediment.VH.types.subclade <- gsub("\\..*","",sediment.VH.types.subclade)
-sediment.VH.types.subclade <- unique(sediment.VH.types.subclade)
-sediment.M.types.subclade <- sediment.M.types
-sediment.M.types.subclade <- gsub("_.*","",sediment.M.types.subclade)
-sediment.M.types.subclade <- gsub("\\..*","",sediment.M.types.subclade)
-sediment.M.types.subclade <- unique(sediment.M.types.subclade)
-
-water.VH.types.subclade <- water.VH.types
-water.VH.types.subclade <- gsub("_.*","",water.VH.types.subclade)
-water.VH.types.subclade <- gsub("\\..*","",water.VH.types.subclade)
-water.VH.types.subclade <- unique(water.VH.types.subclade)
-water.M.types.subclade <- water.M.types
-water.M.types.subclade <- gsub("_.*","",water.M.types.subclade)
-water.M.types.subclade <- gsub("\\..*","",water.M.types.subclade)
-water.M.types.subclade <- unique(water.M.types.subclade)
-
-coral.VH.types.subclade <- coral.VH.types
-coral.VH.types.subclade <- gsub("_.*","",coral.VH.types.subclade)
-coral.VH.types.subclade <- gsub("\\..*","",coral.VH.types.subclade)
-coral.VH.types.subclade <- unique(coral.VH.types.subclade)
-coral.M.types.subclade <- coral.M.types
-coral.M.types.subclade <- gsub("_.*","",coral.M.types.subclade)
-coral.M.types.subclade <- gsub("\\..*","",coral.M.types.subclade)
-coral.M.types.subclade <- unique(coral.M.types.subclade)
 
 cs.VH <- intersect(coral.VH.types.subclade,sediment.VH.types.subclade)
 csw.VH <- intersect(cs.VH,water.VH.types.subclade)

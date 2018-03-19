@@ -8,64 +8,6 @@ load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
 
-sediment.before <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2014",prune=TRUE)
-sediment.before <- subset_taxa(sediment.before, taxa_sums(sediment.before) > 0, prune=TRUE)
-
-sediment.storm <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2015a_Post", prune=TRUE)
-sediment.storm <- subset_taxa(sediment.storm, taxa_sums(sediment.storm) > 0, prune=TRUE)
-
-sediment.after <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2015b", prune=TRUE)
-sediment.after <- subset_taxa(sediment.after, taxa_sums(sediment.after) > 0, prune=TRUE)
-
-sediment.before.types <- unique(data.frame(tax_table(sediment.before))$hit)
-sediment.storm.types <- unique(data.frame(tax_table(sediment.storm))$hit)
-sediment.after.types <- unique(data.frame(tax_table(sediment.after))$hit)
-
-sediment.before.types.subclade <- sediment.before.types
-sediment.before.types.subclade <- gsub("_.*","",sediment.before.types.subclade)
-sediment.before.types.subclade <- gsub("\\..*","",sediment.before.types.subclade)
-sediment.before.types.subclade <- unique(sediment.before.types.subclade)
-
-sediment.storm.types.subclade <- sediment.storm.types
-sediment.storm.types.subclade <- gsub("_.*","",sediment.storm.types.subclade)
-sediment.storm.types.subclade <- gsub("\\..*","",sediment.storm.types.subclade)
-sediment.storm.types.subclade <- unique(sediment.storm.types.subclade)
-
-sediment.after.types.subclade <- sediment.after.types
-sediment.after.types.subclade <- gsub("_.*","",sediment.after.types.subclade)
-sediment.after.types.subclade <- gsub("\\..*","",sediment.after.types.subclade)
-sediment.after.types.subclade <- unique(sediment.after.types.subclade)
-
-water.before <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2014",prune=TRUE)
-water.before <- subset_taxa(water.before, taxa_sums(water.before) > 0, prune=TRUE)
-
-water.storm <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2015a_Post", prune=TRUE)
-water.storm <- subset_taxa(water.storm, taxa_sums(water.storm) > 0, prune=TRUE)
-
-water.after <- subset_samples(phy97.f.c.water, data.frame(sample_data(phy97.f.c.water))$field_season == "KI2015b", prune=TRUE)
-water.after <- subset_taxa(water.after, taxa_sums(water.after) > 0, prune=TRUE)
-
-water.before.types <- unique(data.frame(tax_table(water.before))$hit)
-water.storm.types <- unique(data.frame(tax_table(water.storm))$hit)
-water.after.types <- unique(data.frame(tax_table(water.after))$hit)
-
-water.before.types.subclade <- water.before.types
-water.before.types.subclade <- gsub("_.*","",water.before.types.subclade)
-water.before.types.subclade <- gsub("\\..*","",water.before.types.subclade)
-water.before.types.subclade <- unique(water.before.types.subclade)
-
-water.storm.types.subclade <- water.storm.types
-water.storm.types.subclade <- gsub("_.*","",water.storm.types.subclade)
-water.storm.types.subclade <- gsub("\\..*","",water.storm.types.subclade)
-water.storm.types.subclade <- unique(water.storm.types.subclade)
-
-water.after.types.subclade <- water.after.types
-water.after.types.subclade <- gsub("_.*","",water.after.types.subclade)
-water.after.types.subclade <- gsub("\\..*","",water.after.types.subclade)
-water.after.types.subclade <- unique(water.after.types.subclade)
-
-
-
 # Plot sediment Venn diagrams
 venn.diagram(x=list("Before"=sediment.before.types.subclade,"Post-Storm"=sediment.storm.types.subclade,"After"=sediment.after.types.subclade),file = "analyses/Sediment_Venn.jpg", col=timecols[c(1,3,4)],fill=timecols[c(1,3,4)], margin=0,main = "Symbiodinium Types in Sediment",height=6,width=6,units="in",scaled=T)
 
@@ -118,27 +60,6 @@ jpeg(filename="figures/water_sediment_venn.jpg",
      width = 8, height = 4, units="in",res = 300)
 grid.arrange(vd1,vd2,ncol=2)
 dev.off()
-
-
-all.types <- unique(data.frame(tax_table(phy97.f.c))$hit)
-sediment.types <- unique(data.frame(tax_table(phy97.f.c.sediment))$hit)
-water.types <- unique(data.frame(tax_table(phy97.f.c.water))$hit)
-coral.types <- unique(data.frame(tax_table(phy97.f.c.coral))$hit)
-
-sediment.types.subclade <- sediment.types
-sediment.types.subclade <- gsub("_.*","",sediment.types.subclade)
-sediment.types.subclade <- gsub("\\..*","",sediment.types.subclade)
-sediment.types.subclade <- unique(sediment.types.subclade)
-
-water.types.subclade <- water.types
-water.types.subclade <- gsub("_.*","",water.types.subclade)
-water.types.subclade <- gsub("\\..*","",water.types.subclade)
-water.types.subclade <- unique(water.types.subclade)
-
-coral.types.subclade <- coral.types
-coral.types.subclade <- gsub("_.*","",coral.types.subclade)
-coral.types.subclade <- gsub("\\..*","",coral.types.subclade)
-coral.types.subclade <- unique(coral.types.subclade)
 
 
 venn.diagram(x=list("Coral"=coral.types.subclade,"Sediment"=sediment.types.subclade,"Water"=water.types.subclade),file = "analyses/coral_sediment_water_Venn.jpg", col=compcols,fill=compcols, margin=0,main = "Symbiodinium Types",height=6,width=6,units="in",scaled=T)
