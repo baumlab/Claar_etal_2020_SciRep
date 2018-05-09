@@ -39,28 +39,6 @@ sediment.only.subclades <- sediment.types.subclade[which(!(sediment.types.subcla
 coral.sediment.water.subclades <- coral.types.subclade[which((coral.types.subclade %in% sediment.types.subclade) & (coral.types.subclade %in% water.types.subclade))]
 
 
-
-PeydPlob <- intersect(Peyd.types.subclade,Plob.types.subclade)
-PeydPlobMaeq <- intersect(PeydPlob,MAeq.types.subclade)
-PeydPlob.only <- length(PeydPlob)-length(PeydPlobMaeq)
-PeydPlobMaeq.length <- length(PeydPlobMaeq)
-PeydMaeq <- intersect(Peyd.types.subclade,MAeq.types.subclade)
-PeydMaeq.only <- length(PeydMaeq)-length(PeydPlobMaeq)
-PlobMaeq <- intersect(Plob.types.subclade,MAeq.types.subclade)
-PlobMaeq.only <- length(PlobMaeq)-length(PeydPlobMaeq)
-Peyd <- length(Peyd.types.subclade) - PeydPlob.only - PeydMaeq.only - PeydPlobMaeq.length
-Plob <- length(Plob.types.subclade) - PlobMaeq.only - PeydPlob.only - PeydPlobMaeq.length
-Maeq <- length(MAeq.types.subclade) - PlobMaeq.only - PeydMaeq.only - PeydPlobMaeq.length
-
-
-jpeg(filename="figures/coral_species_venn.jpg", 
-     width = 4, height = 4, units="in",res = 300)
-VennDiag4 <- euler(c("P. eydouxi" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. eydouxi&P. lobata" = (PeydPlob.only), "P. eydouxi&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. eydouxi&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
-plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
-     fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
-dev.off()
-
-
 cs.VH <- intersect(coral.VH.types.subclade,sediment.VH.types.subclade)
 csw.VH <- intersect(cs.VH,water.VH.types.subclade)
 cs.only.VH <- length(cs.VH)-length(csw.VH)

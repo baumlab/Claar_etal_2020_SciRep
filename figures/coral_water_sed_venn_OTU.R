@@ -28,27 +28,6 @@ plot(VennDiag7, quantities = TRUE, font=1, cex=1, alpha=0.5,
 dev.off()
 
 
-PeydPlob <- intersect(Peyd.denovo.subclade,Plob.denovo.subclade)
-PeydPlobMaeq <- intersect(PeydPlob,MAeq.denovo.subclade)
-PeydPlob.only <- length(PeydPlob)-length(PeydPlobMaeq)
-PeydPlobMaeq.length <- length(PeydPlobMaeq)
-PeydMaeq <- intersect(Peyd.denovo.subclade,MAeq.denovo.subclade)
-PeydMaeq.only <- length(PeydMaeq)-length(PeydPlobMaeq)
-PlobMaeq <- intersect(Plob.denovo.subclade,MAeq.denovo.subclade)
-PlobMaeq.only <- length(PlobMaeq)-length(PeydPlobMaeq)
-Peyd <- length(Peyd.denovo.subclade) - PeydPlob.only - PeydMaeq.only - PeydPlobMaeq.length
-Plob <- length(Plob.denovo.subclade) - PlobMaeq.only - PeydPlob.only - PeydPlobMaeq.length
-Maeq <- length(MAeq.denovo.subclade) - PlobMaeq.only - PeydMaeq.only - PeydPlobMaeq.length
-
-
-jpeg(filename="figures/coral_species_venn_OTU.jpg", 
-     width = 4, height = 4, units="in",res = 300)
-VennDiag4 <- euler(c("P. eydouxi" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. eydouxi&P. lobata" = (PeydPlob.only), "P. eydouxi&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. eydouxi&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
-plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
-     fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
-dev.off()
-
-
 cs.VH <- intersect(coral.VH.denovo.subclade,sediment.VH.denovo.subclade)
 csw.VH <- intersect(cs.VH,water.VH.denovo.subclade)
 cs.only.VH <- length(cs.VH)-length(csw.VH)
