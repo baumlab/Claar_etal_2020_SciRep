@@ -12,6 +12,7 @@ rm(list=ls())
 # Load filtered RData object from output of filter_notsym.R script
 load("analyses/KI_Compartment.RData")
 
+################################### Filtering ######################################
 # Filter OTUs by minimum count
 # Set threshold count
 n <- 5
@@ -32,6 +33,7 @@ phy.f <- prune_samples(sample_data(phy.f)$field_season!="KI2015c", phy.f)
 # Remove Site34 samples
 phy.f <- prune_samples(sample_data(phy.f)$site!="34", phy.f)
 
+############################## Site Formatting ####################################
 
 # Characterize sites by disturbance level
 VeryHigh <- c(33,40,32,31,27,30,26)
@@ -76,6 +78,7 @@ for (i in VeryLow){
 
 levels(sample_data(phy.f)$Dist) <- c("VeryHigh","High","HighMed","Low","VeryLow")
 
+###################### Physeq formatting and tree #####################################
 # Assign new name for clarity
 phy97.f.c <- phy.f
 phy97.f.c <- prune_taxa(taxa_sums(phy97.f.c)>0,phy97.f.c)
@@ -182,6 +185,8 @@ phy_tree(uber.tree)
 # Slot uber tree into the phy_tree slot of the phyloseq object
 phy_tree(phy97.f.c) <- phy_tree(uber.tree)
 
+######################### Subset by compartment and calc seqs ##################################
+
 # Transform sample counts to proportional abundance for downstream analyses
 phy97.f.c.p <- transform_sample_counts(phy97.f.c, function(x) x/sum(x))
 
@@ -197,7 +202,6 @@ phy97.f.c.sediment <- subset_samples(phy97.f.c,SampleType=="sediment")
 phy97.f.c.sediment <- subset_samples(phy97.f.c.sediment,field_season!="KI2015c")
 phy97.f.c.sediment <- subset_taxa(phy97.f.c.sediment, taxa_sums(phy97.f.c.sediment) > 0, prune=TRUE)
 
-
 # Transform sample counts to proportional abundance for downstream analyses
 phy97.f.c.coral.p <- transform_sample_counts(phy97.f.c.coral, function(x) x/sum(x))
 phy97.f.c.water.p <- transform_sample_counts(phy97.f.c.water, function(x) x/sum(x))
@@ -209,47 +213,46 @@ coral_seqs <- sum(taxa_sums(phy97.f.c.coral))
 water_seqs <- sum(taxa_sums(phy97.f.c.water))
 sediment_seqs <- sum(taxa_sums(phy97.f.c.sediment))
 
-# Subset by compartment and human disturbance level
-phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
-phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
-phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
-phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
-
-# Subset by coral species and disturbance level
-phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
-phy97.f.c.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd)==0,phy97.f.c.coral.Peyd)
-phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
-phy97.f.c.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq)==0,phy97.f.c.coral.MAeq)
-phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
-phy97.f.c.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob)==0,phy97.f.c.coral.Plob)
-
-phy97.f.c.coral.Peyd.VH <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="VeryHigh")
-phy97.f.c.coral.Peyd.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.VH)==0,phy97.f.c.coral.Peyd.VH)
-phy97.f.c.coral.MAeq.VH <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="VeryHigh")
-phy97.f.c.coral.MAeq.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.VH)==0,phy97.f.c.coral.MAeq.VH)
-phy97.f.c.coral.Plob.VH <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="VeryHigh")
-phy97.f.c.coral.Plob.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.VH)==0,phy97.f.c.coral.Plob.VH)
-
-phy97.f.c.coral.Peyd.M <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="HighMed")
-phy97.f.c.coral.Peyd.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.M)==0,phy97.f.c.coral.Peyd.M)
-phy97.f.c.coral.MAeq.M <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="HighMed")
-phy97.f.c.coral.MAeq.M <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.M)==0,phy97.f.c.coral.MAeq.M)
-phy97.f.c.coral.Plob.M <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="HighMed")
-phy97.f.c.coral.Plob.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.M)==0,phy97.f.c.coral.Plob.M)
+############################## Subset by compartment/disturbance #######################
 # Subset by compartment and disturbance level
 phy97.f.c.coral.VH <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="VeryHigh")
-phy97.f.c.coral.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.VH)==0,phy97.f.c.coral.VH)
+phy97.f.c.coral.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.VH)>0,phy97.f.c.coral.VH)
 phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="HighMed")
-phy97.f.c.coral.M <- prune_taxa(taxa_sums(phy97.f.c.coral.M)==0,phy97.f.c.coral.M)
+phy97.f.c.coral.M <- prune_taxa(taxa_sums(phy97.f.c.coral.M)>0,phy97.f.c.coral.M)
 phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
-phy97.f.c.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.sediment.VH)==0,phy97.f.c.sediment.VH)
+phy97.f.c.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.sediment.VH)>0,phy97.f.c.sediment.VH)
 phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
-phy97.f.c.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.sediment.M)==0,phy97.f.c.sediment.M)
+phy97.f.c.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.sediment.M)>0,phy97.f.c.sediment.M)
 phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
-phy97.f.c.water.VH <- prune_taxa(taxa_sums(phy97.f.c.water.VH)==0,phy97.f.c.water.VH)
+phy97.f.c.water.VH <- prune_taxa(taxa_sums(phy97.f.c.water.VH)>0,phy97.f.c.water.VH)
 phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
-phy97.f.c.water.M <- prune_taxa(taxa_sums(phy97.f.c.water.M)==0,phy97.f.c.water.M)
+phy97.f.c.water.M <- prune_taxa(taxa_sums(phy97.f.c.water.M)>0,phy97.f.c.water.M)
 
+
+############################### Subset by coral species/disturbance ##########################
+# Subset by coral species and disturbance level
+phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
+phy97.f.c.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd)>0,phy97.f.c.coral.Peyd)
+phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
+phy97.f.c.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq)>0,phy97.f.c.coral.MAeq)
+phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
+phy97.f.c.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob)>0,phy97.f.c.coral.Plob)
+
+phy97.f.c.coral.Peyd.VH <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="VeryHigh")
+phy97.f.c.coral.Peyd.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.VH)>0,phy97.f.c.coral.Peyd.VH)
+phy97.f.c.coral.MAeq.VH <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="VeryHigh")
+phy97.f.c.coral.MAeq.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.VH)>0,phy97.f.c.coral.MAeq.VH)
+phy97.f.c.coral.Plob.VH <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="VeryHigh")
+phy97.f.c.coral.Plob.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.VH)>0,phy97.f.c.coral.Plob.VH)
+
+phy97.f.c.coral.Peyd.M <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="HighMed")
+phy97.f.c.coral.Peyd.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.M)>0,phy97.f.c.coral.Peyd.M)
+phy97.f.c.coral.MAeq.M <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="HighMed")
+phy97.f.c.coral.MAeq.M <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.M)>0,phy97.f.c.coral.MAeq.M)
+phy97.f.c.coral.Plob.M <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="HighMed")
+phy97.f.c.coral.Plob.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.M)>0,phy97.f.c.coral.Plob.M)
+
+############################# Subset by Field Season #################################
 # Subset by field season
 sediment.before <- subset_samples(phy97.f.c.sediment, data.frame(sample_data(phy97.f.c.sediment))$field_season == "KI2014",prune=TRUE)
 sediment.before <- subset_taxa(sediment.before, taxa_sums(sediment.before) > 0, prune=TRUE)
@@ -306,28 +309,7 @@ coral.after <- subset_taxa(coral.after, taxa_sums(coral.after) > 0, prune=TRUE)
 # Peyd.after.types.subclade <- gsub("\\..*","",Peyd.after.types.subclade)
 # Peyd.after.types.subclade <- unique(Peyd.after.types.subclade)
 
-
-# Types and subclades by coral species
-Peyd.types <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd))$hit)
-Peyd.types.subclade <- Peyd.types
-Peyd.types.subclade <- gsub("_.*","",Peyd.types.subclade)
-Peyd.types.subclade <- gsub("\\..*","",Peyd.types.subclade)
-Peyd.types.subclade <- unique(Peyd.types.subclade)
-
-Plob.types <- unique(data.frame(tax_table(phy97.f.c.coral.Plob))$hit)
-Plob.types.subclade <- Plob.types
-Plob.types.subclade <- gsub("_.*","",Plob.types.subclade)
-Plob.types.subclade <- gsub("\\..*","",Plob.types.subclade)
-Plob.types.subclade <- unique(Plob.types.subclade)
-
-MAeq.types <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq))$hit)
-MAeq.types.subclade <- MAeq.types
-MAeq.types.subclade <- gsub("_.*","",MAeq.types.subclade)
-MAeq.types.subclade <- gsub("\\..*","",MAeq.types.subclade)
-MAeq.types.subclade <- unique(MAeq.types.subclade)
-
-
-# Types and subclades by compartment
+############################ Types and subclades by compartment #########################
 all.types <- unique(data.frame(tax_table(phy97.f.c))$hit)
 sediment.types <- unique(data.frame(tax_table(phy97.f.c.sediment))$hit)
 water.types <- unique(data.frame(tax_table(phy97.f.c.water))$hit)
@@ -408,7 +390,26 @@ coral.after.types.subclade <- gsub("\\..*","",coral.after.types.subclade)
 coral.after.types.subclade <- unique(coral.after.types.subclade)
 
 
-# Types and subclades by compartment and disturbance level
+####################### Types and subclades by coral species #####################
+Peyd.types <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd))$hit)
+Peyd.types.subclade <- Peyd.types
+Peyd.types.subclade <- gsub("_.*","",Peyd.types.subclade)
+Peyd.types.subclade <- gsub("\\..*","",Peyd.types.subclade)
+Peyd.types.subclade <- unique(Peyd.types.subclade)
+
+Plob.types <- unique(data.frame(tax_table(phy97.f.c.coral.Plob))$hit)
+Plob.types.subclade <- Plob.types
+Plob.types.subclade <- gsub("_.*","",Plob.types.subclade)
+Plob.types.subclade <- gsub("\\..*","",Plob.types.subclade)
+Plob.types.subclade <- unique(Plob.types.subclade)
+
+MAeq.types <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq))$hit)
+MAeq.types.subclade <- MAeq.types
+MAeq.types.subclade <- gsub("_.*","",MAeq.types.subclade)
+MAeq.types.subclade <- gsub("\\..*","",MAeq.types.subclade)
+MAeq.types.subclade <- unique(MAeq.types.subclade)
+
+############## Types and subclades by compartment and disturbance level ################
 sediment.VH.types <- unique(data.frame(tax_table(phy97.f.c.sediment.VH))$hit)
 sediment.M.types <- unique(data.frame(tax_table(phy97.f.c.sediment.M))$hit)
 water.VH.types <- unique(data.frame(tax_table(phy97.f.c.water.VH))$hit)
@@ -443,6 +444,7 @@ coral.M.types.subclade <- gsub("_.*","",coral.M.types.subclade)
 coral.M.types.subclade <- gsub("\\..*","",coral.M.types.subclade)
 coral.M.types.subclade <- unique(coral.M.types.subclade)
 
+################## Denovo by compartment and coral species ###############
 # By denovo
 all.denovo <- unique(data.frame(tax_table(phy97.f.c))$otu)
 sediment.denovo <- unique(data.frame(tax_table(phy97.f.c.sediment))$otu)
@@ -450,38 +452,27 @@ water.denovo <- unique(data.frame(tax_table(phy97.f.c.water))$otu)
 coral.denovo <- unique(data.frame(tax_table(phy97.f.c.coral))$otu)
 
 sediment.denovo.subclade <- sediment.denovo
-sediment.denovo.subclade <- gsub("_.*","",sediment.denovo.subclade)
-sediment.denovo.subclade <- gsub("\\..*","",sediment.denovo.subclade)
 sediment.denovo.subclade <- unique(sediment.denovo.subclade)
 
 water.denovo.subclade <- water.denovo
-water.denovo.subclade <- gsub("_.*","",water.denovo.subclade)
-water.denovo.subclade <- gsub("\\..*","",water.denovo.subclade)
 water.denovo.subclade <- unique(water.denovo.subclade)
 
 coral.denovo.subclade <- coral.denovo
-coral.denovo.subclade <- gsub("_.*","",coral.denovo.subclade)
-coral.denovo.subclade <- gsub("\\..*","",coral.denovo.subclade)
 coral.denovo.subclade <- unique(coral.denovo.subclade)
 
 Peyd.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd))$otu)
 Peyd.denovo.subclade <- Peyd.denovo
-Peyd.denovo.subclade <- gsub("_.*","",Peyd.denovo.subclade)
-Peyd.denovo.subclade <- gsub("\\..*","",Peyd.denovo.subclade)
 Peyd.denovo.subclade <- unique(Peyd.denovo.subclade)
 
 Plob.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Plob))$otu)
 Plob.denovo.subclade <- Plob.denovo
-Plob.denovo.subclade <- gsub("_.*","",Plob.denovo.subclade)
-Plob.denovo.subclade <- gsub("\\..*","",Plob.denovo.subclade)
 Plob.denovo.subclade <- unique(Plob.denovo.subclade)
 
 MAeq.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq))$otu)
 MAeq.denovo.subclade <- MAeq.denovo
-MAeq.denovo.subclade <- gsub("_.*","",MAeq.denovo.subclade)
-MAeq.denovo.subclade <- gsub("\\..*","",MAeq.denovo.subclade)
 MAeq.denovo.subclade <- unique(MAeq.denovo.subclade)
 
+############# Denovo by compartment/coral species and disturbance ###############
 sediment.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.sediment.VH))$otu)
 sediment.M.denovo <- unique(data.frame(tax_table(phy97.f.c.sediment.M))$otu)
 water.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.water.VH))$otu)
@@ -489,34 +480,28 @@ water.M.denovo <- unique(data.frame(tax_table(phy97.f.c.water.M))$otu)
 coral.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.VH))$otu)
 coral.M.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.M))$otu)
 
-sediment.VH.denovo.subclade <- sediment.VH.denovo
-sediment.VH.denovo.subclade <- gsub("_.*","",sediment.VH.denovo.subclade)
-sediment.VH.denovo.subclade <- gsub("\\..*","",sediment.VH.denovo.subclade)
-sediment.VH.denovo.subclade <- unique(sediment.VH.denovo.subclade)
-sediment.M.denovo.subclade <- sediment.M.denovo
-sediment.M.denovo.subclade <- gsub("_.*","",sediment.M.denovo.subclade)
-sediment.M.denovo.subclade <- gsub("\\..*","",sediment.M.denovo.subclade)
-sediment.M.denovo.subclade <- unique(sediment.M.denovo.subclade)
+sediment.VH.denovo.subclade <- unique(sediment.VH.denovo)
+sediment.M.denovo.subclade <- unique(sediment.M.denovo)
+water.VH.denovo.subclade <- unique(water.VH.denovo)
+water.M.denovo.subclade <- unique(water.M.denovo)
+coral.VH.denovo.subclade <- unique(coral.VH.denovo)
+coral.M.denovo.subclade <- unique(coral.M.denovo)
 
-water.VH.denovo.subclade <- water.VH.denovo
-water.VH.denovo.subclade <- gsub("_.*","",water.VH.denovo.subclade)
-water.VH.denovo.subclade <- gsub("\\..*","",water.VH.denovo.subclade)
-water.VH.denovo.subclade <- unique(water.VH.denovo.subclade)
-water.M.denovo.subclade <- water.M.denovo
-water.M.denovo.subclade <- gsub("_.*","",water.M.denovo.subclade)
-water.M.denovo.subclade <- gsub("\\..*","",water.M.denovo.subclade)
-water.M.denovo.subclade <- unique(water.M.denovo.subclade)
+# denovo and subclades by compartment and disturbance level
+Peyd.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd.VH))$hit)
+Peyd.M.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Peyd.M))$hit)
+Plob.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Plob.VH))$hit)
+Plob.M.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.Plob.M))$hit)
+MAeq.VH.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq.VH))$hit)
+MAeq.M.denovo <- unique(data.frame(tax_table(phy97.f.c.coral.MAeq.M))$hit)
 
-coral.VH.denovo.subclade <- coral.VH.denovo
-coral.VH.denovo.subclade <- gsub("_.*","",coral.VH.denovo.subclade)
-coral.VH.denovo.subclade <- gsub("\\..*","",coral.VH.denovo.subclade)
-coral.VH.denovo.subclade <- unique(coral.VH.denovo.subclade)
-coral.M.denovo.subclade <- coral.M.denovo
-coral.M.denovo.subclade <- gsub("_.*","",coral.M.denovo.subclade)
-coral.M.denovo.subclade <- gsub("\\..*","",coral.M.denovo.subclade)
-coral.M.denovo.subclade <- unique(coral.M.denovo.subclade)
+Peyd.VH.denovo.subclade <- unique(Peyd.VH.denovo)
+Peyd.M.denovo.subclade <- unique(Peyd.M.denovo)
+Plob.VH.denovo.subclade <- unique(Plob.VH.denovo)
+Plob.M.denovo.subclade <- unique(Plob.M.denovo)
+MAeq.VH.denovo.subclade <- unique(MAeq.VH.denovo)
+MAeq.M.denovo.subclade <- unique(MAeq.M.denovo)
 
-
-# Save grouped data as RData file
+#################### Save grouped data as RData file ##########################
 save(list=ls(),file="data/KI_Compartment_f_coral_grouped.RData")
 #save(list=ls(pattern="phy97.f.c."), sediment_seqs, total_seqs, coral_seqs, water_seqs, phy97.f.c, file = "data/KI_Compartment_f_coral_grouped.RData")
