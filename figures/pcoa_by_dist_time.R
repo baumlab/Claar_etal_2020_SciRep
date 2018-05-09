@@ -37,6 +37,7 @@ jpeg(filename="figures/pcoa_by_dist_time.jpg",
 par(mfrow=c(2,4))
 
 # Sediment
+# rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "light grey")
 plot(sediment.VH.bd, hull=F, label=F, 
      main="Sediment-VH", col=timecols,
      xlab="PCoA 1", ylab="PCoA 2", sub="")
