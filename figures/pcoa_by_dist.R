@@ -159,9 +159,9 @@ ordihull(MAeq.bd.dist, sample_data(phy97.f.c.coral.MAeq)$Dist,
 # legend("topleft", bty="n", pch=1:6, cex=2.5,
 #        legend=levels(as.factor(sample_data(phy97.f.c.coral.MAeq)$Dist)),
 #        col=sitecols)
-text(0.0001,-0.0018,paste("F = ", round((betadisper.MAeq$`F value`[1]),
+text(0.0001,-0.00188,paste("F = ", round((betadisper.MAeq$`F value`[1]),
                                        digits=1)),cex=2)
-text(0.0001,-0.0023,paste("p ",(ifelse(betadisper.MAeq$`Pr(>F)`[1]<0.001,"< 0.001", paste("= ",round(betadisper.MAeq$`Pr(>F)`[1],digits=3))))),cex=2)
+text(0.0001,-0.00235,paste("p ",(ifelse(betadisper.MAeq$`Pr(>F)`[1]<0.001,"< 0.001", paste("= ",round(betadisper.MAeq$`Pr(>F)`[1],digits=3))))),cex=2)
 
 
 # Porites
