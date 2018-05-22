@@ -3,6 +3,7 @@ load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
 library(gridExtra)
+library(ggplot2)
 
 phy97.f.c.coral.MAeq.M.p <- transform_sample_counts(phy97.f.c.coral.MAeq.M, function(x) x/sum(x))
 phy97.f.c.coral.MAeq.M.p.f <- subset_taxa(phy97.f.c.coral.MAeq.M.p,taxa_sums(phy97.f.c.coral.MAeq.M.p)>0.001)
