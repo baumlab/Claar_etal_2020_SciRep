@@ -5,7 +5,11 @@ load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
 library(vegan)
+library(phyloseq)
 
+phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
+phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
+phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
 
 Peyd.ufdist <- UniFrac(phy97.f.c.coral.Peyd, weighted=T, 
                        normalized=F, parallel=F, fast=T)
@@ -33,6 +37,25 @@ coral.bd.dist <- betadisper(d=coral.ufdist,
 coral.bd.species <- betadisper(d=coral.ufdist, 
                                group=sample_data(phy97.f.c.coral)$Coral_Species,
                                type="centroid", bias.adjust=FALSE)
+
+sediment.ufdist <- UniFrac(phy97.f.c.sediment, weighted=T, 
+                        normalized=F, parallel=F, fast=T)
+sediment.bd.dist <- betadisper(d=sediment.ufdist, 
+                            group=sample_data(phy97.f.c.sediment)$Dist,
+                            type="centroid", bias.adjust=FALSE)
+
+water.ufdist <- UniFrac(phy97.f.c.water, weighted=T, 
+                           normalized=F, parallel=F, fast=T)
+water.bd.dist <- betadisper(d=water.ufdist, 
+                               group=sample_data(phy97.f.c.water)$Dist,
+                               type="centroid", bias.adjust=FALSE)
+
+all.ufdist <- UniFrac(phy97.f.c, weighted=T, 
+                        normalized=F, parallel=F, fast=T)
+all.bd.dist <- betadisper(d=all.ufdist, 
+                            group=sample_data(phy97.f.c)$Dist,
+                            type="centroid", bias.adjust=FALSE)
+
 
 betadisper.sediment <- anova(sediment.bd.dist)
 betadisper.water <- anova(water.bd.dist)

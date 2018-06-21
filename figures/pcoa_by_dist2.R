@@ -125,6 +125,7 @@ ordihull(MAeq.bd.dist, sample_data(phy97.f.c.coral.MAeq)$Dist,
 #        col=sitecols)
 text(-0.0006,-0.00188,"betadisper = sig. ***",cex=2)
 text(-0.0006,-0.00235,"adonis = sig. *",cex=2)
+mtext("b)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Porites
@@ -156,6 +157,7 @@ ordihull(sediment.bd.dist, sample_data(phy97.f.c.sediment)$Dist,
 #        col=sitecols)
 text(-0.02,-0.075,"betadisper = sig. ***",cex=2)
 text(-0.02,-0.087,"adonis = sig. ***",cex=2)
+mtext("d)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Water
@@ -187,6 +189,7 @@ ordihull(all.bd.dist, sample_data(phy97.f.c)$Dist,
 #        col=sitecols)
 text(0.065,-0.027,"betadisper = sig. ***",cex=2)
 text(0.065,-0.037,"adonis = sig. ***",cex=2) 
+mtext("f)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 dev.off()
