@@ -100,21 +100,26 @@ p_water_VH_clade <- plot_bar(phy97.f.c.water.VH.p,fill="clade")+
 p_sediment_M_clade <- plot_bar(phy97.f.c.sediment.M.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Local Disturbance = Medium")+
+  scale_x_discrete(name="Medium Disturbance")+
   theme(axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
-        legend.position = "none")   # Remove ticks 
-
+        axis.title.x = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.position = "none")+  # Remove ticks 
+        coord_flip()
 p_sediment_VH_clade <- plot_bar(phy97.f.c.sediment.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Local Disturbance = Very High")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
-        axis.title.y = element_blank())
+        legend.position = "none")+coord_flip()
 p_sediment_VH_clade
 
+jpeg(filename = "figures/barplot_sediment_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
+grid.arrange(p_sediment_M_clade,p_sediment_VH_clade,nrow=2)
+dev.off()
 
 jpeg(filename = "figures/barplot_sediment.jpg",width = 7.5, height = 4,units = "in",res=300)
 grid.arrange(p_sediment_M_clade,p_sediment_VH_clade,
