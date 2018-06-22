@@ -76,8 +76,27 @@ vd2 <- plot(VennDiag2, quantities = TRUE, font=1, cex=1, alpha=0.5,
 vd3 <- plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
             fill=timecols,col=timecols,border=timecols,lwd=c(1,4,2),auto.key = F,main="Coral")
 
-jpeg(filename="figures/venn_by_fieldseason.jpg", 
-     width = 12, height = 4, units="in",res = 300)
-grid.arrange(vd1,vd2,vd3,ncol=3)
+class(print(vd1))
+
+
+jpeg(filename="figures/Figure_4b_sediment_time_venn.jpg",
+     width = 4, height = 4, units="in",res = 300)
+vd1
 dev.off()
 
+jpeg(filename="figures/Figure_4c_water_time_venn.jpg",
+     width = 4, height = 4, units="in",res = 300)
+vd2
+dev.off()
+
+jpeg(filename="figures/Figure_4a_coral_time_venn.jpg",
+     width = 4, height = 4, units="in",res = 300)
+vd3
+dev.off()
+
+# 
+# jpeg(filename="figures/Figure_4_venn_by_fieldseason.jpg", 
+#      width = 12, height = 4, units="in",res = 300)
+# grid.arrange(vd1j)
+# dev.off()
+# 

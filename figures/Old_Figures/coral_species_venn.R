@@ -42,7 +42,7 @@ Plob <- length(Plob.denovo.subclade) - PlobMaeq.only - PeydPlob.only - PeydPlobM
 Maeq <- length(MAeq.denovo.subclade) - PlobMaeq.only - PeydMaeq.only - PeydPlobMaeq.length
 
 
-jpeg(filename="figures/coral_species_venn_OTU.jpg", 
+jpeg(filename="figures/Figure_2a_coral_species_venn_OTU.jpg", 
      width = 4, height = 4, units="in",res = 300)
 VennDiag4 <- euler(c("P. grandis" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. grandis&P. lobata" = (PeydPlob.only), "P. grandis&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. grandis&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
 plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
