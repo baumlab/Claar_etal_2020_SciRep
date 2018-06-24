@@ -110,7 +110,7 @@ legend("topright", bty="n", pch=1:6, cex=2.5,
        col=sitecols)
 text(-0.07,-0.037,"betadisper = sig. ***",cex=2)
 text(-0.07,-0.046,"adonis = sig. ***",cex=2)
-mtext("a)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("A)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Montipora
@@ -126,7 +126,7 @@ ordihull(MAeq.bd.dist, sample_data(phy97.f.c.coral.MAeq)$Dist,
 #        col=sitecols)
 text(-0.0006,-0.00188,"betadisper = sig. ***",cex=2)
 text(-0.0006,-0.00235,"adonis = sig. *",cex=2)
-mtext("b)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("B)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Porites
@@ -142,7 +142,7 @@ ordihull(Plob.bd.dist, sample_data(phy97.f.c.coral.Plob)$Dist,
 #        col=sitecols)
 text(-0.00275,-0.018,"betadisper = not sig.",cex=2)
 text(-0.00275,-0.02,"adonis = not sig.",cex=2)
-mtext("c)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("C)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Sediment
@@ -158,7 +158,7 @@ ordihull(sediment.bd.dist, sample_data(phy97.f.c.sediment)$Dist,
 #        col=sitecols)
 text(-0.02,-0.075,"betadisper = sig. ***",cex=2)
 text(-0.02,-0.087,"adonis = sig. ***",cex=2)
-mtext("d)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("D)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Water
@@ -174,7 +174,7 @@ ordihull(water.bd.dist, sample_data(phy97.f.c.water)$Dist,
 #        col=sitecols)
 text(0.045,-0.040,"betadisper = not sig.",cex=2)
 text(0.045,-0.047,"adonis = sig. **",cex=2)
-mtext("e)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("E)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # All
@@ -190,7 +190,7 @@ ordihull(all.bd.dist, sample_data(phy97.f.c)$Dist,
 #        col=sitecols)
 text(0.065,-0.027,"betadisper = sig. ***",cex=2)
 text(0.065,-0.037,"adonis = sig. ***",cex=2) 
-mtext("f)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("F)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 dev.off()
@@ -198,7 +198,7 @@ dev.off()
 
 
 pdf(file="figures/Figure_3_pcoa_by_dist.pdf", 
-     width = 12, height = 8)
+     width = 12, height = 8,useDingbats = FALSE)
 par(mfrow=c(2,3), mar=c(1,1,3,1))
 # Pocillopora
 plot(Peyd.bd.dist, hull=F, label=F, 
@@ -212,7 +212,7 @@ legend("topright", bty="n", pch=1:6, cex=2.5,
        col=sitecols)
 text(-0.07,-0.037,"betadisper = sig. ***",cex=2)
 text(-0.07,-0.046,"adonis = sig. ***",cex=2)
-mtext("a)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("A)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Montipora
@@ -228,7 +228,7 @@ ordihull(MAeq.bd.dist, sample_data(phy97.f.c.coral.MAeq)$Dist,
 #        col=sitecols)
 text(-0.0006,-0.00188,"betadisper = sig. ***",cex=2)
 text(-0.0006,-0.00235,"adonis = sig. *",cex=2)
-mtext("b)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("B)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Porites
@@ -244,7 +244,7 @@ ordihull(Plob.bd.dist, sample_data(phy97.f.c.coral.Plob)$Dist,
 #        col=sitecols)
 text(-0.00275,-0.018,"betadisper = not sig.",cex=2)
 text(-0.00275,-0.02,"adonis = not sig.",cex=2)
-mtext("c)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("C)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Sediment
@@ -260,7 +260,7 @@ ordihull(sediment.bd.dist, sample_data(phy97.f.c.sediment)$Dist,
 #        col=sitecols)
 text(-0.02,-0.075,"betadisper = sig. ***",cex=2)
 text(-0.02,-0.087,"adonis = sig. ***",cex=2)
-mtext("d)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("D)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # Water
@@ -276,7 +276,7 @@ ordihull(water.bd.dist, sample_data(phy97.f.c.water)$Dist,
 #        col=sitecols)
 text(0.045,-0.040,"betadisper = not sig.",cex=2)
 text(0.045,-0.047,"adonis = sig. **",cex=2)
-mtext("e)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("E)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 # All
@@ -292,7 +292,7 @@ ordihull(all.bd.dist, sample_data(phy97.f.c)$Dist,
 #        col=sitecols)
 text(0.065,-0.027,"betadisper = sig. ***",cex=2)
 text(0.065,-0.037,"adonis = sig. ***",cex=2) 
-mtext("f)", side=3,line=0.5,adj=-0.025,cex=2) 
+mtext("F)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
 dev.off()
