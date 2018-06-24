@@ -94,6 +94,21 @@ jpeg(filename="figures/Figure_4a_coral_time_venn.jpg",
 vd3
 dev.off()
 
+
+pdf(file="figures/Figure_4b_sediment_time_venn.pdf",
+     width = 4, height = 4)
+vd1
+dev.off()
+
+pdf(file="figures/Figure_4c_water_time_venn.pdf",
+     width = 4, height = 4)
+vd2
+dev.off()
+
+pdf(file="figures/Figure_4a_coral_time_venn.pdf",
+     width = 4, height = 4)
+vd3
+dev.off()
 # 
 # jpeg(filename="figures/Figure_4_venn_by_fieldseason.jpg", 
 #      width = 12, height = 4, units="in",res = 300)
