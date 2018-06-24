@@ -26,3 +26,10 @@ VennDiag4 <- euler(c("P. grandis" = (Peyd), "P. lobata" = (Plob), "M. aequituber
 plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
 dev.off()
+
+pdf(file="figures/Figure_2a_coral_species_venn_OTU.pdf", 
+     width = 4, height = 4)
+VennDiag4 <- euler(c("P. grandis" = (Peyd), "P. lobata" = (Plob), "M. aequituberculata" = (Maeq), "P. grandis&P. lobata" = (PeydPlob.only), "P. grandis&M. aequituberculata" = (PeydMaeq.only), "P. lobata&M. aequituberculata" = (PlobMaeq.only), "P. grandis&P. lobata&M. aequituberculata" = (PeydPlobMaeq.length)))
+plot(VennDiag4, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=speccols,col=speccols,border=speccols,lwd=c(2,2,2))
+dev.off()

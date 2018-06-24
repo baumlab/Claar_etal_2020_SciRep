@@ -26,3 +26,10 @@ VennDiag7 <- euler(c("Coral" = (c), "Sediment" = (s), "Water" = (w), "Coral&Sedi
 plot(VennDiag7, quantities = TRUE, font=1, cex=1, alpha=0.5,
      fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
 dev.off()
+
+pdf(file="figures/Figure_2b_coral_water_sed_venn_OTU.pdf", 
+     width = 4, height = 4)
+VennDiag7 <- euler(c("Coral" = (c), "Sediment" = (s), "Water" = (w), "Coral&Sediment" = (cs.only), "Coral&Water" = (cw.only), "Sediment&Water" = (sw.only), "Coral&Sediment&Water" = (csw.length)))
+plot(VennDiag7, quantities = TRUE, font=1, cex=1, alpha=0.5,
+     fill=compcols,col=compcols,border=compcols,lwd=c(2,2,2))
+dev.off()
