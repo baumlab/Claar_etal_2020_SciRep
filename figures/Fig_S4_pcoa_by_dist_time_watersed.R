@@ -79,3 +79,55 @@ legend("topleft", bty="n", pch=1:6,
        col=timecols)
 
 dev.off()
+
+
+pdf(file="figures/Fig_S4.pdf", 
+     width = 8, height = 8,useDingbats = FALSE)
+par(mfrow=c(2,2))
+
+# Sediment
+plot(sediment.VH.bd, hull=F, label=F, 
+     main=NULL, col=timecols,
+     xlab="PCoA 1", ylab="PCoA 2", sub="")
+title("Sediment", line = 1)
+ordihull(sediment.VH.bd, sample_data(phy97.f.c.sediment.VH)$field_season,  draw = c("polygon"),
+         col = timecols, alpha=0.2, lwd=0.05)
+legend("bottomright", bty="n", pch=1:6,
+       legend=levels(as.factor(sample_data(phy97.f.c.sediment)$field_season)),
+       col=timecols)
+mtext("VERY HIGH DISTURBANCE",side=3,line=3)
+
+plot(sediment.M.bd, hull=F, label=F, 
+     main=NULL, col=timecols,
+     xlab="PCoA 1", ylab="PCoA 2", sub="")
+title("Sediment", line = 1)
+ordihull(sediment.M.bd, sample_data(phy97.f.c.sediment.M)$field_season,  draw = c("polygon"),
+         col = timecols, alpha=0.2, lwd=0.05)
+legend("topleft", bty="n", pch=1:6,
+       legend=levels(as.factor(sample_data(phy97.f.c.sediment)$field_season)),
+       col=timecols)
+mtext("MEDIUM DISTURBANCE",side=3,line=3)
+
+
+# Water
+plot(water.VH.bd, hull=F, label=F, 
+     main=NULL, col=timecols,
+     xlab="PCoA 1", ylab="PCoA 2", sub="")
+title("Water", line = 1)
+ordihull(water.VH.bd, sample_data(phy97.f.c.water.VH)$field_season,  draw = c("polygon"),
+         col = timecols, alpha=0.2, lwd=0.05)
+legend("bottomright", bty="n", pch=1:6,
+       legend=levels(as.factor(sample_data(phy97.f.c.water)$field_season)),
+       col=timecols)
+
+plot(water.M.bd, hull=F, label=F, 
+     main=NULL, col=timecols,
+     xlab="PCoA 1", ylab="PCoA 2", sub="")
+title("Water", line = 1)
+ordihull(water.M.bd, sample_data(phy97.f.c.water.M)$field_season,  draw = c("polygon"),
+         col = timecols, alpha=0.2, lwd=0.05)
+legend("topleft", bty="n", pch=1:6,
+       legend=levels(as.factor(sample_data(phy97.f.c.water)$field_season)),
+       col=timecols)
+
+dev.off()
