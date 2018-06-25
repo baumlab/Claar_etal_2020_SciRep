@@ -135,28 +135,28 @@ p_water_VH_clade <- plot_bar(phy97.f.c.water.VH.p,fill="clade")+
         legend.position = "none")+coord_flip()
 p_water_VH_clade
 
-jpeg(filename = "figures/barplot_MAeq_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
+jpeg(filename = "figures/barplot_MAeq_comb.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p_MAeq_M_clade,p_MAeq_VH_clade,nrow=2)
 dev.off()
 
-jpeg(filename = "figures/barplot_Peyd_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
+jpeg(filename = "figures/barplot_Peyd_comb.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p_Peyd_M_clade,p_Peyd_VH_clade,nrow=2)
 dev.off()
 
-jpeg(filename = "figures/barplot_Plob_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
+jpeg(filename = "figures/barplot_Plob_comb.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p_Plob_M_clade,p_Plob_VH_clade,nrow=2)
 dev.off()
 
 
-jpeg(filename = "figures/barplot_sediment_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
+jpeg(filename = "figures/barplot_sediment_comb.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p_sediment_M_clade,p_sediment_VH_clade,nrow=2)
 dev.off()
 
-jpeg(filename = "figures/barplot_water_comb.jpg",width = 7.5, height = 6,units = "in",res=300)
-grid.arrange(p_water_M_clade,p_water_VH_clade,nrow=2)
+jpeg(filename = "figures/barplot_water_comb.jpg",width = 7.5, height = 8,units = "in",res=300)
+grid.arrange(p_water_M_clade,p_water_VH_clade,nrow=2,heights=c(1.35,1))
 dev.off()
 
-jpeg(filename = "figures/barplot_all.jpg",width = 7.5, height = 6,units = "in",res=300)
+jpeg(filename = "figures/barplot_all.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p_MAeq_M_clade,p_MAeq_VH_clade,p_Peyd_M_clade,p_Peyd_VH_clade,p_Plob_M_clade,p_Plob_VH_clade,p_sediment_M_clade,p_sediment_VH_clade,p_water_M_clade,p_water_VH_clade,nrow=10)
 dev.off()
 
