@@ -160,3 +160,17 @@ jpeg(filename = "figures/barplot_all.jpg",width = 7.5, height = 10,units = "in",
 grid.arrange(p_MAeq_M_clade,p_MAeq_VH_clade,p_Peyd_M_clade,p_Peyd_VH_clade,p_Plob_M_clade,p_Plob_VH_clade,p_sediment_M_clade,p_sediment_VH_clade,p_water_M_clade,p_water_VH_clade,nrow=10)
 dev.off()
 
+p_all <- plot_bar(phy97.f.c,fill="clade")+
+  scale_fill_manual(values=clade_colors,name="Clade")+
+  scale_y_continuous(expand = c(0, 0))+
+  scale_x_discrete(name="Very High Disturbance")+
+  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+        axis.ticks = element_blank(),
+        axis.text.y = element_blank(),
+        legend.direction = "horizontal")+coord_flip()+
+  guides(fill=guide_legend(ncol=6))
+
+leg <- get_legend(p_all)
+jpeg(filename = "figures/barplot_clade_legend.jpg",width = 6, height = 1,units = "in",res=300)
+as_ggplot(leg)
+dev.off()
