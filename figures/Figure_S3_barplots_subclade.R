@@ -98,7 +98,8 @@ p1.sediment <- plot_bar(phy97.f.c.s.h.sediment.VH,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -119,7 +120,8 @@ p1.water <- plot_bar(phy97.f.c.s.h.water.VH,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -140,7 +142,8 @@ p1.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.VH,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), # Remove x axis text
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -161,7 +164,8 @@ p1.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.VH,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -182,7 +186,8 @@ p1.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.VH,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -206,23 +211,23 @@ grid.arrange(p1.coral.Plob,p2.coral.Plob,nrow=2)
 
 # Make jpegs
 # Sediment
-jpeg(filename = "figures/barplot_sediment_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3B_barplot_sediment_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p1.sediment,p2.sediment,nrow=2)
 dev.off()
 # Water
-jpeg(filename = "figures/barplot_water_subclade.jpg",width = 7.5, height = 8,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3C_barplot_water_subclade.jpg",width = 7.5, height = 8,units = "in",res=300)
 grid.arrange(p1.water,p2.water,nrow=2,heights=c(1,1.35))
 dev.off()
 # Pocillopora
-jpeg(filename = "figures/barplot_Peyd_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3E_barplot_Peyd_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p1.coral.Peyd,p2.coral.Peyd,nrow=2)
 dev.off()
 # Montipora
-jpeg(filename = "figures/barplot_MAeq_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3D_barplot_MAeq_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p1.coral.MAeq,p2.coral.MAeq,nrow=2)
 dev.off()
 # Porites
-jpeg(filename = "figures/barplot_Plob_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3F_barplot_Plob_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
 grid.arrange(p1.coral.Plob,p2.coral.Plob,nrow=2)
 dev.off()
 
@@ -244,6 +249,6 @@ p0 <- plot_bar(phy97.f.c.s.h,fill="hit")+
 
 # Get the legend
 leg <- get_legend(p0)
-jpeg(filename = "figures/barplot_subclade_legend.jpg",width = 5.5, height = 5.5,units = "in",res=300)
+jpeg(filename = "figures/Fig_S3A_barplot_subclade_legend.jpg",width = 5.5, height = 5.5,units = "in",res=300)
 as_ggplot(leg)
 dev.off()
