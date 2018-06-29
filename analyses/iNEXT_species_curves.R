@@ -2,6 +2,7 @@ rm(list=ls())
 if(!require(iNEXT)) { devtools::install_github("JohnsonHsieh/iNEXT"); library(iNEXT) }
 library(vegan)
 library(gridExtra)
+library(metagMisc)
 
 load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
