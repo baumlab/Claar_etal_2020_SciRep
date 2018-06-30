@@ -67,7 +67,7 @@ phy97.f.c.s.h.water.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.water.VH)>0,phy97.f
 phy97.f.c.s.h.water.M <- subset_samples(phy97.f.c.s.h.water,sample_data(phy97.f.c.s.h.water)$Dist=="HighMed")
 phy97.f.c.s.h.water.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.water.M)>0,phy97.f.c.s.h.water.M)
 
-# Peyd
+# Pocillopora
 phy97.f.c.s.h.coral.Peyd <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s.h)$Coral_Species=="Pocillopora_eydouxi")
 phy97.f.c.s.h.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd)>0,phy97.f.c.s.h.coral.Peyd)
 phy97.f.c.s.h.coral.Peyd.VH <- subset_samples(phy97.f.c.s.h.coral.Peyd,sample_data(phy97.f.c.s.h.coral.Peyd)$Dist=="VeryHigh")
@@ -75,7 +75,7 @@ phy97.f.c.s.h.coral.Peyd.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd.VH)
 phy97.f.c.s.h.coral.Peyd.M <- subset_samples(phy97.f.c.s.h.coral.Peyd,sample_data(phy97.f.c.s.h.coral.Peyd)$Dist=="HighMed")
 phy97.f.c.s.h.coral.Peyd.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd.M)>0,phy97.f.c.s.h.coral.Peyd.M)
 
-# MAeq
+# Montipora
 phy97.f.c.s.h.coral.MAeq <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s.h)$Coral_Species=="Montipora_foliosa")
 phy97.f.c.s.h.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq)>0,phy97.f.c.s.h.coral.MAeq)
 phy97.f.c.s.h.coral.MAeq.VH <- subset_samples(phy97.f.c.s.h.coral.MAeq,sample_data(phy97.f.c.s.h.coral.MAeq)$Dist=="VeryHigh")
@@ -83,7 +83,7 @@ phy97.f.c.s.h.coral.MAeq.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq.VH)
 phy97.f.c.s.h.coral.MAeq.M <- subset_samples(phy97.f.c.s.h.coral.MAeq,sample_data(phy97.f.c.s.h.coral.MAeq)$Dist=="HighMed")
 phy97.f.c.s.h.coral.MAeq.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq.M)>0,phy97.f.c.s.h.coral.MAeq.M)
 
-# Plob
+# Porites
 phy97.f.c.s.h.coral.Plob <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s.h)$Coral_Species=="Porites_lobata")
 phy97.f.c.s.h.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Plob)>0,phy97.f.c.s.h.coral.Plob)
 phy97.f.c.s.h.coral.Plob.VH <- subset_samples(phy97.f.c.s.h.coral.Plob,sample_data(phy97.f.c.s.h.coral.Plob)$Dist=="VeryHigh")
@@ -93,23 +93,23 @@ phy97.f.c.s.h.coral.Plob.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Plob.M)>0
 
 # Bar plots
 # Sediment - Very High
-p1.sediment <- plot_bar(phy97.f.c.s.h.sediment.VH,fill="hit")+
-  coord_flip()+
-  scale_fill_manual(values=otu_colors2,name="Subclade")+
-  scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Very High Disturbance")+
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), # Remove x axis tick labels
-        axis.ticks = element_blank(),
-        axis.text.y = element_blank(),
-        legend.position = "none")
+p1.sediment <- plot_bar(phy97.f.c.s.h.sediment.VH,fill="hit")+ # start plotting
+  coord_flip()+ # flip horizontal
+  scale_fill_manual(values=otu_colors2,name="Subclade")+ # set color fill values
+  scale_y_continuous(expand = c(0, 0))+ # remove extra space between data and axes
+  scale_x_discrete(name="Very High Disturbance")+ # rename x axis
+  theme(axis.title.x = element_blank(), # remove x axis title
+        axis.text.x = element_blank(), # remove x axis text
+        axis.ticks = element_blank(), # remove x axis ticks
+        axis.text.y = element_blank(), # remove y axis text
+        legend.position = "none") # suppress plotting of legend 
 # Sediment - Medium
 p2.sediment <- plot_bar(phy97.f.c.s.h.sediment.M,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -121,7 +121,7 @@ p1.water <- plot_bar(phy97.f.c.s.h.water.VH,fill="hit")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
   theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), # Remove x axis tick labels
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -131,7 +131,7 @@ p2.water <- plot_bar(phy97.f.c.s.h.water.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -143,7 +143,7 @@ p1.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.VH,fill="hit")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
   theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), # Remove x axis text
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -153,7 +153,7 @@ p2.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -165,7 +165,7 @@ p1.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.VH,fill="hit")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
   theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), # Remove x axis tick labels
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -175,7 +175,7 @@ p2.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -187,7 +187,7 @@ p1.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.VH,fill="hit")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Very High Disturbance")+
   theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), # Remove x axis tick labels
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -197,7 +197,7 @@ p2.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), # Remove x axis tick labels
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -249,6 +249,7 @@ p0 <- plot_bar(phy97.f.c.s.h,fill="hit")+
 
 # Get the legend
 leg <- get_legend(p0)
+# Make a figure with just the legend
 jpeg(filename = "figures/Fig_S3A_barplot_subclade_legend.jpg",width = 5.5, height = 5.5,units = "in",res=300)
-as_ggplot(leg)
-dev.off()
+as_ggplot(leg) # Plot the legend
+dev.off() # Close jpg

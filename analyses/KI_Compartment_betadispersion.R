@@ -10,6 +10,7 @@ load("analyses/KI_Compartment_colors.RData")
 # Load necessary packages
 library(vegan)
 
+# Subset coral species
 phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
 phy97.f.c.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd)>0,phy97.f.c.coral.Peyd)
 phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
@@ -59,6 +60,7 @@ coral.bd.species <- betadisper(d=coral.ufdist,
                                group=sample_data(phy97.f.c.coral)$Coral_Species,
                                type="centroid", bias.adjust=FALSE)
 
+# Test betadisper results
 betadisper.sediment <- anova(sediment.bd.dist)
 betadisper.water <- anova(water.bd.dist)
 betadisper.Peyd <- anova(Peyd.bd.dist)
@@ -66,4 +68,5 @@ betadisper.MAeq <- anova(MAeq.bd.dist)
 betadisper.Plob <- anova(Plob.bd.dist)
 betadisper.all <- anova(all.bd.dist)
 
+# Save 
 save.image(file="analyses/betadisper.RData")

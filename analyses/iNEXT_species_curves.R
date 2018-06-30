@@ -1,12 +1,21 @@
+# Clear working directory
 rm(list=ls())
+
+# Load necessary packages
 if(!require(iNEXT)) { devtools::install_github("JohnsonHsieh/iNEXT"); library(iNEXT) }
 library(vegan)
 library(gridExtra)
 library(metagMisc)
 
+# Load necessary data
 load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
+# Color changes
+sitecols["27"]<- "#a31b4d"
+sitecols["35"]<- "#66a61e"
+
+# Phyloseq to otu helper function 
 vegan_otu <- function(physeq) {
   OTU <- otu_table(physeq)
   if (taxa_are_rows(OTU)) {
@@ -15,10 +24,12 @@ vegan_otu <- function(physeq) {
   return(as(OTU, "matrix"))
 }
 
+# Convert phyloseq objects to vegan-friendly format
 coral <- vegan_otu(phy97.f.c.coral)
 sediment <- vegan_otu(phy97.f.c.sediment)
 water <- vegan_otu(phy97.f.c.water)
 
+# Set x limits for each figure
 xlim_dist <- c(0,100000)
 ylim_dist <- c(0,130)
 xlim_coral <- c(0,4000000)
@@ -28,20 +39,24 @@ ylim_sed <- c(0,85)
 xlim_wat <- c(0,20000)
 ylim_wat <- c(0,85)
 
+# Merge samples by disturbance level
 coral_dist <- merge_samples(phy97.f.c.coral,"Dist")
+# Extract otu table
 coral_dist_otu <- otu_table(coral_dist)
+# Rename rownames
 rownames(coral_dist_otu) <- c("Medium","Very High")
+# Prepare otu table for iNEXT analysis
 coral_dist_iNEXT0 <- prepare_inext(coral_dist_otu)
-coral_dist_iNEXT<- iNEXT(coral_dist_iNEXT0,q=c(0))
-coral_dist_iNEXT_gg <- ggiNEXT(coral_dist_iNEXT,type=1,se=TRUE)+
-  scale_x_continuous(name="Number of Sequences",limits = xlim_coral)+
-  scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_coral)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
-  theme_classic()+
-  scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
-  scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
-coral_dist_iNEXT_gg
+# Run iNEXT (interpolation-extrapolation) analysis
+coral_dist_iNEXT <- iNEXT(coral_dist_iNEXT0,q=c(0))
+# Make ggplot object from iNEXT analysis
+coral_dist_iNEXT_gg <- ggiNEXT(coral_dist_iNEXT,type=1,se=TRUE)+ # Start plotting
+  scale_x_continuous(name="Number of Sequences",limits = xlim_coral)+ # Set x axis
+  scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_coral)+ # Set y axis
+  theme_classic()+ # Set basic theme
+  scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+ # Set colors
+  scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]])) # Set fill colors
+coral_dist_iNEXT_gg 
 
 sed_dist <- merge_samples(phy97.f.c.sediment,"Dist")
 sed_dist_otu <- otu_table(sed_dist)
@@ -50,8 +65,6 @@ sed_dist_iNEXT<- iNEXT(sed_dist_iNEXT0,q=c(0))
 sed_dist_iNEXT_gg <- ggiNEXT(sed_dist_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_sed)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_sed)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
   scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
@@ -63,14 +76,9 @@ wat_dist_iNEXT<- iNEXT(wat_dist_iNEXT0,q=c(0))
 wat_dist_iNEXT_gg <- ggiNEXT(wat_dist_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_wat)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_wat)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
   scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
-
-sitecols["27"]<- "#a31b4d"
-sitecols["35"]<- "#66a61e"
 
 coral_site <- merge_samples(phy97.f.c.coral,"site")
 coral_site_otu <- otu_table(coral_site)
@@ -138,7 +146,7 @@ wat_field_season_iNEXT_gg <- ggiNEXT(wat_field_season_iNEXT,type=1,se=TRUE)+
   scale_color_manual(values=c(timecols))+
   scale_fill_manual(values=c(timecols))
 
-
+# Create figures
 jpeg(filename="figures/coral_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
 grid.arrange(coral_dist_iNEXT_gg,coral_site_iNEXT_gg,coral_field_season_iNEXT_gg)
 dev.off()
@@ -151,11 +159,13 @@ jpeg(filename="figures/water_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,un
 grid.arrange(wat_dist_iNEXT_gg,wat_site_iNEXT_gg,wat_field_season_iNEXT_gg)
 dev.off()
 
-
+###################### By Coral Species #####################
+# Subset coral species
 phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Pocillopora_eydouxi")
 phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
 phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
 
+# Set axis limits for plotting
 xlim_MAeq <- c(0,1500000)
 ylim_MAeq <- c(0,60)
 xlim_Peyd <- c(0,1500000)
@@ -171,8 +181,6 @@ MAeq_dist_iNEXT<- iNEXT(MAeq_dist_iNEXT0,q=c(0))
 MAeq_dist_iNEXT_gg <- ggiNEXT(MAeq_dist_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_MAeq)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_MAeq)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
   scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
@@ -186,8 +194,6 @@ Peyd_dist_iNEXT<- iNEXT(Peyd_dist_iNEXT0,q=c(0))
 Peyd_dist_iNEXT_gg <- ggiNEXT(Peyd_dist_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Peyd)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Peyd)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
   scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
@@ -201,8 +207,6 @@ Plob_dist_iNEXT<- iNEXT(Plob_dist_iNEXT0,q=c(0))
 Plob_dist_iNEXT_gg <- ggiNEXT(Plob_dist_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Plob)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Plob)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=c(sitecols[["8"]],sitecols[["30"]]))+
   scale_fill_manual(values=c(sitecols[["8"]],sitecols[["30"]]))
@@ -216,8 +220,6 @@ MAeq_site_iNEXT<- iNEXT(MAeq_site_iNEXT0,q=c(0))
 MAeq_site_iNEXT_gg <- ggiNEXT(MAeq_site_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_MAeq)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_MAeq)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=sitecols)+
   scale_fill_manual(values=sitecols)
@@ -230,8 +232,6 @@ Peyd_site_iNEXT<- iNEXT(Peyd_site_iNEXT0,q=c(0))
 Peyd_site_iNEXT_gg <- ggiNEXT(Peyd_site_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Peyd)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Peyd)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=sitecols)+
   scale_fill_manual(values=sitecols)
@@ -244,8 +244,6 @@ Plob_site_iNEXT<- iNEXT(Plob_site_iNEXT0,q=c(0))
 Plob_site_iNEXT_gg <- ggiNEXT(Plob_site_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Plob)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Plob)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=sitecols)+
   scale_fill_manual(values=sitecols)
@@ -259,8 +257,6 @@ MAeq_field_season_iNEXT<- iNEXT(MAeq_field_season_iNEXT0,q=c(0))
 MAeq_field_season_iNEXT_gg <- ggiNEXT(MAeq_field_season_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_MAeq)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_MAeq)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=timecols)+
   scale_fill_manual(values=timecols)
@@ -273,8 +269,6 @@ Peyd_field_season_iNEXT<- iNEXT(Peyd_field_season_iNEXT0,q=c(0))
 Peyd_field_season_iNEXT_gg <- ggiNEXT(Peyd_field_season_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Peyd)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Peyd)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=timecols)+
   scale_fill_manual(values=timecols)
@@ -287,13 +281,12 @@ Plob_field_season_iNEXT<- iNEXT(Plob_field_season_iNEXT0,q=c(0))
 Plob_field_season_iNEXT_gg <- ggiNEXT(Plob_field_season_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = xlim_Plob)+
   scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Plob)+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   scale_color_manual(values=timecols)+
   scale_fill_manual(values=timecols)
 Plob_field_season_iNEXT_gg
 
+# Make figures
 jpeg(filename="figures/MAeq_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
 grid.arrange(MAeq_dist_iNEXT_gg,MAeq_site_iNEXT_gg,MAeq_field_season_iNEXT_gg)
 dev.off()
@@ -307,14 +300,12 @@ grid.arrange(Plob_dist_iNEXT_gg,Plob_site_iNEXT_gg,Plob_field_season_iNEXT_gg)
 dev.off()
 
 
-
+######### ALL SAMPLES TOGETHER ########
 all <- merge_samples(phy97.f.c,"SampleType")
 all_otu <- otu_table(all)
 all_iNEXT0 <- prepare_inext(all)
 all_iNEXT<- iNEXT(all_iNEXT0,q=c(0))
 all_iNEXT_gg <- ggiNEXT(all_iNEXT,type=1,se=TRUE)+
-  # scale_x_continuous(name="Number of Sequences",limits = xlim_Plob)+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0),limits = ylim_Plob)+
   scale_x_continuous(name="Number of Sequences")+
   scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
@@ -329,8 +320,6 @@ all_iNEXT_gg
 all_iNEXT_gg2 <- ggiNEXT(all_iNEXT,type=1,se=TRUE)+
   scale_x_continuous(name="Number of Sequences",limits = c(0,100000),breaks = c(seq(0,100000,50000)))+
   scale_y_continuous(name="OTU Richness",expand=c(0,0))+
-  # scale_x_continuous(name="Number of Sequences")+
-  # scale_y_continuous(name="OTU Richness",expand=c(0,0))+
   theme_classic()+
   theme(legend.position=c(0.8,0.5),
         axis.text = element_text(size=18),
@@ -341,11 +330,13 @@ all_iNEXT_gg2 <- ggiNEXT(all_iNEXT,type=1,se=TRUE)+
   guides(fill=FALSE,color=FALSE,shape=FALSE,linetype=FALSE)
 all_iNEXT_gg2
 
+# Make inset of zoomed version
 vp <- viewport(width = 0.45, height = 0.6, x = 0.44, y = 0.5)
 print(all_iNEXT_gg)
 print(all_iNEXT_gg2,vp=vp)
 
+# Create figure
 jpeg(filename="figures/all_iNEXT_SAC.jpeg",res = 300, width = 9, height= 4,units = "in")
-print(all_iNEXT_gg)
-print(all_iNEXT_gg2,vp=vp)
-dev.off()
+print(all_iNEXT_gg) # Plot the main panel
+print(all_iNEXT_gg2,vp=vp) # Plot the inset
+dev.off() # Close jpg

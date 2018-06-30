@@ -36,16 +36,18 @@ phy.f <- prune_samples(sample_data(phy.f)$site!="34", phy.f)
 ############################## Site Formatting ####################################
 
 # Characterize sites by disturbance level
-VeryHigh <- c(33,40,32,31,27,30,26)
-High <- c(25,3,38,24)
-HighMed <- c(9,34,35,8,14,6)
-LowMed <- c(2,22,1,23)
-Low <- c(7,13,12,4,36,5,37)
-VeryLow <- c(10,21,11,20,16,15,39,19,18,17)
+VeryHigh <- c(30,31,32)
+High <- c(1,6,25,26,38,40)
+Medium <- c(7,8,12,13,14,22,33,34,35)
+Low <- c(2,3,4,9,23,24)
+VeryLow <- c(5,10,11,15,16,17,18,19,20,21,28,29,36,37,39)
 
+# Make site a factor
 sample_data(phy.f)$site <- factor(sample_data(phy.f)$site)
+# Create a disturbance level column, start as site
 sample_data(phy.f)$Dist <- sample_data(phy.f)$site
 
+# Finish creating Dist
 for (i in VeryHigh){
   if(i %in% unique(as.character(data.frame(sample_data(phy.f))$site)))
     (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("VeryHigh"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("VeryHigh")))
@@ -56,14 +58,9 @@ for (i in High){
     (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("High"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("High")))
 }
 
-for (i in HighMed){
+for (i in Medium){
   if(i %in% unique(as.character(data.frame(sample_data(phy.f))$site)))
-    (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("HighMed"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("HighMed")))
-}
-
-for (i in LowMed){
-  if(i %in% unique(as.character(data.frame(sample_data(phy.f))$site)))
-    (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("LowMed"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("LowMed")))
+    (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("Medium"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("Medium")))
 }
 
 for (i in Low){
@@ -76,7 +73,8 @@ for (i in VeryLow){
     (sample_data(phy.f)$Dist<- gsub (paste("\\<",as.character(i),"\\>",sep=""),as.character("VeryLow"), as.character(data.frame(sample_data(phy.f))$Dist), as.character("VeryLow")))
 }
 
-levels(sample_data(phy.f)$Dist) <- c("VeryHigh","High","HighMed","Low","VeryLow")
+# Order levels
+levels(sample_data(phy.f)$Dist) <- c("VeryHigh","High","Medium","Low","VeryLow")
 
 ###################### Physeq formatting and tree #####################################
 # Assign new name for clarity
@@ -217,15 +215,15 @@ sediment_seqs <- sum(taxa_sums(phy97.f.c.sediment))
 # Subset by compartment and disturbance level
 phy97.f.c.coral.VH <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="VeryHigh")
 phy97.f.c.coral.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.VH)>0,phy97.f.c.coral.VH)
-phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="HighMed")
+phy97.f.c.coral.M <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Dist=="Medium")
 phy97.f.c.coral.M <- prune_taxa(taxa_sums(phy97.f.c.coral.M)>0,phy97.f.c.coral.M)
 phy97.f.c.sediment.VH <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="VeryHigh")
 phy97.f.c.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.sediment.VH)>0,phy97.f.c.sediment.VH)
-phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="HighMed")
+phy97.f.c.sediment.M <- subset_samples(phy97.f.c.sediment,sample_data(phy97.f.c.sediment)$Dist=="Medium")
 phy97.f.c.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.sediment.M)>0,phy97.f.c.sediment.M)
 phy97.f.c.water.VH <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="VeryHigh")
 phy97.f.c.water.VH <- prune_taxa(taxa_sums(phy97.f.c.water.VH)>0,phy97.f.c.water.VH)
-phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="HighMed")
+phy97.f.c.water.M <- subset_samples(phy97.f.c.water,sample_data(phy97.f.c.water)$Dist=="Medium")
 phy97.f.c.water.M <- prune_taxa(taxa_sums(phy97.f.c.water.M)>0,phy97.f.c.water.M)
 
 
@@ -245,11 +243,11 @@ phy97.f.c.coral.MAeq.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.VH)>0,phy97
 phy97.f.c.coral.Plob.VH <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="VeryHigh")
 phy97.f.c.coral.Plob.VH <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.VH)>0,phy97.f.c.coral.Plob.VH)
 
-phy97.f.c.coral.Peyd.M <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="HighMed")
+phy97.f.c.coral.Peyd.M <- subset_samples(phy97.f.c.coral.Peyd,sample_data(phy97.f.c.coral.Peyd)$Dist=="Medium")
 phy97.f.c.coral.Peyd.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.M)>0,phy97.f.c.coral.Peyd.M)
-phy97.f.c.coral.MAeq.M <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="HighMed")
+phy97.f.c.coral.MAeq.M <- subset_samples(phy97.f.c.coral.MAeq,sample_data(phy97.f.c.coral.MAeq)$Dist=="Medium")
 phy97.f.c.coral.MAeq.M <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.M)>0,phy97.f.c.coral.MAeq.M)
-phy97.f.c.coral.Plob.M <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="HighMed")
+phy97.f.c.coral.Plob.M <- subset_samples(phy97.f.c.coral.Plob,sample_data(phy97.f.c.coral.Plob)$Dist=="Medium")
 phy97.f.c.coral.Plob.M <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.M)>0,phy97.f.c.coral.Plob.M)
 
 ############################# Subset by Field Season #################################
@@ -280,34 +278,6 @@ coral.storm <- subset_taxa(coral.storm, taxa_sums(coral.storm) > 0, prune=TRUE)
 
 coral.after <- subset_samples(phy97.f.c.coral, data.frame(sample_data(phy97.f.c.coral))$field_season == "KI2015b", prune=TRUE)
 coral.after <- subset_taxa(coral.after, taxa_sums(coral.after) > 0, prune=TRUE)
-
-# Peyd.before <- subset_samples(phy97.f.c.coral.Peyd, data.frame(sample_data(phy97.f.c.coral.Peyd))$field_season == "KI2014",prune=TRUE)
-# Peyd.before <- subset_taxa(Peyd.before, taxa_sums(Peyd.before) > 0, prune=TRUE)
-# 
-# Peyd.storm <- subset_samples(phy97.f.c.coral.Peyd, data.frame(sample_data(phy97.f.c.coral.Peyd))$field_season == "KI2015a_Post", prune=TRUE)
-# Peyd.storm <- subset_taxa(Peyd.storm, taxa_sums(Peyd.storm) > 0, prune=TRUE)
-# 
-# Peyd.after <- subset_samples(phy97.f.c.coral.Peyd, data.frame(sample_data(phy97.f.c.coral.Peyd))$field_season == "KI2015b", prune=TRUE)
-# Peyd.after <- subset_taxa(Peyd.after, taxa_sums(Peyd.after) > 0, prune=TRUE)
-# 
-# Peyd.before.types <- unique(data.frame(tax_table(Peyd.before))$hit)
-# Peyd.storm.types <- unique(data.frame(tax_table(Peyd.storm))$hit)
-# Peyd.after.types <- unique(data.frame(tax_table(Peyd.after))$hit)
-# 
-# Peyd.before.types.subclade <- Peyd.before.types
-# Peyd.before.types.subclade <- gsub("_.*","",Peyd.before.types.subclade)
-# Peyd.before.types.subclade <- gsub("\\..*","",Peyd.before.types.subclade)
-# Peyd.before.types.subclade <- unique(Peyd.before.types.subclade)
-# 
-# Peyd.storm.types.subclade <- Peyd.storm.types
-# Peyd.storm.types.subclade <- gsub("_.*","",Peyd.storm.types.subclade)
-# Peyd.storm.types.subclade <- gsub("\\..*","",Peyd.storm.types.subclade)
-# Peyd.storm.types.subclade <- unique(Peyd.storm.types.subclade)
-# 
-# Peyd.after.types.subclade <- Peyd.after.types
-# Peyd.after.types.subclade <- gsub("_.*","",Peyd.after.types.subclade)
-# Peyd.after.types.subclade <- gsub("\\..*","",Peyd.after.types.subclade)
-# Peyd.after.types.subclade <- unique(Peyd.after.types.subclade)
 
 ############################ Types and subclades by compartment #########################
 all.types <- unique(data.frame(tax_table(phy97.f.c))$hit)
@@ -504,4 +474,3 @@ MAeq.M.denovo.subclade <- unique(MAeq.M.denovo)
 
 #################### Save grouped data as RData file ##########################
 save(list=ls(),file="data/KI_Compartment_f_coral_grouped.RData")
-#save(list=ls(pattern="phy97.f.c."), sediment_seqs, total_seqs, coral_seqs, water_seqs, phy97.f.c, file = "data/KI_Compartment_f_coral_grouped.RData")

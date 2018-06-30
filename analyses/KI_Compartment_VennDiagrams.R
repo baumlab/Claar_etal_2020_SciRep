@@ -1,9 +1,12 @@
+# Clear working directory
 rm(list=ls())
 
+# Load necessary libraries
 library(VennDiagram)
 library(eulerr)
 library(gridExtra)
 
+# Load necessary data
 load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
