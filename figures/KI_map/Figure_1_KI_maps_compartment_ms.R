@@ -49,7 +49,7 @@ segments(-157.563, 1.72,-157.563, 1.82)
 dev.off()
 
 # jpeg(filename = "figures/KI_map.jpg",width = 7, height = 7.2, units="in", res=300)
-pdf(file = "figures/Figure_1_KI_map.pdf",width = 7, height = 7.2,family = "Helvetica")
+pdf(file = "figures/Figure_1_KI_map.pdf",width = 7, height = 7.2, useDingbats = FALSE)
 source("figures/KI_map/KI_base_B&W.R")
 # village markers sized by population
 symbols(villages$lon, villages$lat, circles=(villages$pop)/10, add=TRUE,inches=0.3, bg=alpha("black", 0.4))
@@ -66,3 +66,4 @@ text(-157.588, 1.77, "Human\nDisturbance", srt=90, cex=0.6)
 segments(-157.563, 1.72,-157.563, 1.82)
 
 dev.off()
+
