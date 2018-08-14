@@ -476,3 +476,4 @@ MAeq.M.denovo.subclade <- unique(MAeq.M.denovo)
 
 #################### Save grouped data as RData file ##########################
 save(list=ls(),file="data/KI_Compartment_f_coral_grouped.RData")
+save(list=c("phy97.f.c.p"),file="data/KI_Compartment_phy97fcp.RData")
