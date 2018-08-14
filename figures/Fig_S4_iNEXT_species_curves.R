@@ -141,27 +141,27 @@ wat_field_season_iNEXT_gg <- ggiNEXT(wat_field_season_iNEXT,type=1,se=TRUE)+
   scale_fill_manual(values=c(timecols))
 
 
-jpeg(filename="figures/Fig_S6_coral_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
+jpeg(filename="figures/Fig_S4_coral_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
 grid.arrange(coral_dist_iNEXT_gg,coral_site_iNEXT_gg,coral_field_season_iNEXT_gg)
 dev.off()
 
-jpeg(filename="figures/Fig_S7_sediment_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
+jpeg(filename="figures/Fig_S5_sediment_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
 grid.arrange(sed_dist_iNEXT_gg,sed_site_iNEXT_gg,sed_field_season_iNEXT_gg)
 dev.off()
 
-jpeg(filename="figures/Fig_S8_water_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
+jpeg(filename="figures/Fig_S6_water_iNEXT_SAC.jpeg",res = 300, width = 9, height= 12,units = "in")
 grid.arrange(wat_dist_iNEXT_gg,wat_site_iNEXT_gg,wat_field_season_iNEXT_gg)
 dev.off()
 
-pdf(file="figures/Fig_S6_coral_iNEXT_SAC.pdf",width = 9, height = 12,useDingbats = FALSE)
+pdf(file="figures/Fig_S4_coral_iNEXT_SAC.pdf",width = 9, height = 12,useDingbats = FALSE)
 grid.arrange(coral_dist_iNEXT_gg,coral_site_iNEXT_gg,coral_field_season_iNEXT_gg)
 dev.off()
 
-pdf(file="figures/Fig_S7_sediment_iNEXT_SAC.pdf",width = 9, height = 12,useDingbats = FALSE)
+pdf(file="figures/Fig_S5_sediment_iNEXT_SAC.pdf",width = 9, height = 12,useDingbats = FALSE)
 grid.arrange(sed_dist_iNEXT_gg,sed_site_iNEXT_gg,sed_field_season_iNEXT_gg)
 dev.off()
 
-pdf(file="figures/Fig_S8_water_iNEXT_SAC.pdf", width = 9, height = 12,useDingbats = FALSE)
+pdf(file="figures/Fig_S6_water_iNEXT_SAC.pdf", width = 9, height = 12,useDingbats = FALSE)
 grid.arrange(wat_dist_iNEXT_gg,wat_site_iNEXT_gg,wat_field_season_iNEXT_gg)
 dev.off()
 
