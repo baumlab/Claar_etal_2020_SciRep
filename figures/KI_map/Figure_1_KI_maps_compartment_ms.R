@@ -6,6 +6,7 @@ library(rgdal)
 library(ggplot2)
 
 rm(list=ls())
+load("analyses/KI_Compartment_colors.RData")
 
 ### site data
 sites<-read.csv('figures/KI_map/KI_sites_compartment.csv')
@@ -20,9 +21,8 @@ villages$pop<-c(1879, 2311, 955, 441, 1500, 1000, 500)
 villages$village<-c("London", "Tabwakea", "Banana", "Poland", "legend1500", "legend1000", "legend500")
 colnames(villages)[1]<-"lat"
 
-
 ## set palette for fishing pressure
-fishing.cols<-c("#c7eae5","#8c510a")
+fishing.cols<-c(sitecols[["8"]],sitecols[["30"]])
 fishing.cols<-as.data.frame(fishing.cols)
 fishing.cols$f.pressure<-levels(sites$f.pressure)
 sites$col<-fishing.cols$fishing.cols[match(sites$f.pressure, fishing.cols$f.pressure)]
@@ -40,7 +40,7 @@ text(-157.588 + 0.004, 1.67, "Village", srt=90, cex=0.6)
 segments(-157.563, 1.64,-157.563, 1.704)  
 points(sites$lon, sites$lat, bg=alpha(sites$col,0.8), pch=21, cex=1.4)
 with(sites, text(lon, lat, label=site.simple, cex=0.3))
-legend(-157.56, 1.8,legend=levels(sites$f.pressure), pt.bg=c("#c7eae5","#8c510a"), pch=21, bty="n", pt.cex=1.4, cex=0.6)
+legend(-157.56, 1.8,legend=levels(sites$f.pressure), pt.bg=c(sitecols[["8"]],sitecols[["30"]]), pch=21, bty="n", pt.cex=1.4, cex=0.6)
 text(-157.588, 1.77, "Human\nDisturbance", srt=90, cex=0.6)
 segments(-157.563, 1.72,-157.563, 1.82)
 # text(-157.3, 1.88, "Bay of\nWrecks", cex = 0.5)
@@ -61,7 +61,7 @@ text(-157.588 + 0.004, 1.67, "Village", srt=90, cex=0.6)
 segments(-157.563, 1.64,-157.563, 1.704)  
 points(sites$lon, sites$lat, bg=alpha(sites$col,0.8), pch=21, cex=1.4)
 with(sites, text(lon, lat, label=site.simple, cex=0.3))
-legend(-157.56, 1.8,legend=levels(sites$f.pressure), pt.bg=c("#c7eae5","#8c510a"), pch=21, bty="n", pt.cex=1.4, cex=0.6)
+legend(-157.56, 1.8,legend=levels(sites$f.pressure), pt.bg=c(sitecols[["8"]],sitecols[["30"]]), pch=21, bty="n", pt.cex=1.4, cex=0.6)
 text(-157.588, 1.77, "Human\nDisturbance", srt=90, cex=0.6)
 segments(-157.563, 1.72,-157.563, 1.82)
 
