@@ -79,33 +79,33 @@ vd3 <- plot(VennDiag3, quantities = TRUE, font=1, cex=1, alpha=0.5,
 class(print(vd1))
 
 
-jpeg(filename="figures/Figure_4b_sediment_time_venn.jpg",
+jpeg(filename="figures/Figure_5b_sediment_time_venn.jpg",
      width = 4, height = 4, units="in",res = 300)
 vd1
 dev.off()
 
-jpeg(filename="figures/Figure_4c_water_time_venn.jpg",
+jpeg(filename="figures/Figure_5c_water_time_venn.jpg",
      width = 4, height = 4, units="in",res = 300)
 vd2
 dev.off()
 
-jpeg(filename="figures/Figure_4a_coral_time_venn.jpg",
+jpeg(filename="figures/Figure_5a_coral_time_venn.jpg",
      width = 4, height = 4, units="in",res = 300)
 vd3
 dev.off()
 
 
-pdf(file="figures/Figure_4b_sediment_time_venn.pdf",
+pdf(file="figures/Figure_5b_sediment_time_venn.pdf",
      width = 4, height = 4)
 vd1
 dev.off()
 
-pdf(file="figures/Figure_4c_water_time_venn.pdf",
+pdf(file="figures/Figure_5c_water_time_venn.pdf",
      width = 4, height = 4)
 vd2
 dev.off()
 
-pdf(file="figures/Figure_4a_coral_time_venn.pdf",
+pdf(file="figures/Figure_5a_coral_time_venn.pdf",
      width = 4, height = 4)
 vd3
 dev.off()
