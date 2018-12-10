@@ -11,6 +11,13 @@ phy97.f.c.coral.Peyd <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.cor
 phy97.f.c.coral.MAeq <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Montipora_foliosa")
 phy97.f.c.coral.Plob <- subset_samples(phy97.f.c.coral,sample_data(phy97.f.c.coral)$Coral_Species=="Porites_lobata")
 
+sample_data(phy97.f.c.coral)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.coral)$Dist)
+sample_data(phy97.f.c.sediment)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.sediment)$Dist)
+sample_data(phy97.f.c.water)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.water)$Dist)
+sample_data(phy97.f.c.coral.Peyd)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.coral.Peyd)$Dist)
+sample_data(phy97.f.c.coral.MAeq)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.coral.MAeq)$Dist)
+sample_data(phy97.f.c.coral.Plob)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c.coral.Plob)$Dist)
+sample_data(phy97.f.c)$Dist <- gsub(pattern="27",replacement="VeryHigh",sample_data(phy97.f.c)$Dist)
 
 sediment.ufdist <- UniFrac(phy97.f.c.sediment, weighted=T, 
                        normalized=F, parallel=F, fast=T)
@@ -30,6 +37,11 @@ all.bd.dist <- betadisper(d=all.ufdist,
                             group=sample_data(phy97.f.c)$Dist,
                             type="centroid", bias.adjust=FALSE)
 
+st.uf <- UniFrac(phy97.f.c, weighted=T, 
+                      normalized=F, parallel=F, fast=T)
+st.bd <- betadisper(d=st.ufdist, 
+                          group=sample_data(phy97.f.c)$SampleType,
+                          type="centroid", bias.adjust=FALSE)
 
 Peyd.ufdist <- UniFrac(phy97.f.c.coral.Peyd, weighted=T, 
                        normalized=F, parallel=F, fast=T)
@@ -95,7 +107,7 @@ adonis(distance(phy97.f.c, method="wunifrac") ~ Dist,
 
 
 # jpeg(filename="figures/pcoa_by_dist2.jpg", 
-jpeg(filename="figures/Figure_3_pcoa_by_dist.jpg", 
+jpeg(filename="figures/Figure_3_pcoa_by_dist_TEST.jpg", 
      width = 12, height = 8, units="in",res = 300)
 par(mfrow=c(2,3), mar=c(1,1,3,1))
 # Pocillopora
@@ -295,4 +307,37 @@ text(0.065,-0.037,"adonis = sig. ***",cex=2)
 mtext("F)", side=3,line=0.5,adj=-0.025,cex=2) 
 
 
+dev.off()
+
+# Now make a figure divided by coral species
+jpeg(filename="figures/Figure_pcoa_by_coralspecies.jpg", 
+     width = 4, height = 4, units="in",res = 300)
+par(mar=c(1,1,3,1))
+plot(coral.bd.species, hull=F, label=F, 
+     main="Coral Species", col=speccols,
+     xlab="", ylab="", cex=2, sub="", 
+     xaxt='n',yaxt='n',cex.main=2.5)
+ordihull(coral.bd.species, sample_data(phy97.f.c.coral)$Coral_Species, 
+         draw = c("polygon"),
+         col = speccols, alpha=0.2, lwd=0.05)
+legend("topleft", bty="n", pch=1:6, cex=1,
+       # legend=levels(as.factor(sample_data(phy97.f.c.coral)$Coral_Species)),
+       legend=c("M. aequituberculata","P. grandis","P. lobata"),
+       col=speccols)
+dev.off()
+
+# Now make a figure divided by compartment
+jpeg(filename="figures/Figure_pcoa_by_sampletype.jpg", 
+     width = 4, height = 4, units="in",res = 300)
+par(mar=c(1,1,3,1))
+plot(st.bd, hull=F, label=F, 
+     main="Sample Type", col=compcols,
+     xlab="", ylab="", cex=2, sub="", 
+     xaxt='n',yaxt='n',cex.main=2.5)
+ordihull(st.bd, sample_data(phy97.f.c)$SampleType, 
+         draw = c("polygon"),
+         col = compcols, alpha=0.2, lwd=0.05)
+legend("topright", bty="n", pch=1:6, cex=1,
+       legend=levels(as.factor(sample_data(phy97.f.c)$SampleType)),
+       col=compcols)
 dev.off()
