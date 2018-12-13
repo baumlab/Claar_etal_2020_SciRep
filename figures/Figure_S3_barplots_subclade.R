@@ -17,6 +17,8 @@ phy97.f.c.s <- phy97.f.c.p
 # Remove accession number information, only keep subclade identifier in "hit"
 tax_table(phy97.f.c.s)[,8] <- gsub("_.*", "", tax_table(phy97.f.c.s)[,8])
 
+sample_data(phy97.f.c.s)$Dist <- gsub("27","VeryHigh",sample_data(phy97.f.c.s)$Dist)
+
 # Reorder tax table so that tax glom actually works
 tax_table(phy97.f.c.s) <- tax_table(phy97.f.c.s)[,c(9,8,1)]
 # Agglomerate by subclade
@@ -50,13 +52,15 @@ otu_colors2["G3.3"] <- "#51260d"
 otu_colors2["C31"] <- "#9FC9A1"
 
 
+
+
 # Subset samples for each figure
 # Sediment
 phy97.f.c.s.h.sediment <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s.h)$SampleType=="sediment")
 phy97.f.c.s.h.sediment <- prune_taxa(taxa_sums(phy97.f.c.s.h.sediment)>0,phy97.f.c.s.h.sediment)
 phy97.f.c.s.h.sediment.VH <- subset_samples(phy97.f.c.s.h.sediment,sample_data(phy97.f.c.s.h.sediment)$Dist=="VeryHigh")
 phy97.f.c.s.h.sediment.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.sediment.VH)>0,phy97.f.c.s.h.sediment.VH)
-phy97.f.c.s.h.sediment.M <- subset_samples(phy97.f.c.s.h.sediment,sample_data(phy97.f.c.s.h.sediment)$Dist=="HighMed")
+phy97.f.c.s.h.sediment.M <- subset_samples(phy97.f.c.s.h.sediment,sample_data(phy97.f.c.s.h.sediment)$Dist=="Medium")
 phy97.f.c.s.h.sediment.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.sediment.M)>0,phy97.f.c.s.h.sediment.M)
 
 # Water
@@ -64,7 +68,7 @@ phy97.f.c.s.h.water <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s.h)$S
 phy97.f.c.s.h.water <- prune_taxa(taxa_sums(phy97.f.c.s.h.water)>0,phy97.f.c.s.h.water)
 phy97.f.c.s.h.water.VH <- subset_samples(phy97.f.c.s.h.water,sample_data(phy97.f.c.s.h.water)$Dist=="VeryHigh")
 phy97.f.c.s.h.water.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.water.VH)>0,phy97.f.c.s.h.water.VH)
-phy97.f.c.s.h.water.M <- subset_samples(phy97.f.c.s.h.water,sample_data(phy97.f.c.s.h.water)$Dist=="HighMed")
+phy97.f.c.s.h.water.M <- subset_samples(phy97.f.c.s.h.water,sample_data(phy97.f.c.s.h.water)$Dist=="Medium")
 phy97.f.c.s.h.water.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.water.M)>0,phy97.f.c.s.h.water.M)
 
 # Pocillopora
@@ -72,7 +76,7 @@ phy97.f.c.s.h.coral.Peyd <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s
 phy97.f.c.s.h.coral.Peyd <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd)>0,phy97.f.c.s.h.coral.Peyd)
 phy97.f.c.s.h.coral.Peyd.VH <- subset_samples(phy97.f.c.s.h.coral.Peyd,sample_data(phy97.f.c.s.h.coral.Peyd)$Dist=="VeryHigh")
 phy97.f.c.s.h.coral.Peyd.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd.VH)>0,phy97.f.c.s.h.coral.Peyd.VH)
-phy97.f.c.s.h.coral.Peyd.M <- subset_samples(phy97.f.c.s.h.coral.Peyd,sample_data(phy97.f.c.s.h.coral.Peyd)$Dist=="HighMed")
+phy97.f.c.s.h.coral.Peyd.M <- subset_samples(phy97.f.c.s.h.coral.Peyd,sample_data(phy97.f.c.s.h.coral.Peyd)$Dist=="Medium")
 phy97.f.c.s.h.coral.Peyd.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Peyd.M)>0,phy97.f.c.s.h.coral.Peyd.M)
 
 # Montipora
@@ -80,7 +84,7 @@ phy97.f.c.s.h.coral.MAeq <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s
 phy97.f.c.s.h.coral.MAeq <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq)>0,phy97.f.c.s.h.coral.MAeq)
 phy97.f.c.s.h.coral.MAeq.VH <- subset_samples(phy97.f.c.s.h.coral.MAeq,sample_data(phy97.f.c.s.h.coral.MAeq)$Dist=="VeryHigh")
 phy97.f.c.s.h.coral.MAeq.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq.VH)>0,phy97.f.c.s.h.coral.MAeq.VH)
-phy97.f.c.s.h.coral.MAeq.M <- subset_samples(phy97.f.c.s.h.coral.MAeq,sample_data(phy97.f.c.s.h.coral.MAeq)$Dist=="HighMed")
+phy97.f.c.s.h.coral.MAeq.M <- subset_samples(phy97.f.c.s.h.coral.MAeq,sample_data(phy97.f.c.s.h.coral.MAeq)$Dist=="Medium")
 phy97.f.c.s.h.coral.MAeq.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.MAeq.M)>0,phy97.f.c.s.h.coral.MAeq.M)
 
 # Porites
@@ -88,7 +92,7 @@ phy97.f.c.s.h.coral.Plob <- subset_samples(phy97.f.c.s.h,sample_data(phy97.f.c.s
 phy97.f.c.s.h.coral.Plob <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Plob)>0,phy97.f.c.s.h.coral.Plob)
 phy97.f.c.s.h.coral.Plob.VH <- subset_samples(phy97.f.c.s.h.coral.Plob,sample_data(phy97.f.c.s.h.coral.Plob)$Dist=="VeryHigh")
 phy97.f.c.s.h.coral.Plob.VH <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Plob.VH)>0,phy97.f.c.s.h.coral.Plob.VH)
-phy97.f.c.s.h.coral.Plob.M <- subset_samples(phy97.f.c.s.h.coral.Plob,sample_data(phy97.f.c.s.h.coral.Plob)$Dist=="HighMed")
+phy97.f.c.s.h.coral.Plob.M <- subset_samples(phy97.f.c.s.h.coral.Plob,sample_data(phy97.f.c.s.h.coral.Plob)$Dist=="Medium")
 phy97.f.c.s.h.coral.Plob.M <- prune_taxa(taxa_sums(phy97.f.c.s.h.coral.Plob.M)>0,phy97.f.c.s.h.coral.Plob.M)
 
 # Bar plots
@@ -97,7 +101,7 @@ p1.sediment <- plot_bar(phy97.f.c.s.h.sediment.VH,fill="hit")+ # start plotting
   coord_flip()+ # flip horizontal
   scale_fill_manual(values=otu_colors2,name="Subclade")+ # set color fill values
   scale_y_continuous(expand = c(0, 0))+ # remove extra space between data and axes
-  scale_x_discrete(name="Very High Disturbance")+ # rename x axis
+  scale_x_discrete(name="High Disturbance")+ # rename x axis
   theme(axis.title.x = element_blank(), # remove x axis title
         axis.text.x = element_blank(), # remove x axis text
         axis.ticks = element_blank(), # remove x axis ticks
@@ -119,7 +123,7 @@ p1.water <- plot_bar(phy97.f.c.s.h.water.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Very High Disturbance")+
+  scale_x_discrete(name="High Disturbance")+
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
@@ -141,7 +145,7 @@ p1.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Very High Disturbance")+
+  scale_x_discrete(name="High Disturbance")+
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
@@ -163,7 +167,7 @@ p1.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Very High Disturbance")+
+  scale_x_discrete(name="High Disturbance")+
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
@@ -185,7 +189,7 @@ p1.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="Very High Disturbance")+
+  scale_x_discrete(name="High Disturbance")+
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
@@ -209,6 +213,7 @@ grid.arrange(p1.coral.Peyd,p2.coral.Peyd,nrow=2)
 grid.arrange(p1.coral.MAeq,p2.coral.MAeq,nrow=2)
 grid.arrange(p1.coral.Plob,p2.coral.Plob,nrow=2)
 
+dev.off()
 # Make jpegs
 # Sediment
 jpeg(filename = "figures/Fig_S3B_barplot_sediment_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
@@ -253,3 +258,4 @@ leg <- get_legend(p0)
 jpeg(filename = "figures/Fig_S3A_barplot_subclade_legend.jpg",width = 5.5, height = 5.5,units = "in",res=300)
 as_ggplot(leg) # Plot the legend
 dev.off() # Close jpg
+
