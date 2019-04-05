@@ -259,3 +259,37 @@ jpeg(filename = "figures/Fig_S3A_barplot_subclade_legend.jpg",width = 5.5, heigh
 as_ggplot(leg) # Plot the legend
 dev.off() # Close jpg
 
+### Calculate number of dominant subclades for each compartment
+otu1 <- otu_table(phy97.f.c.s.h.sediment)
+tax1 <- tax_table(phy97.f.c.s.h.sediment)
+otu_tax1 <- cbind(otu1,tax1)
+max_sub <- apply(otu1, 2, function(x) which(x == max(x)))
+sort(unique(max_sub))
+nsub1 <- length(unique(max_sub))
+
+otu2 <- otu_table(phy97.f.c.s.h.water)
+tax2 <- tax_table(phy97.f.c.s.h.water)
+otu_tax2 <- cbind(otu2,tax2)
+max_sub2 <- apply(otu2, 2, function(x) which(x == max(x)))
+sort(unique(max_sub2))
+nsub2 <- length(unique(max_sub2))
+
+otu3 <- otu_table(phy97.f.c.s.h.coral.Plob)
+tax3 <- tax_table(phy97.f.c.s.h.coral.Plob)
+otu_tax3 <- cbind(otu3,tax3)
+max_sub3 <- apply(otu3, 2, function(x) which(x == max(x)))
+sort(unique(max_sub3))
+nsub3 <- length(unique(max_sub3))
+
+### Calculate total number of  subclades for each compartment
+ntaxa(phy97.f.c.s.h.sediment)
+ntaxa(phy97.f.c.s.h.water)
+ntaxa(phy97.f.c.s.h.coral.MAeq)
+ntaxa(phy97.f.c.s.h.coral.Peyd)
+ntaxa(phy97.f.c.s.h.coral.Plob)
+
+unique(data.frame(tax_table(phy97.f.c.s.h.sediment))$clade)
+unique(data.frame(tax_table(phy97.f.c.s.h.water))$clade)
+unique(data.frame(tax_table(phy97.f.c.s.h.coral.MAeq))$clade)
+unique(data.frame(tax_table(phy97.f.c.s.h.coral.Peyd))$clade)
+unique(data.frame(tax_table(phy97.f.c.s.h.coral.Plob))$clade)

@@ -408,3 +408,56 @@ p2.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.M,fill="hit")+
 
 grid.arrange(p1.coral.Plob,p2.coral.Plob,nrow=2)
 
+
+### Calculate number of dominant OTUS for each compartment
+otu1 <- otu_table(phy97.f.c.water.p)
+tax1 <- tax_table(phy97.f.c.water.p)
+otu_tax1 <- cbind(otu1,tax1)
+max_sub <- apply(otu1, 2, function(x) which(x == max(x)))
+sort(unique(max_sub))
+nsub1 <- length(unique(max_sub))
+
+otu2 <- otu_table(phy97.f.c.sediment.p)
+tax2 <- tax_table(phy97.f.c.sediment.p)
+otu_tax2 <- cbind(otu2,tax2)
+max_sub2 <- apply(otu2, 2, function(x) which(x == max(x)))
+sort(unique(max_sub2))
+nsub2 <- length(unique(max_sub2))
+
+
+phy97.f.c.coral.MAeq.p <- transform_sample_counts(phy97.f.c.coral.MAeq, function(x) x/sum(x))
+otu3 <- otu_table(phy97.f.c.coral.MAeq.p)
+tax3 <- tax_table(phy97.f.c.coral.MAeq.p)
+otu_tax3 <- cbind(otu3,tax3)
+max_sub <- apply(otu3, 2, function(x) which(x == max(x)))
+sort(unique(max_sub))
+nsub3 <- length(unique(max_sub))
+
+phy97.f.c.coral.Plob.p <- transform_sample_counts(phy97.f.c.coral.Plob, function(x) x/sum(x))
+otu4 <- otu_table(phy97.f.c.coral.Plob.p)
+tax4 <- tax_table(phy97.f.c.coral.Plob.p)
+otu_tax4 <- cbind(otu4,tax4)
+max_sub <- apply(otu4, 2, function(x) which(x == max(x)))
+sort(unique(max_sub))
+nsub4 <- length(unique(max_sub))
+
+phy97.f.c.coral.Peyd.p <- transform_sample_counts(phy97.f.c.coral.Peyd, function(x) x/sum(x))
+otu5 <- otu_table(phy97.f.c.coral.Peyd.p)
+tax5 <- tax_table(phy97.f.c.coral.Peyd.p)
+otu_tax5 <- cbind(otu5,tax5)
+max_sub <- apply(otu5, 2, function(x) which(x == max(x)))
+sort(unique(max_sub))
+nsub5 <- length(unique(max_sub))
+
+phy97.f.c.coral.MAeq.p <- prune_taxa(taxa_sums(phy97.f.c.coral.MAeq.p) > 0, phy97.f.c.coral.MAeq.p)
+phy97.f.c.coral.Peyd.p <- prune_taxa(taxa_sums(phy97.f.c.coral.Peyd.p) > 0, phy97.f.c.coral.Peyd.p)
+phy97.f.c.coral.Plob.p <- prune_taxa(taxa_sums(phy97.f.c.coral.Plob.p) > 0, phy97.f.c.coral.Plob.p)
+phy97.f.c.sediment.p <- prune_taxa(taxa_sums(phy97.f.c.sediment.p) > 0, phy97.f.c.sediment.p)
+phy97.f.c.water.p <- prune_taxa(taxa_sums(phy97.f.c.water.p) > 0, phy97.f.c.water.p)
+
+
+ntaxa(phy97.f.c.sediment.p)
+ntaxa(phy97.f.c.water.p)
+ntaxa(phy97.f.c.coral.MAeq.p)
+ntaxa(phy97.f.c.coral.Peyd.p)
+ntaxa(phy97.f.c.coral.Plob.p)
