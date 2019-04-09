@@ -10,7 +10,7 @@ load("analyses/KI_Compartment_colors.RData")
 
 ### site data
 sites<-read.csv('figures/KI_map/KI_sites_compartment.csv')
-sites$site.simple <- c("M1","H1","H3","M2")
+sites$site.simple <- c("M1","VH1","VH3","M2")
 
 ###village data
 villages<-read.csv("figures/KI_map/KI_villagesDCC_2015update.csv", header = TRUE)
