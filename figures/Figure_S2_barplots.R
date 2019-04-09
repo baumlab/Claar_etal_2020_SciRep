@@ -9,6 +9,7 @@ load("analyses/KI_Compartment_colors.RData")
 library(gridExtra)
 library(ggplot2)
 library(ggpubr)
+library(phyloseq)
 
 sample_data(phy97.f.c.coral)$Dist <- gsub("27","VeryHigh",sample_data(phy97.f.c.coral)$Dist)
 sample_data(phy97.f.c)$Dist <- gsub("27","VeryHigh",sample_data(phy97.f.c)$Dist)
@@ -78,7 +79,7 @@ p_MAeq_M_clade <- plot_bar(phy97.f.c.coral.MAeq.M.p,fill="clade")+ # Start plott
 p_MAeq_VH_clade <- plot_bar(phy97.f.c.coral.MAeq.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0,0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
@@ -98,7 +99,7 @@ p_Peyd_M_clade <- plot_bar(phy97.f.c.coral.Peyd.M.p,fill="clade")+
 p_Peyd_VH_clade <- plot_bar(phy97.f.c.coral.Peyd.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0,0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
@@ -118,7 +119,7 @@ p_Plob_M_clade <- plot_bar(phy97.f.c.coral.Plob.M.p,fill="clade")+
 p_Plob_VH_clade <- plot_bar(phy97.f.c.coral.Plob.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0,0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
@@ -138,7 +139,7 @@ p_sediment_M_clade <- plot_bar(phy97.f.c.sediment.M.p,fill="clade")+
 p_sediment_VH_clade <- plot_bar(phy97.f.c.sediment.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
@@ -158,7 +159,7 @@ p_water_M_clade <- plot_bar(phy97.f.c.water.M.p,fill="clade")+
 p_water_VH_clade <- plot_bar(phy97.f.c.water.VH.p,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
@@ -193,7 +194,7 @@ dev.off()
 p_all <- plot_bar(phy97.f.c,fill="clade")+
   scale_fill_manual(values=clade_colors,name="Clade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
+  scale_x_discrete(name="Very High Disturbance")+
   theme(axis.text.x = element_blank(), # Remove x axis tick labels
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
