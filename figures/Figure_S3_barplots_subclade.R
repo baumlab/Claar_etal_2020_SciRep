@@ -101,9 +101,8 @@ p1.sediment <- plot_bar(phy97.f.c.s.h.sediment.VH,fill="hit")+ # start plotting
   coord_flip()+ # flip horizontal
   scale_fill_manual(values=otu_colors2,name="Subclade")+ # set color fill values
   scale_y_continuous(expand = c(0, 0))+ # remove extra space between data and axes
-  scale_x_discrete(name="High Disturbance")+ # rename x axis
-  theme(axis.title.x = element_blank(), # remove x axis title
-        axis.text.x = element_blank(), # remove x axis text
+  scale_x_discrete(name="Very High Disturbance")+ # rename x axis
+  theme(axis.text.x = element_blank(), # remove x axis text
         axis.ticks = element_blank(), # remove x axis ticks
         axis.text.y = element_blank(), # remove y axis text
         legend.position = "none") # suppress plotting of legend 
@@ -113,7 +112,8 @@ p2.sediment <- plot_bar(phy97.f.c.s.h.sediment.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), 
+  theme(axis.title.x = element_blank(), # remove x axis title
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -123,9 +123,8 @@ p1.water <- plot_bar(phy97.f.c.s.h.water.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), 
+  scale_x_discrete(name="Very High Disturbance")+
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -135,7 +134,8 @@ p2.water <- plot_bar(phy97.f.c.s.h.water.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), 
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -145,9 +145,8 @@ p1.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), 
+  scale_x_discrete(name="Very High Disturbance")+
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -157,7 +156,8 @@ p2.coral.Peyd <- plot_bar(phy97.f.c.s.h.coral.Peyd.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), 
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -167,9 +167,8 @@ p1.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), 
+  scale_x_discrete(name="Very High Disturbance")+
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -179,7 +178,8 @@ p2.coral.MAeq <- plot_bar(phy97.f.c.s.h.coral.MAeq.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), 
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -189,9 +189,8 @@ p1.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.VH,fill="hit")+
   coord_flip()+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
-  scale_x_discrete(name="High Disturbance")+
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(), 
+  scale_x_discrete(name="Very High Disturbance")+
+  theme(axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -201,7 +200,8 @@ p2.coral.Plob <- plot_bar(phy97.f.c.s.h.coral.Plob.M,fill="hit")+
   scale_fill_manual(values=otu_colors2,name="Subclade")+
   scale_y_continuous(expand = c(0, 0))+
   scale_x_discrete(name="Medium Disturbance")+
-  theme(axis.text.x = element_blank(), 
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(), 
         axis.ticks = element_blank(),
         axis.text.y = element_blank(),
         legend.position = "none")
@@ -217,23 +217,23 @@ dev.off()
 # Make jpegs
 # Sediment
 jpeg(filename = "figures/Fig_S3B_barplot_sediment_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
-grid.arrange(p1.sediment,p2.sediment,nrow=2)
+grid.arrange(p2.sediment,p1.sediment,nrow=2)
 dev.off()
 # Water
 jpeg(filename = "figures/Fig_S3C_barplot_water_subclade.jpg",width = 7.5, height = 8,units = "in",res=300)
-grid.arrange(p1.water,p2.water,nrow=2,heights=c(1,1.35))
+grid.arrange(p2.water,p1.water,nrow=2,heights=c(1.35,1))
 dev.off()
 # Pocillopora
 jpeg(filename = "figures/Fig_S3E_barplot_Peyd_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
-grid.arrange(p1.coral.Peyd,p2.coral.Peyd,nrow=2)
+grid.arrange(p2.coral.Peyd,p1.coral.Peyd,nrow=2)
 dev.off()
 # Montipora
 jpeg(filename = "figures/Fig_S3D_barplot_MAeq_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
-grid.arrange(p1.coral.MAeq,p2.coral.MAeq,nrow=2)
+grid.arrange(p2.coral.MAeq,p1.coral.MAeq,nrow=2)
 dev.off()
 # Porites
 jpeg(filename = "figures/Fig_S3F_barplot_Plob_subclade.jpg",width = 7.5, height = 10,units = "in",res=300)
-grid.arrange(p1.coral.Plob,p2.coral.Plob,nrow=2)
+grid.arrange(p2.coral.Plob,p1.coral.Plob,nrow=2)
 dev.off()
 
 # # For testing colors  
