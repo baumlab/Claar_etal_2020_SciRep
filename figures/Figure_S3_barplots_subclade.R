@@ -249,7 +249,7 @@ dev.off()
 
 # Make ggplot with all for legend creation
 p0 <- plot_bar(phy97.f.c.s.h,fill="hit")+  
-  scale_fill_manual(values=otu_colors2,name="Subclade")+
+  scale_fill_manual(values=otu_colors2,name="ITS2 Type")+
   theme(legend.position = "bottom")
 
 # Get the legend
