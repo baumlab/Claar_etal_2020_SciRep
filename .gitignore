@@ -55,6 +55,7 @@ data/Bioinf/clust/KI*
 
 # Ignore raw data files
 data/Bioinf/sequences/KI*
+data/Bioinf/sequences/*
 
 # Ignore merged fasta files
 data/Bioinf/sequences/merged/KI*
