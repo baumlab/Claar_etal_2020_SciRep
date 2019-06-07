@@ -149,23 +149,13 @@ rownames(track) <- sample.names
 head(track)
 
 # Assign taxonomy
-### NEED TO GET SYMBIO REF SET
-# sym.ref <- "ITS2db_trimmed_derep_dada.fasta" 
-# ITS2db_trimmed_derep_dada.fasta is just ITS2db_trimmed_derep.fasta" reformatted to 
-# the >Kingom;Phylum;Class;Order;Family;Genus; ACGAATGTGAAGTAA...... format required by this call. Note: s__ is SUBCLADE not species
 sym.ref <- "ITS2db_fromSymPortal2.fasta" # This is more complete than the in-house ref set we have, so using for now
-
 
 # The reference database for assignTaxonomy should only go to genus. "Species" (actually subclade) ID comes next with assignSpecies
 taxa <- assignTaxonomy(seqtab.nochim, sym.ref, multithread = TRUE, tryRC = TRUE)
 taxa.print <- taxa  # Removing sequence rownames for display only
 rownames(taxa.print) <- NULL
 head(taxa.print)
-sum(data.frame(taxa.print)$Genus=="g__Cladocopium")
-
-# sym.ref.spp <- "ITS2db_fromSymPortal_spp.fasta"
-genus.species <- assignSpecies(seqtab.nochim, sym.ref.spp)
-unname(genus.species)
 
 # Import to phyloseq
 samdf <- read.table("data/mapping_file_dada.txt",header = TRUE) # Read in sample data
@@ -189,3 +179,6 @@ names(dna) <- taxa_names(ps)
 ps <- merge_phyloseq(ps, dna)
 taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 ps
+
+save(ps, file="analyses/KI_Compartment_dada.RData")
+
