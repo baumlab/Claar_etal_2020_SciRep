@@ -95,6 +95,10 @@ ASV.Gs <- subset_taxa(phyASV.f.c,Genus=="g__Gerakladium")
 # ASV.Hs <- subset_taxa(phyASV.f.c,Genus=="g__cladeH") # no seqs
 ASV.Is <- subset_taxa(phyASV.f.c,Genus=="g__cladeI")
 
+ASV.seqs <- refseq(phyASV.f.c)
+min(width(ASV.seqs))
+max(width(ASV.seqs))
+
 ASV.A.seqs <- refseq(ASV.As)
 ASV.A.seqs.aligned <- AlignSeqs(ASV.A.seqs)
 writeXStringSet(ASV.A.seqs.aligned, # write the alignment to a new FASTA file
