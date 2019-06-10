@@ -99,7 +99,7 @@ plotQualityProfile(cutRs[1:2])
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
 filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 
-ref_seqs <- readDNAStringSet(filepath = "ITS2db_fromSymPortal2.fasta")
+# ref_seqs <- readDNAStringSet(filepath = "ITS2db_fromSymPortal2.fasta")
 ref_seqs <- readDNAStringSet(filepath = "ITS2db_trimmed_derep_dada.fasta")
 min(width(ref_seqs))
 max(width(ref_seqs))
@@ -108,11 +108,11 @@ out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs,
                      maxN = 0, # Standard filtering parameter
                      maxEE = c(2, 2), # Sets the maximum number of “expected errors” allowed in a read
                      truncQ = 2, 
-                     minLen = 150, # Enforce a minLen here, to get rid of spurious short sequences
-                     maxLen = 350, # Enforce a maxLen here, to get rid of spurious long sequences
+                     minLen = 150, # Enforce a minLen here, to get rid of spurious short sequences was 50 before
+                     maxLen = 350, # Enforce a maxLen here, to get rid of spurious long sequences wasn't included before
                      rm.phix = TRUE, # Remove any phiX sequences
                      compress = TRUE, 
-                     multithread = TRUE)  # on windows, set multithread = FALSE
+                     multithread = TRUE) # on windows, set multithread = FALSE
 head(out)
 
 # Learn error rates
