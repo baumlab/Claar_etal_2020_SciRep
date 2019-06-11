@@ -37,7 +37,7 @@ phy.f <- prune_taxa(taxa_sums(phy.f)>0, phy.f)
 ############################## Site Formatting ####################################
 
 # Characterize sites by disturbance level
-VeryHigh <- c(30,31,32)
+VeryHigh <- c(30,31,32,27)
 High <- c(1,6,25,26,38,40)
 Medium <- c(7,8,12,13,14,22,33,34,35)
 Low <- c(2,3,4,9,23,24)
