@@ -220,7 +220,7 @@ ubermatrix <- cbind(col1, col2, col3, col4, col5, col6, col7)
 dim(ubermatrix)
 
 #build tree
-uber.tree <- phangorn::NJ(ubermatrix)
+uber.tree <- phangorn::upgma(ubermatrix)
 plot(uber.tree, main="UPGMA")
 
 #write tree to file
