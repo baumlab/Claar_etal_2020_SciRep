@@ -1,3 +1,0 @@
-CogentAligner parameters:
-Method:muscle
-Module:<module 'bfillings.muscle_v38' from '/usr/local/lib/python2.7/dist-packages/bfillings/muscle_v38.pyc'>
