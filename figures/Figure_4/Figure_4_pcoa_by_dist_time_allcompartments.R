@@ -169,7 +169,7 @@ ado.Plob.VH
 ado.sediment.VH
 ado.water.VH
 
-# Make Figure
+# Make Figure 4 as jpeg
 jpeg(filename="figures/Figure_4/Figure_4_pcoa_by_dist_time_allcompartments.jpg", 
      width = 8, height = 20, units="in",res = 300)
 par(mfrow=c(5,2),mar=c(1,1,5,1))
@@ -181,6 +181,8 @@ plot(Peyd.VH.bd, hull=F, label=F, cex=2,
 title(expression(italic("Pocillopora grandis")), line = 1, cex.main=2.2)
 ordihull(Peyd.VH.bd, sample_data(phyASV.f.c.coral.Peyd.VH)$field_season,  
          draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+legend("topright", bty="n", pch=c(16,17,18), col=timecols, cex=2.7, pt.cex=4,
+       legend=c("Before","Post Storm","After"))
 mtext("VERY HIGH DISTURBANCE", side=3, line=3, cex=1.5)
 
 plot(Peyd.M.bd, hull=F, label=F, cex=2,
@@ -189,8 +191,6 @@ plot(Peyd.M.bd, hull=F, label=F, cex=2,
 title(expression(italic("Pocillopora grandis")), line = 1,cex.main=2.2)
 ordihull(Peyd.M.bd, sample_data(phyASV.f.c.coral.Peyd.M)$field_season,
          draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
-legend("topright", bty="n", pch=c(16,17,18), col=timecols, cex=2.7, pt.cex=4,
-       legend=c("Before","Post Storm","After"))
 mtext("MEDIUM DISTURBANCE", side=3, line=3, cex=1.5)
 
 par(mar=c(1,1,2.3,1))
@@ -214,8 +214,91 @@ plot(Maeq.VH.bd, hull=F, label=F, cex=2,
 title(expression(italic("Montipora aequituberculata")), line = 1, cex.main=2.2)
 ordihull(Maeq.VH.bd, sample_data(phyASV.f.c.coral.MAeq.VH)$field_season,  
          draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
-# legend("topleft", bty="n", pch=1:6,col=timecols,
-#        legend=levels(as.factor(sample_data(phyASV.f.c.coral.MAeq.VH)$field_season)))
+
+plot(Maeq.M.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Montipora aequituberculata")), line = 1, cex.main=2.2)
+ordihull(Maeq.M.bd, sample_data(phyASV.f.c.coral.MAeq.M)$field_season, 
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+# Sediment
+plot(sediment.VH.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title("Sediment", line = 1, cex.main=2.2, font.main=1)
+ordihull(sediment.VH.bd, sample_data(phyASV.f.c.sediment.VH)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+plot(sediment.M.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title("Sediment", line = 1, cex.main=2.2, font.main=1)
+ordihull(sediment.M.bd, sample_data(phyASV.f.c.sediment.M)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+# Water
+plot(water.VH.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title("Water", line = 1, cex.main=2.2, font.main=1)
+ordihull(water.VH.bd, sample_data(phyASV.f.c.water.VH)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+plot(water.M.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title("Water", line = 1, cex.main=2.2, font.main=1)
+ordihull(water.M.bd, sample_data(phyASV.f.c.water.M)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+dev.off()
+
+# Make Figure 4 as pdf
+pdf(file="figures/Figure_4/Figure_4_pcoa_by_dist_time_allcompartments.pdf", 
+     width = 8, height = 20, useDingbats = FALSE)
+par(mfrow=c(5,2),mar=c(1,1,5,1))
+
+# Pocillopora
+plot(Peyd.VH.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Pocillopora grandis")), line = 1, cex.main=2.2)
+ordihull(Peyd.VH.bd, sample_data(phyASV.f.c.coral.Peyd.VH)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+legend("topright", bty="n", pch=c(16,17,18), col=timecols, cex=2.7, pt.cex=4,
+       legend=c("Before","Post Storm","After"))
+mtext("VERY HIGH DISTURBANCE", side=3, line=3, cex=1.5)
+
+plot(Peyd.M.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Pocillopora grandis")), line = 1,cex.main=2.2)
+ordihull(Peyd.M.bd, sample_data(phyASV.f.c.coral.Peyd.M)$field_season,
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+mtext("MEDIUM DISTURBANCE", side=3, line=3, cex=1.5)
+
+par(mar=c(1,1,2.3,1))
+plot(Plob.VH.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Porites lobata")), line = 1,cex.main=2.2)
+ordihull(Plob.VH.bd, sample_data(phyASV.f.c.coral.Plob.VH)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+plot(Plob.M.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Porites lobata")), line = 1, cex.main=2.2)
+ordihull(Plob.M.bd, sample_data(phyASV.f.c.coral.Plob.M)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
+
+plot(Maeq.VH.bd, hull=F, label=F, cex=2,
+     main=NULL, col=timecols, pch=c(16,17,18),
+     xaxt="n", yaxt="n", xlab=NULL, ylab=NULL, sub="")
+title(expression(italic("Montipora aequituberculata")), line = 1, cex.main=2.2)
+ordihull(Maeq.VH.bd, sample_data(phyASV.f.c.coral.MAeq.VH)$field_season,  
+         draw = c("polygon"), col = timecols, alpha=0.2, lwd=0.05)
 
 plot(Maeq.M.bd, hull=F, label=F, cex=2,
      main=NULL, col=timecols, pch=c(16,17,18),
