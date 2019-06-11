@@ -107,12 +107,12 @@ max(width(ref_seqs))
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, 
                      maxN = 0, # Standard filtering parameter
                      maxEE = c(2, 2), # Sets the maximum number of “expected errors” allowed in a read
-                     truncQ = 2, 
-                     minLen = 150, # Enforce a minLen here, to get rid of spurious short sequences was 50 before
-                     maxLen = 350, # Enforce a maxLen here, to get rid of spurious long sequences wasn't included before
+                     trimRight = 100, # The number of nucleotides to remove from the end of each read - chosen based on declining quality scors in plot
+                     minLen = 150, # Enforce a minLen here, to get rid of spurious short sequences; was 50 before
                      rm.phix = TRUE, # Remove any phiX sequences
                      compress = TRUE, 
-                     multithread = TRUE) # on windows, set multithread = FALSE
+                     multithread = TRUE, # on windows, set multithread = FALSE
+                     verbose = TRUE) 
 head(out)
 
 # Learn error rates
@@ -134,7 +134,8 @@ dadaFs <- dada(derepFs, err = errF, multithread = TRUE)
 dadaRs <- dada(derepRs, err = errR, multithread = TRUE)
 
 # Merge paired reads
-mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
+mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, 
+                      trimOverhang=TRUE, verbose=TRUE)
 
 # Construct amplicon sequence variant table (ASV) table
 seqtab <- makeSequenceTable(mergers)
@@ -155,13 +156,26 @@ rownames(track) <- sample.names
 head(track)
 
 # Assign taxonomy
-sym.ref <- "ITS2db_fromSymPortal2.fasta" # This is more complete than the in-house ref set we have, so using for now
+sym.ref <- "ITS2db_trimmed_derep_dada.fasta" 
+sym.ref2 <- "ITS2db_fromSymPortal2.fasta" 
 
-# The reference database for assignTaxonomy should only go to genus. "Species" (actually subclade) ID comes next with assignSpecies
-taxa <- assignTaxonomy(seqtab.nochim, sym.ref, multithread = TRUE, tryRC = TRUE)
+# Try with in-house reference database down to Genus
+taxa <- assignTaxonomy(seqtab.nochim, sym.ref, multithread = TRUE, tryRC = TRUE, minBoot = 80, verbose = TRUE)
 taxa.print <- taxa  # Removing sequence rownames for display only
 rownames(taxa.print) <- NULL
 head(taxa.print)
+tp <- data.frame(taxa.print)
+tp$Genus
+unique(tp$Genus)
+
+# # Try with SymPortal database
+# taxa2 <- assignTaxonomy(seqtab.nochim, sym.ref2, multithread = TRUE, tryRC = TRUE, minBoot = 80, verbose = TRUE)
+# taxa.print2 <- taxa2  # Removing sequence rownames for display only
+# rownames(taxa.print2) <- NULL
+# head(taxa.print2)
+# tp2 <- data.frame(taxa.print2)
+# tp2$Genus
+# unique(tp2$Genus)
 
 # Import to phyloseq
 samdf <- read.table("data/mapping_file_dada.txt",header = TRUE) # Read in sample data
