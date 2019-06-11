@@ -19,9 +19,9 @@ veganotu = function(physeq) {
 }
 
 # Subset taxa, removing any taxa that have fewer than 50 reads
-water <- subset_taxa(physeq = phy97.f.c.water,taxa_sums(phy97.f.c.water) > 50)
-sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) > 50)
-all <- subset_taxa(physeq = phy97.f.c,taxa_sums(phy97.f.c) > 50)
+water <- subset_taxa(physeq = phyASV.f.c.water,taxa_sums(phyASV.f.c.water) > 50)
+sediment <- subset_taxa(physeq = phyASV.f.c.sediment,taxa_sums(phyASV.f.c.sediment) > 50)
+all <- subset_taxa(physeq = phyASV.f.c,taxa_sums(phyASV.f.c) > 50)
 
 # Transform to vegan-friendly objects
 water.veg <- veganotu(water)
@@ -29,16 +29,32 @@ sediment.veg <- veganotu(sediment)
 all.veg <- veganotu(all)
 
 # Indicator species analysis - Water by Field Season
-groups.water <- as.numeric(sample_data(water)$field_season)
+groups.water <- as.numeric(as.factor(sample_data(water)$field_season))
 indval.water = multipatt(as.data.frame(water.veg), groups.water, control = how(nperm=999))
 summary(indval.water)
 
 # Indicator species analysis - Sediment by Field Season
-groups.sed <- as.numeric(sample_data(sediment)$field_season)
+groups.sed <- as.numeric(as.factor(sample_data(sediment)$field_season))
 indval.sed = multipatt(as.data.frame(sediment.veg), groups.sed, control = how(nperm=999))
 summary(indval.sed)
 
 # Indicator species analysis - All by Field Season
-groups.all <- as.numeric(sample_data(all)$SampleType)
+groups.all <- as.numeric(as.factor(sample_data(all)$SampleType))
+indval.all = multipatt(as.data.frame(all.veg), groups.all, control = how(nperm=999))
+summary(indval.all)
+
+# Disturbance level
+# Indicator species analysis - Water by Field Season
+groups.water <- as.numeric(as.factor(sample_data(water)$Dist)) # 1 is Med 2 is VH
+indval.water = multipatt(as.data.frame(water.veg), groups.water, control = how(nperm=999))
+summary(indval.water)
+
+# Indicator species analysis - Sediment by Field Season
+groups.sed <- as.numeric(as.factor(sample_data(sediment)$Dist))
+indval.sed = multipatt(as.data.frame(sediment.veg), groups.sed, control = how(nperm=999))
+summary(indval.sed)
+
+# Indicator species analysis - All by Field Season
+groups.all <- as.numeric(as.factor(sample_data(all)$Dist))
 indval.all = multipatt(as.data.frame(all.veg), groups.all, control = how(nperm=999))
 summary(indval.all)
