@@ -1,3 +1,6 @@
+# Load necessary packages
+library(ggplot2)
+
 # Clear working environment
 rm(list=ls())
 
@@ -6,16 +9,16 @@ load("data/KI_Compartment_f_coral_grouped.RData")
 load("analyses/KI_Compartment_colors.RData")
 
 # Subset taxa, remove any with less than 10 reads
-water <- subset_taxa(physeq = phy97.f.c.water,taxa_sums(phy97.f.c.water) > 10)
-sediment <- subset_taxa(physeq = phy97.f.c.sediment,taxa_sums(phy97.f.c.sediment) > 10)
+water <- subset_taxa(physeq = phyASV.f.c.water,taxa_sums(phyASV.f.c.water) > 10)
+sediment <- subset_taxa(physeq = phyASV.f.c.sediment,taxa_sums(phyASV.f.c.sediment) > 10)
 
 # Plot tree - Water
-pt1 <- plot_tree(water,color="field_season",label.tips = "hit") + 
+pt1 <- plot_tree(water,color="field_season",label.tips = "Genus") + 
   scale_color_manual(values=timecols) + 
   guides(fill=F,color=F) + 
   ggtitle("Water")
 # Plot tree - Sediment
-pt2 <- plot_tree(sediment,color="field_season", label.tips = "hit") + 
+pt2 <- plot_tree(sediment,color="field_season", label.tips = "Genus") + 
   scale_color_manual(values=timecols) + 
   ggtitle("Sediment")
 
