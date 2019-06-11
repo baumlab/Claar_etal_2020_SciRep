@@ -326,198 +326,34 @@ coral.storm <- subset_taxa(coral.storm, taxa_sums(coral.storm) > 0, prune=TRUE)
 coral.after <- subset_samples(phyASV.f.c.coral, data.frame(sample_data(phyASV.f.c.coral))$field_season == "KI2015b", prune=TRUE)
 coral.after <- subset_taxa(coral.after, taxa_sums(coral.after) > 0, prune=TRUE)
 
-############################ Types and subclades by compartment #########################
-all.types <- unique(data.frame(tax_table(phyASV.f.c))$hit)
-sediment.types <- unique(data.frame(tax_table(phyASV.f.c.sediment))$hit)
-water.types <- unique(data.frame(tax_table(phyASV.f.c.water))$hit)
-coral.types <- unique(data.frame(tax_table(phyASV.f.c.coral))$hit)
+############################ ASVs by compartment #########################
+n.all.ASVs <- nrow(data.frame(tax_table(phyASV.f.c)))
+n.sediment.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.sediment)))
+n.water.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.water)))
+n.coral.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.coral)))
+n.Peyd.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.coral.Peyd)))
+n.MAeq.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.coral.MAeq)))
+n.Plob.ASVs <- nrow(data.frame(tax_table(phyASV.f.c.coral.Plob)))
 
-sediment.types.subclade <- sediment.types
-sediment.types.subclade <- gsub("_.*","",sediment.types.subclade)
-sediment.types.subclade <- gsub("\\..*","",sediment.types.subclade)
-sediment.types.subclade <- unique(sediment.types.subclade)
+all.ASVs <- rownames(data.frame(tax_table(phyASV.f.c)))
+sediment.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.sediment)))
+water.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.water)))
+coral.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.coral)))
+Peyd.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.coral.Peyd)))
+MAeq.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.coral.MAeq)))
+Plob.ASVs <- rownames(data.frame(tax_table(phyASV.f.c.coral.Plob)))
 
-water.types.subclade <- water.types
-water.types.subclade <- gsub("_.*","",water.types.subclade)
-water.types.subclade <- gsub("\\..*","",water.types.subclade)
-water.types.subclade <- unique(water.types.subclade)
+sediment.before.ASVs <- rownames(data.frame(tax_table(sediment.before)))
+water.before.ASVs <- rownames(data.frame(tax_table(water.before)))
+coral.before.ASVs <- rownames(data.frame(tax_table(coral.before)))
 
-coral.types.subclade <- coral.types
-coral.types.subclade <- gsub("_.*","",coral.types.subclade)
-coral.types.subclade <- gsub("\\..*","",coral.types.subclade)
-coral.types.subclade <- unique(coral.types.subclade)
+sediment.storm.ASVs <- rownames(data.frame(tax_table(sediment.storm)))
+water.storm.ASVs <- rownames(data.frame(tax_table(water.storm)))
+coral.storm.ASVs <- rownames(data.frame(tax_table(coral.storm)))
 
-# Types and subclades by compartment and time point
-sediment.before.types <- unique(data.frame(tax_table(sediment.before))$hit)
-sediment.storm.types <- unique(data.frame(tax_table(sediment.storm))$hit)
-sediment.after.types <- unique(data.frame(tax_table(sediment.after))$hit)
-
-sediment.before.types.subclade <- sediment.before.types
-sediment.before.types.subclade <- gsub("_.*","",sediment.before.types.subclade)
-sediment.before.types.subclade <- gsub("\\..*","",sediment.before.types.subclade)
-sediment.before.types.subclade <- unique(sediment.before.types.subclade)
-
-sediment.storm.types.subclade <- sediment.storm.types
-sediment.storm.types.subclade <- gsub("_.*","",sediment.storm.types.subclade)
-sediment.storm.types.subclade <- gsub("\\..*","",sediment.storm.types.subclade)
-sediment.storm.types.subclade <- unique(sediment.storm.types.subclade)
-
-sediment.after.types.subclade <- sediment.after.types
-sediment.after.types.subclade <- gsub("_.*","",sediment.after.types.subclade)
-sediment.after.types.subclade <- gsub("\\..*","",sediment.after.types.subclade)
-sediment.after.types.subclade <- unique(sediment.after.types.subclade)
-
-
-water.before.types <- unique(data.frame(tax_table(water.before))$hit)
-water.storm.types <- unique(data.frame(tax_table(water.storm))$hit)
-water.after.types <- unique(data.frame(tax_table(water.after))$hit)
-
-water.before.types.subclade <- water.before.types
-water.before.types.subclade <- gsub("_.*","",water.before.types.subclade)
-water.before.types.subclade <- gsub("\\..*","",water.before.types.subclade)
-water.before.types.subclade <- unique(water.before.types.subclade)
-
-water.storm.types.subclade <- water.storm.types
-water.storm.types.subclade <- gsub("_.*","",water.storm.types.subclade)
-water.storm.types.subclade <- gsub("\\..*","",water.storm.types.subclade)
-water.storm.types.subclade <- unique(water.storm.types.subclade)
-
-water.after.types.subclade <- water.after.types
-water.after.types.subclade <- gsub("_.*","",water.after.types.subclade)
-water.after.types.subclade <- gsub("\\..*","",water.after.types.subclade)
-water.after.types.subclade <- unique(water.after.types.subclade)
-
-coral.before.types <- unique(data.frame(tax_table(coral.before))$hit)
-coral.storm.types <- unique(data.frame(tax_table(coral.storm))$hit)
-coral.after.types <- unique(data.frame(tax_table(coral.after))$hit)
-
-coral.before.types.subclade <- coral.before.types
-coral.before.types.subclade <- gsub("_.*","",coral.before.types.subclade)
-coral.before.types.subclade <- gsub("\\..*","",coral.before.types.subclade)
-coral.before.types.subclade <- unique(coral.before.types.subclade)
-
-coral.storm.types.subclade <- coral.storm.types
-coral.storm.types.subclade <- gsub("_.*","",coral.storm.types.subclade)
-coral.storm.types.subclade <- gsub("\\..*","",coral.storm.types.subclade)
-coral.storm.types.subclade <- unique(coral.storm.types.subclade)
-
-coral.after.types.subclade <- coral.after.types
-coral.after.types.subclade <- gsub("_.*","",coral.after.types.subclade)
-coral.after.types.subclade <- gsub("\\..*","",coral.after.types.subclade)
-coral.after.types.subclade <- unique(coral.after.types.subclade)
-
-
-####################### Types and subclades by coral species #####################
-Peyd.types <- unique(data.frame(tax_table(phyASV.f.c.coral.Peyd))$hit)
-Peyd.types.subclade <- Peyd.types
-Peyd.types.subclade <- gsub("_.*","",Peyd.types.subclade)
-Peyd.types.subclade <- gsub("\\..*","",Peyd.types.subclade)
-Peyd.types.subclade <- unique(Peyd.types.subclade)
-
-Plob.types <- unique(data.frame(tax_table(phyASV.f.c.coral.Plob))$hit)
-Plob.types.subclade <- Plob.types
-Plob.types.subclade <- gsub("_.*","",Plob.types.subclade)
-Plob.types.subclade <- gsub("\\..*","",Plob.types.subclade)
-Plob.types.subclade <- unique(Plob.types.subclade)
-
-MAeq.types <- unique(data.frame(tax_table(phyASV.f.c.coral.MAeq))$hit)
-MAeq.types.subclade <- MAeq.types
-MAeq.types.subclade <- gsub("_.*","",MAeq.types.subclade)
-MAeq.types.subclade <- gsub("\\..*","",MAeq.types.subclade)
-MAeq.types.subclade <- unique(MAeq.types.subclade)
-
-############## Types and subclades by compartment and disturbance level ################
-sediment.VH.types <- unique(data.frame(tax_table(phyASV.f.c.sediment.VH))$hit)
-sediment.M.types <- unique(data.frame(tax_table(phyASV.f.c.sediment.M))$hit)
-water.VH.types <- unique(data.frame(tax_table(phyASV.f.c.water.VH))$hit)
-water.M.types <- unique(data.frame(tax_table(phyASV.f.c.water.M))$hit)
-coral.VH.types <- unique(data.frame(tax_table(phyASV.f.c.coral.VH))$hit)
-coral.M.types <- unique(data.frame(tax_table(phyASV.f.c.coral.M))$hit)
-
-sediment.VH.types.subclade <- sediment.VH.types
-sediment.VH.types.subclade <- gsub("_.*","",sediment.VH.types.subclade)
-sediment.VH.types.subclade <- gsub("\\..*","",sediment.VH.types.subclade)
-sediment.VH.types.subclade <- unique(sediment.VH.types.subclade)
-sediment.M.types.subclade <- sediment.M.types
-sediment.M.types.subclade <- gsub("_.*","",sediment.M.types.subclade)
-sediment.M.types.subclade <- gsub("\\..*","",sediment.M.types.subclade)
-sediment.M.types.subclade <- unique(sediment.M.types.subclade)
-
-water.VH.types.subclade <- water.VH.types
-water.VH.types.subclade <- gsub("_.*","",water.VH.types.subclade)
-water.VH.types.subclade <- gsub("\\..*","",water.VH.types.subclade)
-water.VH.types.subclade <- unique(water.VH.types.subclade)
-water.M.types.subclade <- water.M.types
-water.M.types.subclade <- gsub("_.*","",water.M.types.subclade)
-water.M.types.subclade <- gsub("\\..*","",water.M.types.subclade)
-water.M.types.subclade <- unique(water.M.types.subclade)
-
-coral.VH.types.subclade <- coral.VH.types
-coral.VH.types.subclade <- gsub("_.*","",coral.VH.types.subclade)
-coral.VH.types.subclade <- gsub("\\..*","",coral.VH.types.subclade)
-coral.VH.types.subclade <- unique(coral.VH.types.subclade)
-coral.M.types.subclade <- coral.M.types
-coral.M.types.subclade <- gsub("_.*","",coral.M.types.subclade)
-coral.M.types.subclade <- gsub("\\..*","",coral.M.types.subclade)
-coral.M.types.subclade <- unique(coral.M.types.subclade)
-
-################## Denovo by compartment and coral species ###############
-# By denovo
-all.denovo <- unique(data.frame(tax_table(phyASV.f.c))$otu)
-sediment.denovo <- unique(data.frame(tax_table(phyASV.f.c.sediment))$otu)
-water.denovo <- unique(data.frame(tax_table(phyASV.f.c.water))$otu)
-coral.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral))$otu)
-
-sediment.denovo.subclade <- sediment.denovo
-sediment.denovo.subclade <- unique(sediment.denovo.subclade)
-
-water.denovo.subclade <- water.denovo
-water.denovo.subclade <- unique(water.denovo.subclade)
-
-coral.denovo.subclade <- coral.denovo
-coral.denovo.subclade <- unique(coral.denovo.subclade)
-
-Peyd.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Peyd))$otu)
-Peyd.denovo.subclade <- Peyd.denovo
-Peyd.denovo.subclade <- unique(Peyd.denovo.subclade)
-
-Plob.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Plob))$otu)
-Plob.denovo.subclade <- Plob.denovo
-Plob.denovo.subclade <- unique(Plob.denovo.subclade)
-
-MAeq.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.MAeq))$otu)
-MAeq.denovo.subclade <- MAeq.denovo
-MAeq.denovo.subclade <- unique(MAeq.denovo.subclade)
-
-############# Denovo by compartment/coral species and disturbance ###############
-sediment.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.sediment.VH))$otu)
-sediment.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.sediment.M))$otu)
-water.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.water.VH))$otu)
-water.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.water.M))$otu)
-coral.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.VH))$otu)
-coral.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.M))$otu)
-
-sediment.VH.denovo.subclade <- unique(sediment.VH.denovo)
-sediment.M.denovo.subclade <- unique(sediment.M.denovo)
-water.VH.denovo.subclade <- unique(water.VH.denovo)
-water.M.denovo.subclade <- unique(water.M.denovo)
-coral.VH.denovo.subclade <- unique(coral.VH.denovo)
-coral.M.denovo.subclade <- unique(coral.M.denovo)
-
-# denovo and subclades by compartment and disturbance level
-Peyd.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Peyd.VH))$hit)
-Peyd.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Peyd.M))$hit)
-Plob.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Plob.VH))$hit)
-Plob.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.Plob.M))$hit)
-MAeq.VH.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.MAeq.VH))$hit)
-MAeq.M.denovo <- unique(data.frame(tax_table(phyASV.f.c.coral.MAeq.M))$hit)
-
-Peyd.VH.denovo.subclade <- unique(Peyd.VH.denovo)
-Peyd.M.denovo.subclade <- unique(Peyd.M.denovo)
-Plob.VH.denovo.subclade <- unique(Plob.VH.denovo)
-Plob.M.denovo.subclade <- unique(Plob.M.denovo)
-MAeq.VH.denovo.subclade <- unique(MAeq.VH.denovo)
-MAeq.M.denovo.subclade <- unique(MAeq.M.denovo)
+sediment.after.ASVs <- rownames(data.frame(tax_table(sediment.after)))
+water.after.ASVs <- rownames(data.frame(tax_table(water.after)))
+coral.after.ASVs <- rownames(data.frame(tax_table(coral.after)))
 
 #################### Save grouped data as RData file ##########################
 save(list=ls(),file="data/KI_Compartment_f_coral_grouped.RData")
