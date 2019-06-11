@@ -83,9 +83,9 @@ phyASV.f.c <- phy.f
 phyASV.f.c <- prune_taxa(taxa_sums(phyASV.f.c)>0,phyASV.f.c)
 
 # Write tax table for phylogenetically-informed diversity
-write.table(data.frame(tax_table(phyASV.f.c)), "data/tax_table.txt", row.names=T, quote=F)
+# write.table(data.frame(tax_table(phyASV.f.c)), "data/tax_table.txt", row.names=T, quote=F)
 # Write otu table for phylogenetically-informed diversity
-write.delim(data.frame(otu_table(phyASV.f.c)), "data/otu_table.tsv", quote = FALSE, row.names = T, sep = "\t")
+# write.delim(data.frame(otu_table(phyASV.f.c)), "data/otu_table.tsv", quote = FALSE, row.names = T, sep = "\t")
 
 ASV.As <- subset_taxa(phyASV.f.c,Genus=="g__Symbiodinium")
 ASV.Bs <- subset_taxa(phyASV.f.c,Genus=="g__Breviolum")
