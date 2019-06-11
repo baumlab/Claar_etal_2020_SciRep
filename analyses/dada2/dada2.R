@@ -200,5 +200,5 @@ ps <- merge_phyloseq(ps, dna)
 taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 ps
 
-save(ps, file="analyses/KI_Compartment_dada.RData")
+save(ps, file="analyses/dada2/KI_Compartment_dada.RData")
 

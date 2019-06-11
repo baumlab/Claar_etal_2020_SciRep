@@ -12,7 +12,7 @@ library(DECIPHER)
 rm(list=ls())
 
 # Load filtered RData object from output of filter_notsym.R script
-load("analyses/KI_Compartment_dada.RData")
+load("analyses/dada2/KI_Compartment_dada.RData")
 
 phy.f <- ps
 
