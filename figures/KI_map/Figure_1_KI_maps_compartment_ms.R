@@ -28,7 +28,7 @@ fishing.cols$f.pressure<-levels(sites$f.pressure)
 sites$col<-fishing.cols$fishing.cols[match(sites$f.pressure, fishing.cols$f.pressure)]
 
 # jpeg(filename = "figures/KI_map.jpg",width = 7, height = 7.2, units="in", res=300)
-jpeg(filename = "figures/Figure_1_KI_map.jpg",width = 7, height = 7.2, units="in", res=300)
+jpeg(filename = "figures/Figure_1/Figure_1_KI_map.jpg",width = 7, height = 7.2, units="in", res=300)
 source("figures/KI_map/KI_base_B&W.R")
 # village markers sized by population
 symbols(villages$lon, villages$lat, circles=(villages$pop)/10, add=TRUE,inches=0.3, bg=alpha("black", 0.4))
@@ -49,7 +49,7 @@ segments(-157.563, 1.72,-157.563, 1.82)
 dev.off()
 
 # jpeg(filename = "figures/KI_map.jpg",width = 7, height = 7.2, units="in", res=300)
-pdf(file = "figures/Figure_1_KI_map.pdf",width = 7, height = 7.2, useDingbats = FALSE)
+pdf(file = "figures/Figure_1/Figure_1_KI_map.pdf",width = 7, height = 7.2, useDingbats = FALSE)
 source("figures/KI_map/KI_base_B&W.R")
 # village markers sized by population
 symbols(villages$lon, villages$lat, circles=(villages$pop)/10, add=TRUE,inches=0.3, bg=alpha("black", 0.4))
