@@ -1,4 +1,5 @@
 # KI Compartment - Count sequences
+library(phyloseq)
 
 # Clear working environment
 rm(list=ls())
@@ -9,7 +10,7 @@ load("analyses/KI_Compartment_colors.RData")
 
 # Calculate the total number of sequences
 total_seqs <- sum(taxa_sums(phyASV.f.c))
-total_seqs
+total_seqss
 
 # Calculate the number of sequences in each compartment
 coral_seqs <- sum(taxa_sums(phyASV.f.c.coral))
