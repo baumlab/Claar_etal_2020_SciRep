@@ -80,29 +80,17 @@ MAeq.ASVs.dom.names
 Peyd.ASVs.dom.names
 Plob.ASVs.dom.names
 
-sum(water.ASVs %in% sediment.ASVs)
-sum(sediment.ASVs %in% water.ASVs)
-sum(sediment.ASVs %in% coral.ASVs)
-sum(coral.ASVs %in% sediment.ASVs)
-sum(water.ASVs %in% coral.ASVs)
-sum(coral.ASVs %in% water.ASVs)
+writeXStringSet(file="analyses/refseqs/Plob_dom.fasta",refseq(phyASV.f.c)[Plob.ASVs.dom.names])
+writeXStringSet(file="analyses/refseqs/Maeq_dom.fasta",refseq(phyASV.f.c)[MAeq.ASVs.dom.names])
+writeXStringSet(file="analyses/refseqs/Peyd_dom.fasta",refseq(phyASV.f.c)[Peyd.ASVs.dom.names])
 
-nrow(data.frame(intersect(intersect(water.ASVs,sediment.ASVs),coral.ASVs)))
-nrow(data.frame(intersect(water.ASVs,sediment.ASVs)))
-nrow(data.frame(intersect(water.ASVs,coral.ASVs)))
-nrow(data.frame(intersect(coral.ASVs,sediment.ASVs)))
-nrow(data.frame(intersect(intersect(water.ASVs,sediment.ASVs),coral.ASVs)))
 
-outersect <- function(x, y) {
-  sort(c(x[!x%in%y],
-         y[!y%in%x]))
-}
 
-water.sed <- c(water.ASVs,sediment.ASVs)
-water.coral <- c(water.ASVs,coral.ASVs)
-sed.coral <- c(sediment.ASVs,coral.ASVs)
-all.ASVs
 
-nrow(data.frame(outersect(water.sed,all.ASVs)))
-nrow(data.frame(outersect(water.coral,all.ASVs)))
-nrow(data.frame(outersect(sed.coral,all.ASVs)))
+writeXStringSet(file="analyses/refseqs/ASV3.fasta",refseq(phyASV.f.c)["ASV3"])
+writeXStringSet(file="analyses/refseqs/ASV7.fasta",refseq(phyASV.f.c)["ASV7"])
+writeXStringSet(file="analyses/refseqs/ASV16.fasta",refseq(phyASV.f.c)["ASV16"])
+writeXStringSet(file="analyses/refseqs/ASV28.fasta",refseq(phyASV.f.c)["ASV28"])
+writeXStringSet(file="analyses/refseqs/ASV36.fasta",refseq(phyASV.f.c)["ASV36"])
+writeXStringSet(file="analyses/refseqs/ASV51.fasta",refseq(phyASV.f.c)["ASV51"])
+writeXStringSet(file="analyses/refseqs/ASV105.fasta",refseq(phyASV.f.c)["ASV105"])
