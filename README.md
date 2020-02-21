@@ -1,5 +1,5 @@
 
-##Data and R code accompanying:  
+## Data and R code accompanying:  
   
 **Chronic disturbance modulates symbiont (Symbiodiniaceae) beta diversity on a coral reef**  
   
