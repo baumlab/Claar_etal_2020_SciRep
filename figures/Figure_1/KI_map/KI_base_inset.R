@@ -5,9 +5,9 @@ library(rgdal)
 library(scales)
 
 ### Complex inset
-world_shp<-readShapePoly("figures/KI_map/shapes/ne_110m_land/ne_110m_land")
+world_shp<-readShapePoly("figures/Figure_1/KI_map/shapes/ne_110m_land/ne_110m_land")
 
-pdf("figures/KI_map/inset.pdf")
+pdf("figures/Figure_1/KI_map/inset.pdf")
 
 par(mar=c(2.5,4.8,0.5,0.5))
 
@@ -30,7 +30,7 @@ points(-157.4, 1.9, col=1, pch=2, cex=3)
 
 dev.off()
 
-jpeg("figures/KI_map/inset.jpg",width = 4,height=4,units = "in",res=300)
+jpeg("figures/Figure_1/KI_map/inset.jpg",width = 4,height=4,units = "in",res=300)
 
 par(mar=c(2.5,4.5,0.5,0.5))
 

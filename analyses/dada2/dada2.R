@@ -157,7 +157,6 @@ head(track)
 
 # Assign taxonomy
 sym.ref <- "ITS2db_trimmed_derep_dada.fasta" 
-sym.ref2 <- "ITS2db_fromSymPortal2.fasta" 
 
 # Try with in-house reference database down to Genus
 taxa <- assignTaxonomy(seqtab.nochim, sym.ref, multithread = TRUE, tryRC = TRUE, minBoot = 80, verbose = TRUE)
@@ -167,15 +166,6 @@ head(taxa.print)
 tp <- data.frame(taxa.print)
 tp$Genus
 unique(tp$Genus)
-
-# # Try with SymPortal database
-# taxa2 <- assignTaxonomy(seqtab.nochim, sym.ref2, multithread = TRUE, tryRC = TRUE, minBoot = 80, verbose = TRUE)
-# taxa.print2 <- taxa2  # Removing sequence rownames for display only
-# rownames(taxa.print2) <- NULL
-# head(taxa.print2)
-# tp2 <- data.frame(taxa.print2)
-# tp2$Genus
-# unique(tp2$Genus)
 
 # Import to phyloseq
 samdf <- read.table("data/mapping_file_dada.txt",header = TRUE) # Read in sample data

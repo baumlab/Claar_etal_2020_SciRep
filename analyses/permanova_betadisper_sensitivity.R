@@ -2,7 +2,6 @@
 
 rm(list=ls())
 load("data/KI_Compartment_f_coral_grouped.RData")
-load("analyses/KI_Compartment_colors.RData")
 
 library(vegan)
 library(ggplot2)
